@@ -3,136 +3,109 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>은퇴 인출 시뮬레이터</title>
+<title>은퇴생활비 계산기</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1" integrity="sha384-jb8JQMbMoBUzgWatfe6COACi2ljcDdZQ2OxczGA3bGNeWe+6DChMTBJemed7ZnvJ" crossorigin="anonymous"></script>
 <style>
-:root {
-  --bg:#f0f4f8; --card:#fff; --hdr:#14213d; --accent:#2563eb;
-  --green:#16a34a; --amber:#d97706; --red:#dc2626; --purple:#7c3aed;
-  --text:#1e293b; --text2:#64748b; --border:#e2e8f0; --gap:16px; --r:12px;
+:root{
+  --bg:#f0f4f8;--card:#fff;--navy:#14213d;--yellow:#fbbf24;--yellow2:#fef3c7;
+  --green:#16a34a;--red:#dc2626;--blue:#2563eb;--amber:#d97706;--purple:#7c3aed;
+  --text:#1e293b;--text2:#64748b;--border:#e2e8f0;--gap:16px;--r:12px;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);}
-
-.hdr{background:linear-gradient(135deg,#14213d 0%,#1d3461 100%);color:#fff;padding:22px 32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.hdr{background:linear-gradient(135deg,#14213d,#1e3a5f);color:#fff;padding:20px 32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
 .hdr h1{font-size:20px;font-weight:700;}
 .hdr p{font-size:12px;color:rgba(255,255,255,.6);margin-top:3px;}
-.badge{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:5px 14px;font-size:11px;color:rgba(255,255,255,.8);}
-
-.wrap{max-width:1320px;margin:0 auto;padding:var(--gap);}
+.badge{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:4px 14px;font-size:11px;color:rgba(255,255,255,.85);}
+.wrap{max-width:1380px;margin:0 auto;padding:var(--gap);}
 .card{background:var(--card);border-radius:var(--r);box-shadow:0 1px 4px rgba(0,0,0,.07);}
 
-/* input */
-.inp-panel{padding:22px 26px;margin-bottom:var(--gap);border-left:4px solid var(--accent);}
-.inp-panel h2{font-size:14px;font-weight:700;margin-bottom:18px;}
-.inp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;}
-.inp-item label{display:block;font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;}
-.inp-item input,.inp-item select{width:100%;padding:8px 11px;border:1px solid var(--border);border-radius:7px;font-size:15px;font-weight:700;color:var(--text);background:#fafbfc;}
-.inp-item input:focus,.inp-item select:focus{outline:none;border-color:var(--accent);background:#fff;}
-.inp-item .unit{font-size:11px;color:var(--text2);margin-top:3px;}
-.btn{margin-top:18px;background:var(--accent);color:#fff;border:none;border-radius:8px;padding:10px 26px;font-size:14px;font-weight:600;cursor:pointer;}
-.btn:hover{background:#1d4ed8;}
+/* 입력 패널 */
+.inp-section{padding:20px 24px;margin-bottom:var(--gap);border-left:4px solid var(--yellow);}
+.inp-section h2{font-size:14px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.inp-section h2 .note{font-size:11px;font-weight:400;color:var(--text2);background:var(--yellow2);padding:2px 8px;border-radius:4px;}
+.inp-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:12px;}
+.inp-group{background:var(--yellow2);border-radius:10px;padding:14px 16px;}
+.inp-group h3{font-size:11px;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:.4px;margin-bottom:10px;}
+.inp-item{margin-bottom:8px;}
+.inp-item:last-child{margin-bottom:0;}
+.inp-item label{display:block;font-size:11px;color:var(--text2);margin-bottom:3px;}
+.inp-item input{width:100%;padding:6px 9px;border:1.5px solid #fde68a;border-radius:6px;font-size:14px;font-weight:700;color:var(--text);background:#fffbeb;}
+.inp-item input:focus{outline:none;border-color:var(--yellow);background:#fff;}
+.inp-item .unit{font-size:10px;color:var(--text2);margin-top:2px;}
+.btn{background:var(--navy);color:#fff;border:none;border-radius:8px;padding:10px 28px;font-size:14px;font-weight:600;cursor:pointer;margin-top:14px;}
+.btn:hover{background:#1e3a5f;}
 
-/* kpi */
-.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--gap);margin-bottom:var(--gap);}
-.kpi{padding:18px 20px;}
-.kpi .lbl{font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
-.kpi .val{font-size:25px;font-weight:800;line-height:1.1;margin-bottom:4px;}
-.kpi .sub{font-size:12px;color:var(--text2);}
-.kpi.blue{border-top:3px solid var(--accent);}
+/* KPI */
+.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:var(--gap);margin-bottom:var(--gap);}
+.kpi{padding:16px 18px;}
+.kpi .lbl{font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.4px;margin-bottom:5px;}
+.kpi .val{font-size:24px;font-weight:800;line-height:1.1;margin-bottom:3px;}
+.kpi .sub{font-size:11px;color:var(--text2);}
+.kpi.yellow{border-top:3px solid var(--yellow);}
 .kpi.green{border-top:3px solid var(--green);}
-.kpi.amber{border-top:3px solid var(--amber);}
-.kpi.purple{border-top:3px solid var(--purple);}
 .kpi.red{border-top:3px solid var(--red);}
+.kpi.blue{border-top:3px solid var(--blue);}
+.kpi.purple{border-top:3px solid var(--purple);}
+.kpi.amber{border-top:3px solid var(--amber);}
 
-.stitle{font-size:14px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
-.stitle span{font-size:11px;font-weight:500;color:var(--text2);}
+/* 고갈 경고 */
+.alert{border-radius:10px;padding:12px 16px;margin-bottom:var(--gap);font-size:13px;font-weight:600;}
+.alert.danger{background:#fee2e2;color:#b91c1c;border:1px solid #fca5a5;}
+.alert.ok{background:#f0fdf4;color:#15803d;border:1px solid #86efac;}
 
-.chart-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(400px,1fr));gap:var(--gap);margin-bottom:var(--gap);}
-.chart-card{padding:20px 22px;}
-.chart-card canvas{max-height:300px;}
+/* 차트 */
+.chart-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:var(--gap);margin-bottom:var(--gap);}
+.chart-card{padding:18px 20px;}
+.chart-card canvas{max-height:280px;}
+.stitle{font-size:13px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:6px;}
+.stitle span{font-size:11px;font-weight:400;color:var(--text2);}
 
-.tbl-card{padding:20px 22px;margin-bottom:var(--gap);overflow-x:auto;}
-table.dt{width:100%;border-collapse:collapse;font-size:13px;}
-table.dt thead th{padding:9px 10px;border-bottom:2px solid var(--border);color:var(--text2);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;text-align:right;white-space:nowrap;}
-table.dt thead th:first-child{text-align:left;}
-table.dt tbody td{padding:8px 10px;border-bottom:1px solid #f1f5f9;text-align:right;font-variant-numeric:tabular-nums;font-size:13px;}
-table.dt tbody td:first-child{text-align:left;font-weight:600;}
-table.dt tbody tr:last-child td{border-bottom:none;}
-table.dt tbody tr:hover{background:#f8fafc;}
-.depleted td{background:#fee2e2 !important;color:var(--red);}
-.safe-row td{background:#f0fdf4 !important;}
-
-/* 월 수령액 비교 패널 */
-.monthly-panel{padding:20px 24px;margin-bottom:var(--gap);border-left:4px solid var(--green);}
-.monthly-panel h2{font-size:14px;font-weight:700;margin-bottom:6px;}
-.monthly-panel .sub-desc{font-size:12px;color:var(--text2);margin-bottom:16px;}
-.monthly-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:10px;}
-.monthly-card{border-radius:10px;padding:14px 16px;border:1px solid var(--border);background:#fafbfc;position:relative;}
-.monthly-card.highlight{background:linear-gradient(135deg,#eff6ff,#e0f2fe);border-color:#93c5fd;}
-.monthly-card .wr-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;}
-.monthly-card .amount{font-size:22px;font-weight:800;line-height:1.1;margin-bottom:2px;}
-.monthly-card .today-val{font-size:12px;margin-top:6px;padding-top:6px;border-top:1px solid var(--border);}
-.monthly-card .today-val span{font-weight:700;}
-.monthly-card .status-badge{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;margin-top:5px;}
-.badge-safe{background:#dcfce7;color:#15803d;}
-.badge-warn{background:#fef3c7;color:#92400e;}
-.badge-danger{background:#fee2e2;color:#b91c1c;}
-
-/* safe rate finder */
-.finder{background:linear-gradient(135deg,#eff6ff,#f0fdf4);border-radius:var(--r);padding:18px 22px;margin-bottom:var(--gap);border:1px solid #bfdbfe;}
-.finder h3{font-size:13px;font-weight:700;margin-bottom:12px;}
-.finder-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;}
-.finder-item{background:#fff;border-radius:8px;padding:12px 14px;border:1px solid var(--border);}
-.finder-item .rate{font-size:11px;color:var(--text2);margin-bottom:4px;font-weight:600;}
-.finder-item .val{font-size:16px;font-weight:800;}
-.finder-item .note{font-size:11px;color:var(--text2);margin-top:3px;}
-.safe{color:var(--green);}
-.warn{color:var(--amber);}
-.danger{color:var(--red);}
-
-/* scenario toggle */
-.scenario-btns{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;}
-.scen-btn{padding:5px 12px;border-radius:6px;border:1px solid var(--border);font-size:12px;font-weight:600;cursor:pointer;background:#fff;color:var(--text2);}
-.scen-btn.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+/* 테이블 */
+.tbl-wrap{padding:18px 20px;margin-bottom:var(--gap);overflow-x:auto;}
+table.dt{width:100%;border-collapse:collapse;font-size:12.5px;}
+table.dt thead th{padding:7px 10px;border-bottom:2px solid var(--border);color:var(--text2);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;text-align:right;white-space:nowrap;}
+table.dt thead th:first-child{text-align:center;}
+table.dt tbody td{padding:7px 10px;border-bottom:1px solid #f1f5f9;text-align:right;font-variant-numeric:tabular-nums;}
+table.dt tbody td:first-child{text-align:center;font-weight:700;}
+table.dt tbody tr:hover td{background:#f8fafc;}
+table.dt tbody tr.retire-row td{background:#fffbeb !important;font-weight:600;}
+table.dt tbody tr.pension-row td{background:#f0fdf4 !important;}
+table.dt tbody tr.danger-row td{background:#fff5f5 !important;color:var(--red);}
+table.dt tbody tr.danger-row td:first-child{color:var(--red);}
 
 .footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;color:var(--text2);font-size:11px;margin-top:18px;padding:16px 24px;}
-@media(max-width:600px){.hdr{padding:14px 16px;}.wrap{padding:10px;}.kpi-row{grid-template-columns:1fr 1fr;}.chart-grid{grid-template-columns:1fr;}}
 
-  /* ── 출력 메뉴 ── */
-  .print-wrap { position:relative; }
-  .print-btn {
-    display:flex; align-items:center; gap:6px;
-    background:rgba(255,255,255,.13); border:1px solid rgba(255,255,255,.25);
-    color:#fff; border-radius:8px; padding:8px 16px; font-size:13px;
-    font-weight:600; cursor:pointer; transition:background .2s;
-  }
-  .print-btn:hover { background:rgba(255,255,255,.22); }
-  .print-drop {
-    display:none; position:absolute; right:0; top:calc(100% + 6px);
-    background:#1e293b; border:1px solid rgba(255,255,255,.15);
-    border-radius:10px; padding:6px; min-width:180px;
-    box-shadow:0 8px 24px rgba(0,0,0,.4); z-index:999;
-  }
-  .print-drop.open { display:block; }
-  .print-drop button {
-    display:flex; align-items:center; gap:8px; width:100%;
-    background:none; border:none; color:rgba(255,255,255,.85);
-    font-size:13px; padding:9px 14px; border-radius:7px;
-    cursor:pointer; text-align:left; transition:background .15s;
-  }
-  .print-drop button:hover { background:rgba(255,255,255,.1); color:#fff; }
+/* 버튼 그룹 */
+.btn-group{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.btn{color:#fff;border:none;border-radius:8px;padding:10px 22px;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px;}
+.btn-calc{background:var(--navy);}
+.btn-calc:hover{background:#1e3a5f;}
+.btn-reset{background:#6b7280;}
+.btn-reset:hover{background:#4b5563;}
+.btn-save{background:var(--green);}
+.btn-save:hover{background:#15803d;}
+.btn-load{background:var(--blue);}
+.btn-load:hover{background:#1d4ed8;}
+.btn-print{background:var(--purple);}
+.btn-print:hover{background:#6d28d9;}
 
-</style>
+/* 저장 토스트 */
+.toast{position:fixed;bottom:28px;right:28px;background:#1e293b;color:#fff;padding:12px 20px;border-radius:10px;font-size:13px;font-weight:600;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none;}
+.toast.show{opacity:1;}
 
-<style id="print-css">
-@media print {
-  #__cr_bar__, #__pw_overlay__, #__lock_style__, .badge,
-  .inp-panel, .btn { display:none !important; }
-  .card { box-shadow:none; border:1px solid #e2e8f0; break-inside:avoid; }
-  body { background:#fff; }
-  @page { size:A4 landscape; margin:12mm; }
+/* 인쇄 */
+@media print{
+  .hdr{background:#14213d !important;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .inp-section,.btn-group,.toast{display:none !important;}
+  .wrap{padding:0;}
+  .chart-grid{grid-template-columns:1fr 1fr;}
+  .kpi-row{grid-template-columns:repeat(3,1fr);}
+  body{background:#fff;}
+  .card{box-shadow:none;border:1px solid #e2e8f0;}
+  @page{size:A4 landscape;margin:12mm;}
 }
+@media(max-width:700px){.hdr{padding:14px 16px;}.wrap{padding:10px;}.chart-grid{grid-template-columns:1fr;}.kpi-row{grid-template-columns:1fr 1fr;}}
 </style>
 </head>
 <body>
@@ -143,542 +116,561 @@ table.dt tbody tr:hover{background:#f8fafc;}
 <style id="__lock_style__">
 #__pw_overlay__ {
   position:fixed; inset:0; z-index:99999;
-  background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 100%);
+  background:#f2f2f7;
   display:flex; align-items:center; justify-content:center;
 }
 #__pw_box__ {
-  background:#1e293b; border:1px solid rgba(255,255,255,.15);
-  border-radius:16px; padding:40px 48px; text-align:center;
-  box-shadow:0 24px 64px rgba(0,0,0,.5); min-width:320px;
+  background:#f2f2f7;
+  text-align:center;
+  width:100%; max-width:400px;
+  padding:60px 24px 40px;
 }
-#__pw_box__ .pw-icon { font-size:40px; margin-bottom:14px; }
-#__pw_box__ h2 { color:#fff; font-size:18px; font-weight:700; margin-bottom:4px; font-family:'Malgun Gothic',sans-serif; }
-#__pw_box__ .pw-sub { color:rgba(255,255,255,.45); font-size:12px; margin-bottom:24px; font-family:'Malgun Gothic',sans-serif; }
-#__pw_box__ input {
-  width:100%; padding:12px 16px; border-radius:8px;
-  border:1.5px solid rgba(255,255,255,.2); background:rgba(255,255,255,.08);
-  color:#fff; font-size:18px; font-weight:700; text-align:center;
-  outline:none; font-family:'Malgun Gothic',sans-serif; margin-bottom:14px;
-  letter-spacing:3px;
+#__pw_box__ h2 { color:#000; font-size:20px; font-weight:700; margin-bottom:8px; font-family:'Malgun Gothic',sans-serif; }
+#__pw_box__ .pw-sub { color:#8e8e93; font-size:14px; margin-bottom:32px; font-family:'Malgun Gothic',sans-serif; }
+.pin-dots { display:flex; justify-content:center; gap:16px; margin-bottom:40px; }
+.pin-dot { width:14px; height:14px; border-radius:50%; border:1.5px solid #c7c7cc; background:transparent; transition:background .15s; }
+.pin-dot.filled { background:#000; border-color:#000; }
+.pin-pad { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; max-width:280px; margin:0 auto; }
+.pin-btn {
+  background:#fff; border:none; border-radius:16px;
+  padding:20px 0; font-size:28px; font-weight:400;
+  cursor:pointer; font-family:'Malgun Gothic',sans-serif;
+  box-shadow:0 2px 8px rgba(0,0,0,.1); transition:background .1s;
 }
-#__pw_box__ input:focus { border-color:#3b82f6; }
-#__pw_box__ input::placeholder { color:rgba(255,255,255,.25); letter-spacing:0; }
-#__pw_box__ button {
-  width:100%; padding:12px; border-radius:8px; border:none;
-  background:#2563eb; color:#fff; font-size:14px; font-weight:700;
-  cursor:pointer; font-family:'Malgun Gothic',sans-serif; transition:background .2s;
-}
-#__pw_box__ button:hover { background:#1d4ed8; }
-#__pw_err__ { color:#f87171; font-size:12px; margin-top:10px; min-height:18px; font-family:'Malgun Gothic',sans-serif; }
+.pin-btn:active { background:#e5e5ea; }
+.pin-btn.del { font-size:20px; }
+.pin-btn.empty { background:transparent; box-shadow:none; cursor:default; pointer-events:none; }
+#__pw_err__ { color:#ff3b30; font-size:13px; margin-top:16px; min-height:18px; font-family:'Malgun Gothic',sans-serif; }
 #__pw_box__ .pw-copy { color:rgba(255,255,255,.25); font-size:10px; margin-top:20px; font-family:'Malgun Gothic',sans-serif; }
 </style>
 
 <div id="__pw_overlay__">
   <div id="__pw_box__">
-    <div class="pw-icon">🔐</div>
-    <h2>비밀번호를 입력하세요</h2>
-    <div class="pw-sub">접근 제한 문서입니다</div>
-    <input type="password" id="__pw_input__" placeholder="비밀번호"
-      onkeydown="if(event.key==='Enter')__checkPw__()">
-    <button onclick="__checkPw__()">확인</button>
+    <h2>은퇴생활비 계산기</h2>
+    <div class="pw-sub">PIN 4자리를 입력하세요</div>
+    <div class="pin-dots">
+      <div class="pin-dot" id="d0"></div>
+      <div class="pin-dot" id="d1"></div>
+      <div class="pin-dot" id="d2"></div>
+      <div class="pin-dot" id="d3"></div>
+    </div>
+    <div class="pin-pad">
+      <button class="pin-btn" onclick="pinInput('1')">1</button>
+      <button class="pin-btn" onclick="pinInput('2')">2</button>
+      <button class="pin-btn" onclick="pinInput('3')">3</button>
+      <button class="pin-btn" onclick="pinInput('4')">4</button>
+      <button class="pin-btn" onclick="pinInput('5')">5</button>
+      <button class="pin-btn" onclick="pinInput('6')">6</button>
+      <button class="pin-btn" onclick="pinInput('7')">7</button>
+      <button class="pin-btn" onclick="pinInput('8')">8</button>
+      <button class="pin-btn" onclick="pinInput('9')">9</button>
+      <div class="pin-btn empty"></div>
+      <button class="pin-btn" onclick="pinInput('0')">0</button>
+      <button class="pin-btn del" onclick="pinDel()">⌫</button>
+    </div>
     <div id="__pw_err__"></div>
-    <div class="pw-copy">ⓒ 장정민 · All rights reserved</div>
   </div>
+</div>
 </div>
 <script>
 (function(){
-  var _h = '1e7b9f0395515fb9cd285bc0942b28ea1bd7bf890fecc1dae7882dd91119ff58';
-
-  function unlock() {
-    var ov = document.getElementById('__pw_overlay__');
-    if (ov) ov.style.display = 'none';
-    var s = document.getElementById('__lock_style__');
-    if (s) s.remove();
-  }
-
-  window.__checkPw__ = async function() {
-    var v = document.getElementById('__pw_input__').value;
-    var enc  = new TextEncoder();
-    var buf  = await crypto.subtle.digest('SHA-256', enc.encode(v));
-    var hex  = Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
-    if (hex === _h) {
-      unlock();
-    } else {
-      document.getElementById('__pw_err__').textContent = '비밀번호가 올바르지 않습니다';
-      document.getElementById('__pw_input__').value = '';
-      document.getElementById('__pw_input__').focus();
+  var _h = '5631e5efadc1db19f6b2453cc6a2d6b76a81682d8c8594680343794a2558a91e';
+  var _pin = '';
+  window.pinInput = async function(n) {
+    if (_pin.length >= 4) return;
+    _pin += n;
+    document.getElementById('d'+(_pin.length-1)).classList.add('filled');
+    if (_pin.length === 4) {
+      var enc = new TextEncoder();
+      var buf = await crypto.subtle.digest('SHA-256', enc.encode(_pin));
+      var hex = Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+      if (hex === _h) {
+        document.getElementById('__pw_overlay__').style.display = 'none';
+        var s = document.getElementById('__lock_style__');
+        if (s) s.remove();
+      } else {
+        document.getElementById('__pw_err__').textContent = '핀 번호가 올바르지 않습니다';
+        setTimeout(function(){ _pin=''; for(var i=0;i<4;i++) document.getElementById('d'+i).classList.remove('filled'); document.getElementById('__pw_err__').textContent=''; }, 700);
+      }
     }
   };
-
-  document.addEventListener('DOMContentLoaded', function() {
-    // 배당투자 로드맵에서 연동된 경우 비번 없이 자동 해제
-    var params = new URLSearchParams(window.location.search);
-    if (params.get('from') === 'roadmap') {
-      unlock();
-      return;
-    }
-    var inp = document.getElementById('__pw_input__');
-    if (inp) inp.focus();
-  });
+  window.pinDel = function() {
+    if (_pin.length === 0) return;
+    document.getElementById('d'+(_pin.length-1)).classList.remove('filled');
+    _pin = _pin.slice(0, -1);
+  };
+  window.__checkPw__ = function(){};
 })();
 </script>
 
 
 <div class="hdr">
   <div>
-    <h1>💸 은퇴 인출 시뮬레이터</h1>
-    <p>쌓인 자산에서 꺼내 쓰면서 얼마나 오래 버티나 · 재투자 수익 포함</p>
+    <h1>🏖️ 은퇴생활비 계산기</h1>
+    <p>노란색 항목을 직접 입력하면 자동으로 재계산됩니다</p>
   </div>
-  <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-    <div class="badge">인출률 · 수익률 · 물가를 바꿔가며 시뮬레이션</div>
-    <div class="print-wrap">
-      <button class="print-btn" onclick="togglePrint(this)">🖨️ 출력 ▾</button>
-      <div class="print-drop" id="printDrop">
-        <button onclick="doPrint('all')">📄 전체 인쇄</button>
-        <button onclick="doPrint('chart')">📈 차트만 인쇄</button>
-        <button onclick="doPrint('table')">📋 표만 인쇄</button>
-      </div>
-    </div>
-  </div>
+  <div class="badge">인플레이션 · 수익률 · 연금 반영</div>
 </div>
 
 <div class="wrap">
 
-  <!-- 입력 패널 -->
-  <div class="card inp-panel">
-    <h2>⚙️ 은퇴 인출 조건 입력</h2>
-    <div class="inp-grid">
-      <div class="inp-item">
-        <label>은퇴 시작 총자산</label>
-        <input type="number" id="i-assets" value="10000" min="100" step="1000">
-        <div class="unit">만원</div>
+  <!-- ══ 입력 패널 ══ -->
+  <div class="card inp-section">
+    <h2>⚙️ 입력 항목 <span class="note">🟡 노란색 = 직접 수정 가능</span></h2>
+    <div class="inp-row">
+
+      <!-- 기본 정보 -->
+      <div class="inp-group">
+        <h3>👤 기본 정보</h3>
+        <div class="inp-item">
+          <label>현재 나이</label>
+          <input type="number" id="i-now" value="45" min="20" max="80">
+          <div class="unit">세</div>
+        </div>
+        <div class="inp-item">
+          <label>은퇴 나이</label>
+          <input type="number" id="i-retire" value="55" min="40" max="80">
+          <div class="unit">세</div>
+        </div>
+        <div class="inp-item">
+          <label>시뮬레이션 종료 나이</label>
+          <input type="number" id="i-end" value="100" min="70" max="120">
+          <div class="unit">세</div>
+        </div>
       </div>
-      <div class="inp-item">
-        <label>연간 인출률 (기준)</label>
-        <input type="number" id="i-withdraw" value="4" min="1" max="20" step="0.5">
-        <div class="unit">% (연 기준, 물가에 따라 증가)</div>
+
+      <!-- 생활비 -->
+      <div class="inp-group">
+        <h3>🛒 생활비</h3>
+        <div class="inp-item">
+          <label>월 생활비</label>
+          <input type="number" id="i-living" value="500" step="10">
+          <div class="unit">만원/월</div>
+        </div>
+        <div class="inp-item">
+          <label>인플레이션</label>
+          <input type="number" id="i-inflation" value="2.1" step="0.1" min="0" max="10">
+          <div class="unit">% 연평균</div>
+        </div>
+        <div class="inp-item">
+          <label>자녀교육비 (월)</label>
+          <input type="number" id="i-edu" value="83" step="10">
+          <div class="unit">만원/월 (적용 종료나이까지)</div>
+        </div>
+        <div class="inp-item">
+          <label>교육비 종료 나이</label>
+          <input type="number" id="i-edu-end" value="49" min="40" max="70">
+          <div class="unit">세 이하까지 적용</div>
+        </div>
       </div>
-      <div class="inp-item">
-        <label>은퇴 후 수익률</label>
-        <input type="number" id="i-return" value="6" min="0" max="15" step="0.5">
-        <div class="unit">% (남은 자산 재투자 수익)</div>
+
+      <!-- 금융자산 -->
+      <div class="inp-group">
+        <h3>💰 금융자산 (현재)</h3>
+        <div class="inp-item">
+          <label>IRP</label>
+          <input type="number" id="i-irp" value="30000" step="1000">
+          <div class="unit">만원</div>
+        </div>
+        <div class="inp-item">
+          <label>DC (퇴직연금)</label>
+          <input type="number" id="i-dc" value="5000" step="1000">
+          <div class="unit">만원</div>
+        </div>
+        <div class="inp-item">
+          <label>연금저축</label>
+          <input type="number" id="i-pension" value="5000" step="1000">
+          <div class="unit">만원</div>
+        </div>
+        <div class="inp-item">
+          <label>ISA</label>
+          <input type="number" id="i-isa" value="4000" step="1000">
+          <div class="unit">만원</div>
+        </div>
       </div>
-      <div class="inp-item">
-        <label>물가 상승률</label>
-        <input type="number" id="i-inflation" value="3" min="0" max="10" step="0.5">
-        <div class="unit">% (인출액 매년 증가)</div>
+
+      <!-- 금융자산2 -->
+      <div class="inp-group">
+        <h3>📈 금융자산 (현재) 2</h3>
+        <div class="inp-item">
+          <label>국내주식</label>
+          <input type="number" id="i-stock-kr" value="1000" step="500">
+          <div class="unit">만원</div>
+        </div>
+        <div class="inp-item">
+          <label>해외주식</label>
+          <input type="number" id="i-stock-us" value="1000" step="500">
+          <div class="unit">만원</div>
+        </div>
+        <div class="inp-item">
+          <label>예금</label>
+          <input type="number" id="i-deposit" value="1000" step="500">
+          <div class="unit">만원</div>
+        </div>
+        <div class="inp-item">
+          <label>저축성보험</label>
+          <input type="number" id="i-insurance" value="1000" step="500">
+          <div class="unit">만원</div>
+        </div>
       </div>
-      <div class="inp-item">
-        <label>시뮬레이션 기간</label>
-        <input type="number" id="i-period" value="40" min="10" max="60" step="5">
-        <div class="unit">년 (은퇴 후 생존 기간)</div>
+
+      <!-- 수익률·수입 -->
+      <div class="inp-group">
+        <h3>📊 수익률 · 수입</h3>
+        <div class="inp-item">
+          <label>연 수익률</label>
+          <input type="number" id="i-return" value="8" step="0.5" min="0" max="20">
+          <div class="unit">% (금융자산 운용)</div>
+        </div>
+        <div class="inp-item">
+          <label>수입 (연, 은퇴 전)</label>
+          <input type="number" id="i-income" value="3000" step="100">
+          <div class="unit">만원/년 (은퇴 전까지)</div>
+        </div>
+        <div class="inp-item">
+          <label>부동산 자산</label>
+          <input type="number" id="i-estate" value="10000" step="1000">
+          <div class="unit">만원 (참고용, 시뮬에 미포함)</div>
+        </div>
       </div>
-      <div class="inp-item">
-        <label>세율 (배당/이자)</label>
-        <input type="number" id="i-tax" value="15.4" min="0" max="45" step="0.1">
-        <div class="unit">% (수익에서 차감)</div>
+
+      <!-- 연금 -->
+      <div class="inp-group">
+        <h3>🏛️ 연금 · 기타소득</h3>
+        <div class="inp-item">
+          <label>주택연금 (월)</label>
+          <input type="number" id="i-house" value="100" step="10">
+          <div class="unit">만원/월</div>
+        </div>
+        <div class="inp-item">
+          <label>주택연금 시작 나이</label>
+          <input type="number" id="i-house-age" value="55" min="40" max="80">
+          <div class="unit">세부터</div>
+        </div>
+        <div class="inp-item">
+          <label>국민연금 / 공무원연금 (월)</label>
+          <input type="number" id="i-natpension" value="100" step="10">
+          <div class="unit">만원/월</div>
+        </div>
+        <div class="inp-item">
+          <label>국민연금 / 공무원연금 시작 나이</label>
+          <input type="number" id="i-natpension-age" value="65" min="55" max="75">
+          <div class="unit">세부터</div>
+        </div>
+        <div class="inp-item">
+          <label>기타 월소득</label>
+          <input type="number" id="i-other" value="0" step="10">
+          <div class="unit">만원/월 (부업, 임대 등)</div>
+        </div>
+        <div class="inp-item">
+          <label>기타소득 시작 나이</label>
+          <input type="number" id="i-other-start" value="55" min="20" max="100">
+          <div class="unit">세부터</div>
+        </div>
+        <div class="inp-item">
+          <label>기타소득 종료 나이</label>
+          <input type="number" id="i-other-end" value="70" min="20" max="120">
+          <div class="unit">세까지</div>
+        </div>
       </div>
-      <div class="inp-item">
-        <label>적립 기간</label>
-        <input type="number" id="i-accum" value="30" min="1" max="50" step="1">
-        <div class="unit">년 (오늘 가치 환산용)</div>
-      </div>
+
     </div>
-    <button class="btn" onclick="recalc()">🔄 다시 계산하기</button>
+    <div class="btn-group">
+      <button class="btn btn-calc" onclick="recalc()">🔄 다시 계산하기</button>
+      <button class="btn btn-reset" onclick="resetDefaults()">↩️ 초기화</button>
+      <button class="btn btn-save" onclick="saveSettings()">💾 저장</button>
+      <button class="btn btn-load" onclick="loadSettings()">📂 불러오기</button>
+      <button class="btn btn-print" onclick="window.print()">🖨️ 인쇄 / PDF</button>
+    </div>
   </div>
 
-  <!-- ★ 월 수령액 비교 패널 (최상단) -->
-  <div class="card monthly-panel">
-    <h2>💰 인출률별 첫 해 월 수령액 한눈에 보기</h2>
-    <div class="sub-desc" id="monthly-desc"></div>
-    <div class="monthly-grid" id="monthly-grid"></div>
-  </div>
-
-  <!-- KPI -->
+  <!-- ══ KPI ══ -->
+  <div id="alert-box"></div>
   <div class="kpi-row" id="kpi-row"></div>
 
-  <!-- 안전 인출률 분석 -->
-  <div class="finder" id="finder"></div>
-
-  <!-- 차트 -->
+  <!-- ══ 차트 ══ -->
   <div class="chart-grid">
     <div class="card chart-card">
-      <div class="stitle">📉 인출률별 자산 잔액 변화 <span>(재투자 수익 포함)</span></div>
-      <canvas id="c-main"></canvas>
+      <div class="stitle">📉 나이별 금융자산 잔고 변화 <span>(고갈 시점 표시)</span></div>
+      <canvas id="c-balance"></canvas>
     </div>
     <div class="card chart-card">
-      <div class="stitle">💰 연도별 월 수령액 변화 <span>(물가 반영 증가)</span></div>
-      <canvas id="c-monthly"></canvas>
+      <div class="stitle">💸 나이별 지출 vs 수입 구성 <span>(만원/년)</span></div>
+      <canvas id="c-flow"></canvas>
+    </div>
+  </div>
+  <div class="chart-grid">
+    <div class="card chart-card">
+      <div class="stitle">📊 수입 구성 변화 <span>(금융자산 인출 · 연금 · 수입)</span></div>
+      <canvas id="c-income"></canvas>
+    </div>
+    <div class="card chart-card">
+      <div class="stitle">📈 월 생활비 증가 추이 <span>(인플레이션 반영)</span></div>
+      <canvas id="c-living"></canvas>
     </div>
   </div>
 
-  <!-- 연도별 상세 테이블 -->
-  <div class="card tbl-card">
-    <div class="stitle">📋 연도별 상세 내역
-      <span style="margin-left:auto;font-size:11px;color:var(--text2)">인출률 선택 →</span>
-      <div class="scenario-btns" id="tbl-btns" style="margin-bottom:0;margin-left:8px;"></div>
-    </div>
+  <!-- ══ 상세 테이블 ══ -->
+  <div class="card tbl-wrap">
+    <div class="stitle">📋 연도별 상세 내역 <span>🟡은퇴 · 🏠주택연금 · 🟢국민/공무원연금 · 💼기타소득시작 · 🔚기타소득종료 · 🔴자산고갈</span></div>
     <div id="tbl-detail"></div>
   </div>
 
 </div>
-
-<div class="footer"><span style="font-weight:700;color:var(--text2)">ⓒ 장정민</span><span>본 시뮬레이터는 참고용이며 실제 투자 결과와 다를 수 있습니다 · 세금·수수료 등 변수 있음</span></div>
+<div class="footer"><span style="font-weight:700;color:var(--text2)">ⓒ 장정민</span><span>본 계산기는 참고용입니다 · 실제 수익률·세금·건강보험료 등 변수에 따라 결과가 다를 수 있습니다</span></div>
+<div class="toast" id="toast"></div>
 
 <script>
-const WITHDRAW_RATES = [0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.10];
-const COLORS = ['#16a34a','#2563eb','#d97706','#dc2626','#7c3aed','#0891b2','#64748b'];
-let cMain, cMonthly;
-let selectedRate = 0.04;
-
-function fmt(v) {
-  if (Math.abs(v) >= 10000) return (v/10000).toFixed(2).replace(/\.?0+$/,'')+'억';
-  if (Math.abs(v) >= 1000)  return (v/1000).toFixed(1).replace(/\.?0+$/,'')+'천만';
-  return v.toFixed(0)+'만';
+let charts={};
+function mkChart(id,type,data,opts){
+  if(charts[id]) charts[id].destroy();
+  charts[id]=new Chart(document.getElementById(id).getContext('2d'),{type,data,options:{responsive:true,maintainAspectRatio:false,...opts}});
 }
-function fmtM(v) { return v.toFixed(0)+'만원'; }
-
-function getParams() {
-  return {
-    assets:    +document.getElementById('i-assets').value    || 10000,
-    withdraw:  +document.getElementById('i-withdraw').value  / 100 || 0.04,
-    ret:       +document.getElementById('i-return').value    / 100 || 0.06,
-    inflation: +document.getElementById('i-inflation').value / 100 || 0.03,
-    period:    +document.getElementById('i-period').value    || 40,
-    tax:       +document.getElementById('i-tax').value       / 100 || 0.154,
-    accum:     +document.getElementById('i-accum').value     || 30,
-  };
+function fmt(v){
+  if(Math.abs(v)>=10000) return (v/10000).toFixed(1).replace(/\.?0+$/,'')+'억';
+  if(Math.abs(v)>=1000)  return (v/1000).toFixed(1).replace(/\.?0+$/,'')+'천만';
+  return Math.round(v)+'만';
 }
+function n(id){ return parseFloat(document.getElementById(id).value)||0; }
 
-function renderMonthlyPanel(p) {
-  const { assets, withdraw, inflation, accum, period } = p;
+function recalc(){
+  const nowAge      = n('i-now');
+  const retireAge   = n('i-retire');
+  const endAge      = n('i-end');
+  const living      = n('i-living');       // 만원/월
+  const inflation   = n('i-inflation')/100;
+  const edu         = n('i-edu');          // 만원/월
+  const eduEnd      = n('i-edu-end');
+  const retRate     = n('i-return')/100;
+  const income      = n('i-income');       // 만원/년 (은퇴 전)
+  const houseM      = n('i-house');        // 만원/월
+  const houseAge    = n('i-house-age');    // 주택연금 시작 나이
+  const natM        = n('i-natpension');   // 만원/월
+  const natAge      = n('i-natpension-age');
+  const otherM      = n('i-other');
+  const otherStart  = n('i-other-start');
+  const otherEnd    = n('i-other-end');
 
-  document.getElementById('monthly-desc').textContent =
-    `총자산 ${fmt(assets)} 기준 · 물가 ${(inflation*100).toFixed(1)}%로 매년 인출액 증가 · 괄호 안은 오늘(${accum}년 전) 기준 실질 구매력`;
+  // 총 금융자산
+  const totalAsset = n('i-irp')+n('i-dc')+n('i-pension')+n('i-isa')+n('i-stock-kr')+n('i-stock-us')+n('i-deposit')+n('i-insurance');
 
-  const deflator = Math.pow(1 + inflation, accum); // 적립 기간 동안 물가 누적
-
-  let html = '';
-  for (const wr of WITHDRAW_RATES) {
-    const annualWithdraw = assets * wr;
-    const monthly = annualWithdraw / 12;
-    const todayValue = monthly / deflator; // 오늘 기준 실질 가치
-
-    // 자산 생존 여부
-    const rows = simulate(assets, wr, p.ret, inflation, p.tax, period);
-    const dep = rows.find(r => r.depleted);
-    const final30 = simulate(assets, wr, p.ret, inflation, p.tax, 30);
-    const dep30 = final30.find(r => r.depleted);
-
-    let badgeClass, badgeText;
-    if (!dep30) {
-      badgeClass = 'badge-safe'; badgeText = '30년 안전 ✓';
-    } else if (!dep) {
-      badgeClass = 'badge-warn'; badgeText = `${dep30.year}년에 고갈`;
-    } else {
-      badgeClass = 'badge-danger'; badgeText = `${dep.year}년에 고갈 ⚠`;
-    }
-
-    const isRef = Math.abs(wr - withdraw) < 0.001;
-    const amtColor = !dep30 ? 'var(--green)' : dep?.year < 20 ? 'var(--red)' : 'var(--amber)';
-
-    html += `<div class="monthly-card ${isRef ? 'highlight' : ''}">
-      <div class="wr-label" style="color:${amtColor}">인출률 ${(wr*100).toFixed(0)}%${isRef ? ' ★기준' : ''}</div>
-      <div class="amount" style="color:${amtColor}">${monthly.toFixed(0)}만원</div>
-      <div style="font-size:11px;color:var(--text2)">월 수령 (은퇴 첫 해)</div>
-      <div class="today-val">
-        오늘 기준 실질 가치<br>
-        <span style="color:var(--purple);font-size:15px">${todayValue.toFixed(0)}만원</span>
-        <span style="font-size:10px;color:var(--text2)">/월</span>
-      </div>
-      <div><span class="status-badge ${badgeClass}">${badgeText}</span></div>
-    </div>`;
-  }
-  document.getElementById('monthly-grid').innerHTML = html;
-}
-
-/**
- * 한 시나리오 시뮬레이션
- * returns array of {year, startAssets, withdrawal, monthlyWithdrawal, gain, endAssets, depleted}
- */
-function simulate(assets, withdrawRate, ret, inflation, tax, period) {
   const rows = [];
-  let cur = assets;
-  const annualWithdrawBase = assets * withdrawRate;
+  let balance = totalAsset;
+  let depletedAge = null;
 
-  for (let y = 1; y <= period; y++) {
-    if (cur <= 0) {
-      rows.push({ year:y, startAssets:0, withdrawal:0, monthlyWithdrawal:0, gain:0, endAssets:0, depleted:true });
-      continue;
-    }
-    const withdrawal = annualWithdrawBase * Math.pow(1 + inflation, y - 1); // 물가 반영 인출액
-    const gain = cur * ret * (1 - tax);                                     // 세후 수익
-    const end = cur + gain - withdrawal;
+  for(let age=nowAge; age<=endAge; age++){
+    const yr = age - nowAge; // 경과 연수
+
+    // 연간 지출
+    const livingAnn = living * 12 * Math.pow(1+inflation, yr);
+    const eduAnn    = age <= eduEnd ? edu*12 : 0;
+    const totalExp  = livingAnn + eduAnn;
+
+    // 연간 수입
+    const incomeAnn  = age < retireAge ? income : 0;
+    const houseAnn   = age >= houseAge ? houseM*12 : 0;
+    const natAnn     = age >= natAge    ? natM*12*(Math.pow(1+inflation, age-natAge)) : 0; // 국민연금도 물가연동
+    const otherAnn   = (age >= otherStart && age <= otherEnd) ? otherM*12 : 0;
+    const totalInc   = incomeAnn + houseAnn + natAnn + otherAnn;
+
+    // 금융자산 인출 필요액
+    const needed = Math.max(0, totalExp - totalInc);
+
+    // 잔고 계산: 전년 잔고 × (1+수익률) - 인출
+    const balBefore = balance * (1 + retRate);
+    const withdrawal = Math.min(needed, Math.max(0, balBefore)); // 잔고 이상 인출 불가
+    balance = balBefore - withdrawal;
+
+    if(balance <= 0 && depletedAge === null) depletedAge = age;
+
     rows.push({
-      year: y,
-      startAssets: cur,
-      withdrawal: withdrawal,
-      monthlyWithdrawal: withdrawal / 12,
-      gain: gain,
-      endAssets: Math.max(0, end),
-      depleted: end <= 0,
+      age, livingAnn, eduAnn, totalExp,
+      houseAnn, natAnn, incomeAnn, otherAnn, totalInc,
+      withdrawal, balance,
+      livingM: livingAnn/12,
     });
-    cur = Math.max(0, end);
   }
-  return rows;
-}
 
-function recalc() {
-  const p = getParams();
-  renderMonthlyPanel(p);
-  const { assets, withdraw, ret, inflation, tax, period } = p;
+  // ── KPI ──────────────────────────────
+  const yearsToRetire = retireAge - nowAge;
+  const retireRow     = rows.find(r=>r.age===retireAge);
+  const retireLiving  = retireRow ? retireRow.livingM : 0;
 
-  // 기준 시나리오
-  const baseRows = simulate(assets, withdraw, ret, inflation, tax, period);
-  const firstMonthly = baseRows[0].monthlyWithdrawal;
-  const lastAssets   = baseRows[baseRows.length - 1].endAssets;
-  const depletedYear = baseRows.find(r => r.depleted)?.year;
-  const depletedAt30 = simulate(assets, withdraw, ret, inflation, tax, 30).find(r => r.depleted);
-
-  // KPI
   document.getElementById('kpi-row').innerHTML = `
-    <div class="card kpi blue">
-      <div class="lbl">첫 해 월 수령액</div>
-      <div class="val">${fmtM(firstMonthly)}</div>
-      <div class="sub">인출률 ${(withdraw*100).toFixed(1)}% 기준 · 세전</div>
-    </div>
-    <div class="card kpi ${lastAssets > assets ? 'green' : lastAssets > 0 ? 'amber' : 'red'}">
-      <div class="lbl">${period}년 후 잔여 자산</div>
-      <div class="val">${lastAssets > 0 ? fmt(lastAssets) : '고갈'}</div>
-      <div class="sub">${lastAssets > assets ? '▲ 자산 증가 (안전)' : lastAssets > 0 ? '▼ 자산 감소 중' : `${depletedYear}년 차에 고갈`}</div>
-    </div>
-    <div class="card kpi ${!depletedAt30 ? 'green' : 'red'}">
-      <div class="lbl">30년 생존 여부</div>
-      <div class="val">${!depletedAt30 ? '✓ 안전' : '✗ 고갈'}</div>
-      <div class="sub">${!depletedAt30 ? '30년 후 자산 남음 (4% 룰 통과)' : `${depletedAt30.year}년 차에 고갈 예상`}</div>
-    </div>
-    <div class="card kpi amber">
-      <div class="lbl">${period}년 후 월 수령액</div>
-      <div class="val">${fmtM(baseRows[baseRows.length-1].monthlyWithdrawal)}</div>
-      <div class="sub">물가 ${(inflation*100).toFixed(1)}% 반영 누적 증가</div>
-    </div>
+    <div class="card kpi yellow"><div class="lbl">총 금융자산</div><div class="val">${fmt(totalAsset)}</div><div class="sub">현재 보유 합산</div></div>
+    <div class="card kpi blue"><div class="lbl">은퇴까지 남은 기간</div><div class="val">${yearsToRetire}년</div><div class="sub">${nowAge}세 → ${retireAge}세</div></div>
+    <div class="card kpi amber"><div class="lbl">은퇴 시 월 생활비</div><div class="val">${Math.round(retireLiving)}만원</div><div class="sub">물가 반영 (인플레 ${(inflation*100).toFixed(1)}%)</div></div>
+    <div class="card kpi ${depletedAge?'red':'green'}"><div class="lbl">자산 고갈 나이</div><div class="val">${depletedAge?depletedAge+'세':'고갈없음'}</div><div class="sub">${depletedAge?`${depletedAge-nowAge}년 후 고갈`:'시뮬레이션 기간 내 안전'}</div></div>
+    <div class="card kpi purple"><div class="lbl">연금 월 수령 합계</div><div class="val">${Math.round((natM+houseM+otherM))}만원</div><div class="sub">주택연금(${houseAge}세~)+국민/공무원연금(${natAge}세~)</div></div>
+    <div class="card kpi green"><div class="lbl">부동산 자산 (참고)</div><div class="val">${fmt(n('i-estate'))}</div><div class="sub">시뮬레이션 미포함</div></div>
   `;
 
-  // 안전 인출률 파인더
-  let finderHTML = `<h3>🎯 인출률별 자산 생존 분석 <small style="font-weight:400;color:#64748b">(초기자산 ${fmt(assets)} · 수익률 ${(ret*100).toFixed(1)}% · 물가 ${(inflation*100).toFixed(1)}%)</small></h3><div class="finder-grid">`;
-  for (const wr of WITHDRAW_RATES) {
-    const rows = simulate(assets, wr, ret, inflation, tax, period);
-    const dep = rows.find(r => r.depleted);
-    const final = rows[rows.length - 1].endAssets;
-    const ratio = final / assets;
-    let cls, status;
-    if (!dep) {
-      cls = ratio >= 1 ? 'safe' : 'warn';
-      status = ratio >= 1 ? `${period}년 후 ${fmt(final)} (자산 증가)` : `${period}년 후 ${fmt(final)} 남음`;
-    } else {
-      cls = 'danger';
-      status = `${dep.year}년 차 고갈 ⚠️`;
-    }
-    finderHTML += `<div class="finder-item">
-      <div class="rate">인출률 ${(wr*100).toFixed(0)}%</div>
-      <div class="val ${cls}">${!dep ? fmt(final) : dep.year+'년에 고갈'}</div>
-      <div class="note">${status}</div>
-    </div>`;
-  }
-  finderHTML += '</div>';
-  document.getElementById('finder').innerHTML = finderHTML;
+  // ── 경고 ──────────────────────────────
+  document.getElementById('alert-box').innerHTML = depletedAge
+    ? `<div class="alert danger">⚠️ <strong>${depletedAge}세</strong>에 금융자산이 고갈될 것으로 예상됩니다 (현재 나이 기준 <strong>${depletedAge-nowAge}년 후</strong>). 월 생활비 조정 또는 추가 수입원 마련이 필요합니다.</div>`
+    : `<div class="alert ok">✅ ${endAge}세까지 금융자산이 유지됩니다. 현재 계획이 안정적입니다.</div>`;
 
-  // 메인 차트 — 인출률별 자산 잔액
-  const years = Array.from({length: period}, (_, i) => `${i+1}년`);
-  const datasets = WITHDRAW_RATES.map((wr, i) => {
-    const rows = simulate(assets, wr, ret, inflation, tax, period);
-    return {
-      label: `인출률 ${(wr*100).toFixed(0)}%`,
-      data: rows.map(r => r.endAssets),
-      borderColor: COLORS[i],
-      backgroundColor: COLORS[i]+'22',
-      borderWidth: wr === withdraw ? 3 : 1.5,
-      pointRadius: 0,
-      tension: 0.3,
-      fill: false,
-      borderDash: wr === withdraw ? [] : [4,3],
-    };
+  // ── 라인 차트: 잔고 변화 ──────────────
+  const labels = rows.map(r=>r.age+'세');
+  const balData = rows.map(r=>Math.max(r.balance,0));
+  const zeroLine= rows.map(()=>0);
+  mkChart('c-balance','line',{
+    labels,
+    datasets:[
+      {label:'금융자산 잔고',data:balData,borderColor:'#2563eb',backgroundColor:'#2563eb22',borderWidth:2.5,pointRadius:0,tension:0.3,fill:true},
+      {label:'잔고 0',data:zeroLine,borderColor:'#dc2626',borderWidth:1.5,borderDash:[5,4],pointRadius:0,fill:false},
+    ]
+  },{
+    interaction:{mode:'index',intersect:false},
+    plugins:{legend:{position:'top',labels:{font:{size:10}}},tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${fmt(c.parsed.y)}`}}},
+    scales:{x:{grid:{display:false},ticks:{maxTicksLimit:15,font:{size:10}}},y:{beginAtZero:true,ticks:{callback:v=>fmt(v)}}}
   });
 
-  if (cMain) cMain.destroy();
-  cMain = new Chart(document.getElementById('c-main').getContext('2d'), {
-    type: 'line',
-    data: { labels: years, datasets },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      interaction: { mode: 'index', intersect: false },
-      plugins: {
-        legend: { position: 'top', labels: { usePointStyle: true, padding: 10, font: { size: 10 } } },
-        tooltip: { callbacks: { label: c => `${c.dataset.label}: ${c.parsed.y > 0 ? fmt(c.parsed.y) : '고갈'}` } },
-      },
-      scales: {
-        x: { grid: { display: false }, ticks: { maxTicksLimit: 10 } },
-        y: { beginAtZero: true, ticks: { callback: v => fmt(v) } },
-      }
-    }
+  // ── 바 차트: 지출 vs 수입 ─────────────
+  const expData = rows.map(r=>r.totalExp/12); // 월 기준
+  const incData = rows.map(r=>r.totalInc/12);
+  mkChart('c-flow','line',{
+    labels,
+    datasets:[
+      {label:'월 지출합계',data:expData,borderColor:'#dc2626',backgroundColor:'#dc262622',borderWidth:2,pointRadius:0,tension:0.3,fill:true},
+      {label:'월 수입합계 (연금+소득)',data:incData,borderColor:'#16a34a',backgroundColor:'#16a34a22',borderWidth:2,pointRadius:0,tension:0.3,fill:true},
+    ]
+  },{
+    interaction:{mode:'index',intersect:false},
+    plugins:{legend:{position:'top',labels:{font:{size:10}}},tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${Math.round(c.parsed.y)}만원/월`}}},
+    scales:{x:{grid:{display:false},ticks:{maxTicksLimit:15,font:{size:10}}},y:{beginAtZero:true,ticks:{callback:v=>Math.round(v)+'만'}}}
   });
 
-  // 월 수령액 차트 (기준 인출률, 물가 반영 증가)
-  if (cMonthly) cMonthly.destroy();
-  const monthlyData = baseRows.map(r => r.monthlyWithdrawal);
-  const assetLine   = baseRows.map(r => r.endAssets);
-  cMonthly = new Chart(document.getElementById('c-monthly').getContext('2d'), {
-    type: 'bar',
-    data: {
-      labels: years,
-      datasets: [
-        {
-          label: `월 수령액 (인출률 ${(withdraw*100).toFixed(1)}%)`,
-          data: monthlyData,
-          backgroundColor: '#2563eb88',
-          borderColor: '#2563eb',
-          borderWidth: 1,
-          borderRadius: 3,
-          yAxisID: 'y',
-        },
-        {
-          label: '잔여 자산',
-          data: assetLine,
-          type: 'line',
-          borderColor: '#16a34a',
-          backgroundColor: '#16a34a22',
-          borderWidth: 2,
-          pointRadius: 0,
-          tension: 0.3,
-          fill: false,
-          yAxisID: 'y2',
-        }
-      ]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      interaction: { mode: 'index', intersect: false },
-      plugins: {
-        legend: { position: 'top', labels: { usePointStyle: true, padding: 10, font: { size: 10 } } },
-        tooltip: {
-          callbacks: {
-            label: c => c.datasetIndex === 0
-              ? `월 수령액: ${fmtM(c.parsed.y)}`
-              : `잔여자산: ${c.parsed.y > 0 ? fmt(c.parsed.y) : '고갈'}`
-          }
-        }
-      },
-      scales: {
-        x: { grid: { display: false }, ticks: { maxTicksLimit: 10 } },
-        y:  { beginAtZero: true, position: 'left',  ticks: { callback: v => v+'만' }, title: { display: true, text: '월 수령액', font: { size: 10 } } },
-        y2: { beginAtZero: true, position: 'right', ticks: { callback: v => fmt(v) }, grid: { display: false }, title: { display: true, text: '잔여 자산', font: { size: 10 } } },
-      }
-    }
+  // ── 누적 바: 수입 구성 ────────────────
+  mkChart('c-income','bar',{
+    labels,
+    datasets:[
+      {label:'금융자산 인출',data:rows.map(r=>Math.round(r.withdrawal/12)),backgroundColor:'#2563eb88',borderColor:'#2563eb',borderWidth:0,borderRadius:0},
+      {label:'근로·사업 소득',data:rows.map(r=>Math.round(r.incomeAnn/12)),backgroundColor:'#7c3aed88',borderColor:'#7c3aed',borderWidth:0},
+      {label:'주택연금',data:rows.map(r=>Math.round(r.houseAnn/12)),backgroundColor:'#d9780688',borderColor:'#d97806',borderWidth:0},
+      {label:'국민연금',data:rows.map(r=>Math.round(r.natAnn/12)),backgroundColor:'#16a34a88',borderColor:'#16a34a',borderWidth:0},
+      {label:'기타소득',data:rows.map(r=>Math.round(r.otherAnn/12)),backgroundColor:'#0d948888',borderColor:'#0d9488',borderWidth:0},
+    ]
+  },{
+    interaction:{mode:'index',intersect:false},
+    plugins:{legend:{position:'top',labels:{font:{size:10}}},tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${c.parsed.y}만원/월`}}},
+    scales:{x:{stacked:true,grid:{display:false},ticks:{maxTicksLimit:15,font:{size:10}}},y:{stacked:true,beginAtZero:true,ticks:{callback:v=>v+'만'}}}
   });
 
-  // 테이블 버튼
-  if (!WITHDRAW_RATES.includes(selectedRate)) selectedRate = withdraw;
-  document.getElementById('tbl-btns').innerHTML = WITHDRAW_RATES.map(wr =>
-    `<button class="scen-btn ${wr===selectedRate?'active':''}"
-      onclick="selectedRate=${wr};renderTable(getParams())">${(wr*100).toFixed(0)}%</button>`
-  ).join('');
+  // ── 라인: 월 생활비 추이 ──────────────
+  mkChart('c-living','line',{
+    labels,
+    datasets:[{
+      label:'월 생활비 (물가반영)',
+      data:rows.map(r=>Math.round(r.livingM)),
+      borderColor:'#d97706',backgroundColor:'#d9780622',
+      borderWidth:2.5,pointRadius:0,tension:0.3,fill:true,
+    }]
+  },{
+    plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`월 생활비: ${c.parsed.y}만원`}}},
+    scales:{x:{grid:{display:false},ticks:{maxTicksLimit:15,font:{size:10}}},y:{beginAtZero:true,ticks:{callback:v=>v+'만'}}}
+  });
 
-  renderTable(p);
-}
-
-function renderTable(p) {
-  const { assets, ret, inflation, tax, period } = p;
-  const rows = simulate(assets, selectedRate, ret, inflation, tax, period);
-
-  let html = `<table class="dt"><thead><tr>
-    <th>연도</th>
-    <th>연초 자산</th>
-    <th>투자 수익 (세후)</th>
-    <th>연간 인출액</th>
-    <th>월 수령액</th>
-    <th>연말 잔여 자산</th>
-    <th>자산 변화</th>
+  // ── 상세 테이블 ───────────────────────
+  let html=`<table class="dt"><thead><tr>
+    <th>나이</th><th>월 생활비</th><th>교육비</th><th>지출합계</th>
+    <th>근로소득</th><th>주택연금</th><th>국민연금</th><th>기타소득</th><th>금융자산 인출</th><th>수입합계</th><th>잔고</th>
   </tr></thead><tbody>`;
-
-  for (const r of rows) {
-    const change = r.endAssets - r.startAssets;
-    const cls = r.depleted ? 'depleted' : r.endAssets >= assets ? 'safe-row' : '';
-    html += `<tr class="${cls}">
-      <td>${r.year}년 차</td>
-      <td>${r.depleted && r.startAssets===0 ? '—' : fmt(r.startAssets)}</td>
-      <td>${r.depleted && r.gain===0 ? '—' : fmt(r.gain)}</td>
-      <td>${r.depleted && r.withdrawal===0 ? '—' : fmtM(r.withdrawal)}</td>
-      <td>${r.depleted && r.monthlyWithdrawal===0 ? '—' : fmtM(r.monthlyWithdrawal)}</td>
-      <td>${r.depleted ? '<span style="color:var(--red);font-weight:700">고갈 ⚠️</span>' : fmt(r.endAssets)}</td>
-      <td style="color:${change>=0?'var(--green)':'var(--red)'}">${r.depleted?'—':(change>=0?'+':'')+fmt(change)}</td>
+  for(const r of rows){
+    let cls='';
+    if(r.balance<=0) cls='danger-row';
+    else if(r.age===natAge||r.age===houseAge) cls='pension-row';
+    else if(r.age===retireAge) cls='retire-row';
+    const fmr=v=>v>0?Math.round(v)+'만':'—';
+    html+=`<tr class="${cls}">
+      <td>${r.age}세${r.age===retireAge?' 🟡':''}${r.age===houseAge?' 🏠':''}${r.age===natAge?' 🟢':''}${r.age===otherStart&&otherM>0?' 💼':''}${r.age===otherEnd&&otherM>0?' 🔚':''}</td>
+      <td>${Math.round(r.livingM)}만</td>
+      <td>${r.eduAnn>0?Math.round(r.eduAnn/12)+'만':'—'}</td>
+      <td><strong>${Math.round(r.totalExp/12)}만/월</strong></td>
+      <td>${fmr(r.incomeAnn/12)}</td>
+      <td>${fmr(r.houseAnn/12)}</td>
+      <td>${fmr(r.natAnn/12)}</td>
+      <td>${fmr(r.otherAnn/12)}</td>
+      <td style="color:${r.withdrawal>0?'#2563eb':'var(--text2)'}">${r.withdrawal>0?Math.round(r.withdrawal/12)+'만':'—'}</td>
+      <td>${Math.round(r.totalInc/12)}만</td>
+      <td style="color:${r.balance<=0?'#dc2626':'#16a34a'};font-weight:700">${r.balance<=0?'고갈 ⚠️':fmt(r.balance)}</td>
     </tr>`;
   }
-  html += '</tbody></table>';
-  document.getElementById('tbl-detail').innerHTML = html;
-
-  // 버튼 활성화 업데이트
-  document.querySelectorAll('.scen-btn').forEach(btn => {
-    const wr = parseFloat(btn.textContent) / 100;
-    btn.classList.toggle('active', Math.abs(wr - selectedRate) < 0.001);
-  });
+  html+='</tbody></table>';
+  document.getElementById('tbl-detail').innerHTML=html;
 }
 
+// ── 기본값 ─────────────────────────────
+const DEFAULTS = {
+  'i-now':45,'i-retire':55,'i-end':100,
+  'i-living':500,'i-inflation':2.1,'i-edu':83,'i-edu-end':49,
+  'i-irp':30000,'i-dc':5000,'i-pension':5000,'i-isa':4000,
+  'i-stock-kr':1000,'i-stock-us':1000,'i-deposit':1000,'i-insurance':1000,
+  'i-return':8,'i-income':3000,'i-estate':10000,
+  'i-house':100,'i-house-age':55,
+  'i-natpension':100,'i-natpension-age':65,
+  'i-other':0,'i-other-start':55,'i-other-end':70,
+};
 
-function togglePrint(btn) {
-  const d = document.getElementById('printDrop');
-  d.classList.toggle('open');
-  document.addEventListener('click', function close(e) {
-    if (!btn.closest('.print-wrap').contains(e.target)) {
-      d.classList.remove('open');
-      document.removeEventListener('click', close);
-    }
-  });
-}
-function doPrint(mode) {
-  document.getElementById('printDrop').classList.remove('open');
-  if (mode === 'chart') {
-    document.querySelectorAll('.tbl-card').forEach(el => el.style.setProperty('display','none','important'));
-    window.print();
-    setTimeout(() => document.querySelectorAll('.tbl-card').forEach(el => el.style.removeProperty('display')), 500);
-  } else if (mode === 'table') {
-    document.querySelectorAll('.chart-grid,.chart-card').forEach(el => el.style.setProperty('display','none','important'));
-    window.print();
-    setTimeout(() => document.querySelectorAll('.chart-grid,.chart-card').forEach(el => el.style.removeProperty('display')), 500);
-  } else {
-    window.print();
-  }
+function showToast(msg, color='#1e293b'){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.style.background=color;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2500);
 }
 
-window.addEventListener('DOMContentLoaded', () => {
-  // 배당투자 로드맵에서 넘어온 경우 URL 파라미터 자동 입력
-  const params = new URLSearchParams(window.location.search);
-  if (params.get('assets')) {
-    document.getElementById('i-assets').value = params.get('assets');
+function resetDefaults(){
+  if(!confirm('모든 입력값을 초기값으로 되돌릴까요?')) return;
+  for(const [id,val] of Object.entries(DEFAULTS)){
+    const el=document.getElementById(id);
+    if(el) el.value=val;
   }
-  if (params.get('inflation')) {
-    document.getElementById('i-inflation').value = params.get('inflation');
+  recalc();
+  showToast('✅ 초기화 완료', '#16a34a');
+}
+
+function saveSettings(){
+  const data={};
+  for(const id of Object.keys(DEFAULTS)){
+    const el=document.getElementById(id);
+    if(el) data[id]=el.value;
   }
-  if (params.get('accum')) {
-    document.getElementById('i-accum').value = params.get('accum');
-  }
-  if (params.get('from') === 'roadmap') {
-    // 안내 배너 표시
-    const banner = document.createElement('div');
-    banner.style.cssText = 'background:linear-gradient(135deg,#eff6ff,#f0fdf4);border:1px solid #bfdbfe;border-radius:10px;padding:12px 18px;margin-bottom:var(--gap);font-size:13px;color:#1e293b;';
-    banner.innerHTML = `
-      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
-        <div>
-          <div style="font-size:11px;font-weight:700;color:#1d4ed8;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px">📈 배당투자 로드맵에서 연동</div>
-          <div style="font-size:16px;font-weight:800;color:#1e293b">총자산 ${(+params.get('assets')).toLocaleString()}만원 자동 입력됨</div>
-          <div style="font-size:11px;color:#64748b;margin-top:2px">적립기간 ${params.get('accum')||'—'}년 · 물가 ${params.get('inflation')||'—'}% 기준</div>
-        </div>
-        <button onclick="history.back()" style="background:#f1f5f9;color:#1e293b;border:1px solid #e2e8f0;border-radius:8px;padding:8px 16px;font-size:12px;font-weight:700;cursor:pointer;">
-          ← 배당투자 로드맵으로 돌아가기
-        </button>
-      </div>`;
-    banner.style.cssText = 'background:linear-gradient(135deg,#eff6ff,#f0fdf4);border:1px solid #bfdbfe;border-radius:12px;padding:16px 20px;margin-bottom:var(--gap);';
-    document.querySelector('.wrap').insertBefore(banner, document.querySelector('.card.inp-panel'));
-  }
+  // 파일로 다운로드
+  const json=JSON.stringify(data,null,2);
+  const blob=new Blob([json],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='은퇴생활비_설정.json';
+  a.click();
+  showToast('💾 설정 파일 저장 완료', '#2563eb');
+}
+
+function loadSettings(){
+  const input=document.createElement('input');
+  input.type='file'; input.accept='.json';
+  input.onchange=e=>{
+    const file=e.target.files[0];
+    if(!file) return;
+    const reader=new FileReader();
+    reader.onload=ev=>{
+      try{
+        const data=JSON.parse(ev.target.result);
+        for(const [id,val] of Object.entries(data)){
+          const el=document.getElementById(id);
+          if(el) el.value=val;
+        }
+        recalc();
+        showToast('📂 설정 불러오기 완료', '#7c3aed');
+      }catch(err){
+        showToast('❌ 파일 형식 오류', '#dc2626');
+      }
+    };
+    reader.readAsText(file);
+  };
+  input.click();
+}
+
+window.addEventListener('DOMContentLoaded', ()=>{
   recalc();
 });
 </script>
