@@ -143,70 +143,90 @@ table.dt tbody tr:hover{background:#f8fafc;}
 <style id="__lock_style__">
 #__pw_overlay__ {
   position:fixed; inset:0; z-index:99999;
-  background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 100%);
+  background:#f2f2f7;
   display:flex; align-items:center; justify-content:center;
 }
 #__pw_box__ {
-  background:#1e293b; border:1px solid rgba(255,255,255,.15);
-  border-radius:16px; padding:40px 48px; text-align:center;
-  box-shadow:0 24px 64px rgba(0,0,0,.5); min-width:320px;
+  background:#f2f2f7;
+  text-align:center;
+  width:100%; max-width:400px;
+  padding:60px 24px 40px;
 }
-#__pw_box__ .pw-icon { font-size:40px; margin-bottom:14px; }
-#__pw_box__ h2 { color:#fff; font-size:18px; font-weight:700; margin-bottom:4px; font-family:'Malgun Gothic',sans-serif; }
-#__pw_box__ .pw-sub { color:rgba(255,255,255,.45); font-size:12px; margin-bottom:24px; font-family:'Malgun Gothic',sans-serif; }
-#__pw_box__ input {
-  width:100%; padding:12px 16px; border-radius:8px;
-  border:1.5px solid rgba(255,255,255,.2); background:rgba(255,255,255,.08);
-  color:#fff; font-size:18px; font-weight:700; text-align:center;
-  outline:none; font-family:'Malgun Gothic',sans-serif; margin-bottom:14px;
-  letter-spacing:3px;
+#__pw_box__ h2 { color:#000; font-size:20px; font-weight:700; margin-bottom:8px; font-family:'Malgun Gothic',sans-serif; }
+#__pw_box__ .pw-sub { color:#8e8e93; font-size:14px; margin-bottom:32px; font-family:'Malgun Gothic',sans-serif; }
+.pin-dots { display:flex; justify-content:center; gap:16px; margin-bottom:40px; }
+.pin-dot { width:14px; height:14px; border-radius:50%; border:1.5px solid #c7c7cc; background:transparent; transition:background .15s; }
+.pin-dot.filled { background:#000; border-color:#000; }
+.pin-pad { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; max-width:280px; margin:0 auto; }
+.pin-btn {
+  background:#fff; border:none; border-radius:16px;
+  padding:20px 0; font-size:28px; font-weight:400;
+  cursor:pointer; font-family:'Malgun Gothic',sans-serif;
+  box-shadow:0 2px 8px rgba(0,0,0,.1); transition:background .1s;
 }
-#__pw_box__ input:focus { border-color:#3b82f6; }
-#__pw_box__ input::placeholder { color:rgba(255,255,255,.25); letter-spacing:0; }
-#__pw_box__ button {
-  width:100%; padding:12px; border-radius:8px; border:none;
-  background:#2563eb; color:#fff; font-size:14px; font-weight:700;
-  cursor:pointer; font-family:'Malgun Gothic',sans-serif; transition:background .2s;
-}
-#__pw_box__ button:hover { background:#1d4ed8; }
-#__pw_err__ { color:#f87171; font-size:12px; margin-top:10px; min-height:18px; font-family:'Malgun Gothic',sans-serif; }
+.pin-btn:active { background:#e5e5ea; }
+.pin-btn.del { font-size:20px; }
+.pin-btn.empty { background:transparent; box-shadow:none; cursor:default; pointer-events:none; }
+#__pw_err__ { color:#ff3b30; font-size:13px; margin-top:16px; min-height:18px; font-family:'Malgun Gothic',sans-serif; }
 #__pw_box__ .pw-copy { color:rgba(255,255,255,.25); font-size:10px; margin-top:20px; font-family:'Malgun Gothic',sans-serif; }
 </style>
 
 <div id="__pw_overlay__">
   <div id="__pw_box__">
-    <div class="pw-icon">🔐</div>
-    <h2>비밀번호를 입력하세요</h2>
-    <div class="pw-sub">접근 제한 문서입니다</div>
-    <input type="password" id="__pw_input__" placeholder="비밀번호"
-      onkeydown="if(event.key==='Enter')__checkPw__()">
-    <button onclick="__checkPw__()">확인</button>
+    <h2>배당투자 로드맵 Ver3.0</h2>
+    <div class="pw-sub">PIN 4자리를 입력하세요</div>
+    <div class="pin-dots">
+      <div class="pin-dot" id="d0"></div>
+      <div class="pin-dot" id="d1"></div>
+      <div class="pin-dot" id="d2"></div>
+      <div class="pin-dot" id="d3"></div>
+    </div>
+    <div class="pin-pad">
+      <button class="pin-btn" onclick="pinInput('1')">1</button>
+      <button class="pin-btn" onclick="pinInput('2')">2</button>
+      <button class="pin-btn" onclick="pinInput('3')">3</button>
+      <button class="pin-btn" onclick="pinInput('4')">4</button>
+      <button class="pin-btn" onclick="pinInput('5')">5</button>
+      <button class="pin-btn" onclick="pinInput('6')">6</button>
+      <button class="pin-btn" onclick="pinInput('7')">7</button>
+      <button class="pin-btn" onclick="pinInput('8')">8</button>
+      <button class="pin-btn" onclick="pinInput('9')">9</button>
+      <div class="pin-btn empty"></div>
+      <button class="pin-btn" onclick="pinInput('0')">0</button>
+      <button class="pin-btn del" onclick="pinDel()">⌫</button>
+    </div>
     <div id="__pw_err__"></div>
-    <div class="pw-copy">ⓒ 장정민 · All rights reserved</div>
   </div>
+</div>
 </div>
 <script>
 (function(){
-  var _h = '1e7b9f0395515fb9cd285bc0942b28ea1bd7bf890fecc1dae7882dd91119ff58';
-  window.__checkPw__ = async function() {
-    var v = document.getElementById('__pw_input__').value;
-    var enc  = new TextEncoder();
-    var buf  = await crypto.subtle.digest('SHA-256', enc.encode(v));
-    var hex  = Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
-    if (hex === _h) {
-      document.getElementById('__pw_overlay__').style.display = 'none';
-      var s = document.getElementById('__lock_style__');
-      if (s) s.remove();
-    } else {
-      document.getElementById('__pw_err__').textContent = '비밀번호가 올바르지 않습니다';
-      document.getElementById('__pw_input__').value = '';
-      document.getElementById('__pw_input__').focus();
+  var _h = '5631e5efadc1db19f6b2453cc6a2d6b76a81682d8c8594680343794a2558a91e';
+  var _pin = '';
+  window.pinInput = async function(n) {
+    if (_pin.length >= 4) return;
+    _pin += n;
+    document.getElementById('d'+(_pin.length-1)).classList.add('filled');
+    if (_pin.length === 4) {
+      var enc = new TextEncoder();
+      var buf = await crypto.subtle.digest('SHA-256', enc.encode(_pin));
+      var hex = Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+      if (hex === _h) {
+        document.getElementById('__pw_overlay__').style.display = 'none';
+        var s = document.getElementById('__lock_style__');
+        if (s) s.remove();
+      } else {
+        document.getElementById('__pw_err__').textContent = '핀 번호가 올바르지 않습니다';
+        setTimeout(function(){ _pin=''; for(var i=0;i<4;i++) document.getElementById('d'+i).classList.remove('filled'); document.getElementById('__pw_err__').textContent=''; }, 700);
+      }
     }
   };
-  document.addEventListener('DOMContentLoaded', function() {
-    var inp = document.getElementById('__pw_input__');
-    if (inp) inp.focus();
-  });
+  window.pinDel = function() {
+    if (_pin.length === 0) return;
+    document.getElementById('d'+(_pin.length-1)).classList.remove('filled');
+    _pin = _pin.slice(0, -1);
+  };
+  window.__checkPw__ = function(){};
 })();
 </script>
 
