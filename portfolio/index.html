@@ -154,59 +154,11 @@
     .card, .acct-card, .kpi-card { box-shadow: none; border: 1px solid #e2e8f0; break-inside: avoid; }
     .calc-card { break-inside: avoid; }
   }
-
   @media (max-width: 900px) {
     .kpi-row, .acct-grid { grid-template-columns: repeat(2,1fr); }
     .chart-row, .chart-row-3 { grid-template-columns: 1fr; }
     .alloc-grid { grid-template-columns: repeat(2,1fr); }
-    .kall-acct-grid { grid-template-columns: 1fr; }
-    .kall-tax-bar   { grid-template-columns: repeat(2,1fr); }
-    .kall-input-row { flex-direction: column; }
   }
-
-  /* ── K-올웨더 절세계좌 배분 ── */
-  .kall-acct-wrap {
-    background: linear-gradient(135deg, #0f172a 0%, #1a3a5c 100%);
-    color: #fff; border-radius: var(--radius); padding: 24px 28px;
-    margin-bottom: var(--gap); box-shadow: 0 4px 20px rgba(0,0,0,.18);
-  }
-  .kall-acct-wrap h2 { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
-  .kall-acct-wrap .kdesc { font-size: 12px; color: rgba(255,255,255,.5); margin-bottom: 18px; }
-  .kall-input-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; align-items: flex-end; }
-  .kall-input-box {
-    background: rgba(255,255,255,.1); border: 1.5px solid rgba(255,255,255,.2);
-    border-radius: 10px; padding: 10px 16px;
-  }
-  .kall-input-box.auto-box { border-style: dashed; opacity: .8; }
-  .kall-input-box label { display: block; font-size: 10px; color: rgba(255,255,255,.5); margin-bottom: 5px; letter-spacing: .3px; }
-  .kall-input-box input {
-    background: transparent; border: none; outline: none; color: #fff;
-    font-size: 20px; font-weight: 800; width: 90px; font-family: inherit;
-  }
-  .kall-input-box .unit { font-size: 12px; color: rgba(255,255,255,.5); }
-  .kall-reset-btn {
-    background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2);
-    color: rgba(255,255,255,.8); border-radius: 8px; padding: 9px 14px;
-    font-size: 12px; cursor: pointer; transition: background .2s; align-self: flex-end;
-  }
-  .kall-reset-btn:hover { background: rgba(255,255,255,.2); }
-  .kall-acct-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 16px; }
-  .kall-acct-card { background: rgba(255,255,255,.08); border-radius: 10px; padding: 16px; border-top: 3px solid rgba(255,255,255,.3); }
-  .kac-name   { font-size: 11px; font-weight: 700; color: rgba(255,255,255,.6); margin-bottom: 2px; text-transform: uppercase; letter-spacing: .5px; }
-  .kac-amount { font-size: 22px; font-weight: 800; margin-bottom: 12px; }
-  .kac-etf-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,.07); font-size: 11px; }
-  .kac-etf-row:last-of-type { border-bottom: none; }
-  .kac-etf-name { color: rgba(255,255,255,.72); line-height: 1.3; flex: 1; }
-  .kac-etf-amt  { font-weight: 700; color: #fff; white-space: nowrap; margin-left: 8px; }
-  .kac-badge { display: inline-block; font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 4px; margin-left: 4px; vertical-align: middle; }
-  .badge-risky { background: rgba(59,130,246,.35); color: #93c5fd; }
-  .badge-safe  { background: rgba(16,185,129,.35); color: #6ee7b7; }
-  .kac-note { font-size: 10px; color: rgba(255,255,255,.4); margin-top: 10px; border-top: 1px dashed rgba(255,255,255,.12); padding-top: 8px; }
-  .kall-tax-bar { background: rgba(255,255,255,.07); border-radius: 10px; padding: 14px 18px; display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; }
-  .ktb-item { text-align: center; }
-  .ktb-label { font-size: 10px; color: rgba(255,255,255,.45); margin-bottom: 5px; }
-  .ktb-value { font-size: 15px; font-weight: 800; }
-  .sec-label { font-size: 14px; font-weight: 700; color: var(--text2); margin-bottom: 10px; padding-bottom: 8px; border-bottom: 2px solid var(--border); }
 </style>
 </head>
 <body>
@@ -217,70 +169,90 @@
 <style id="__lock_style__">
 #__pw_overlay__ {
   position:fixed; inset:0; z-index:99999;
-  background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 100%);
+  background:#f2f2f7;
   display:flex; align-items:center; justify-content:center;
 }
 #__pw_box__ {
-  background:#1e293b; border:1px solid rgba(255,255,255,.15);
-  border-radius:16px; padding:40px 48px; text-align:center;
-  box-shadow:0 24px 64px rgba(0,0,0,.5); min-width:320px;
+  background:#f2f2f7;
+  text-align:center;
+  width:100%; max-width:400px;
+  padding:60px 24px 40px;
 }
-#__pw_box__ .pw-icon { font-size:40px; margin-bottom:14px; }
-#__pw_box__ h2 { color:#fff; font-size:18px; font-weight:700; margin-bottom:4px; font-family:'Malgun Gothic',sans-serif; }
-#__pw_box__ .pw-sub { color:rgba(255,255,255,.45); font-size:12px; margin-bottom:24px; font-family:'Malgun Gothic',sans-serif; }
-#__pw_box__ input {
-  width:100%; padding:12px 16px; border-radius:8px;
-  border:1.5px solid rgba(255,255,255,.2); background:rgba(255,255,255,.08);
-  color:#fff; font-size:18px; font-weight:700; text-align:center;
-  outline:none; font-family:'Malgun Gothic',sans-serif; margin-bottom:14px;
-  letter-spacing:3px;
+#__pw_box__ h2 { color:#000; font-size:20px; font-weight:700; margin-bottom:8px; font-family:'Malgun Gothic',sans-serif; }
+#__pw_box__ .pw-sub { color:#8e8e93; font-size:14px; margin-bottom:32px; font-family:'Malgun Gothic',sans-serif; }
+.pin-dots { display:flex; justify-content:center; gap:16px; margin-bottom:40px; }
+.pin-dot { width:14px; height:14px; border-radius:50%; border:1.5px solid #c7c7cc; background:transparent; transition:background .15s; }
+.pin-dot.filled { background:#000; border-color:#000; }
+.pin-pad { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; max-width:280px; margin:0 auto; }
+.pin-btn {
+  background:#fff; border:none; border-radius:16px;
+  padding:20px 0; font-size:28px; font-weight:400;
+  cursor:pointer; font-family:'Malgun Gothic',sans-serif;
+  box-shadow:0 2px 8px rgba(0,0,0,.1); transition:background .1s;
 }
-#__pw_box__ input:focus { border-color:#3b82f6; }
-#__pw_box__ input::placeholder { color:rgba(255,255,255,.25); letter-spacing:0; }
-#__pw_box__ button {
-  width:100%; padding:12px; border-radius:8px; border:none;
-  background:#2563eb; color:#fff; font-size:14px; font-weight:700;
-  cursor:pointer; font-family:'Malgun Gothic',sans-serif; transition:background .2s;
-}
-#__pw_box__ button:hover { background:#1d4ed8; }
-#__pw_err__ { color:#f87171; font-size:12px; margin-top:10px; min-height:18px; font-family:'Malgun Gothic',sans-serif; }
+.pin-btn:active { background:#e5e5ea; }
+.pin-btn.del { font-size:20px; }
+.pin-btn.empty { background:transparent; box-shadow:none; cursor:default; pointer-events:none; }
+#__pw_err__ { color:#ff3b30; font-size:13px; margin-top:16px; min-height:18px; font-family:'Malgun Gothic',sans-serif; }
 #__pw_box__ .pw-copy { color:rgba(255,255,255,.25); font-size:10px; margin-top:20px; font-family:'Malgun Gothic',sans-serif; }
 </style>
 
 <div id="__pw_overlay__">
   <div id="__pw_box__">
-    <div class="pw-icon">🔐</div>
-    <h2>비밀번호를 입력하세요</h2>
-    <div class="pw-sub">접근 제한 문서입니다</div>
-    <input type="password" id="__pw_input__" placeholder="비밀번호"
-      onkeydown="if(event.key==='Enter')__checkPw__()">
-    <button onclick="__checkPw__()">확인</button>
+    <h2>포트폴리오 비교 대시보드</h2>
+    <div class="pw-sub">PIN 4자리를 입력하세요</div>
+    <div class="pin-dots">
+      <div class="pin-dot" id="d0"></div>
+      <div class="pin-dot" id="d1"></div>
+      <div class="pin-dot" id="d2"></div>
+      <div class="pin-dot" id="d3"></div>
+    </div>
+    <div class="pin-pad">
+      <button class="pin-btn" onclick="pinInput('1')">1</button>
+      <button class="pin-btn" onclick="pinInput('2')">2</button>
+      <button class="pin-btn" onclick="pinInput('3')">3</button>
+      <button class="pin-btn" onclick="pinInput('4')">4</button>
+      <button class="pin-btn" onclick="pinInput('5')">5</button>
+      <button class="pin-btn" onclick="pinInput('6')">6</button>
+      <button class="pin-btn" onclick="pinInput('7')">7</button>
+      <button class="pin-btn" onclick="pinInput('8')">8</button>
+      <button class="pin-btn" onclick="pinInput('9')">9</button>
+      <div class="pin-btn empty"></div>
+      <button class="pin-btn" onclick="pinInput('0')">0</button>
+      <button class="pin-btn del" onclick="pinDel()">⌫</button>
+    </div>
     <div id="__pw_err__"></div>
-    <div class="pw-copy">ⓒ 장정민 · All rights reserved</div>
   </div>
+</div>
 </div>
 <script>
 (function(){
-  var _h = '1e7b9f0395515fb9cd285bc0942b28ea1bd7bf890fecc1dae7882dd91119ff58';
-  window.__checkPw__ = async function() {
-    var v = document.getElementById('__pw_input__').value;
-    var enc  = new TextEncoder();
-    var buf  = await crypto.subtle.digest('SHA-256', enc.encode(v));
-    var hex  = Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
-    if (hex === _h) {
-      document.getElementById('__pw_overlay__').style.display = 'none';
-      var s = document.getElementById('__lock_style__');
-      if (s) s.remove();
-    } else {
-      document.getElementById('__pw_err__').textContent = '비밀번호가 올바르지 않습니다';
-      document.getElementById('__pw_input__').value = '';
-      document.getElementById('__pw_input__').focus();
+  var _h = '5631e5efadc1db19f6b2453cc6a2d6b76a81682d8c8594680343794a2558a91e';
+  var _pin = '';
+  window.pinInput = async function(n) {
+    if (_pin.length >= 4) return;
+    _pin += n;
+    document.getElementById('d'+(_pin.length-1)).classList.add('filled');
+    if (_pin.length === 4) {
+      var enc = new TextEncoder();
+      var buf = await crypto.subtle.digest('SHA-256', enc.encode(_pin));
+      var hex = Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+      if (hex === _h) {
+        document.getElementById('__pw_overlay__').style.display = 'none';
+        var s = document.getElementById('__lock_style__');
+        if (s) s.remove();
+      } else {
+        document.getElementById('__pw_err__').textContent = '핀 번호가 올바르지 않습니다';
+        setTimeout(function(){ _pin=''; for(var i=0;i<4;i++) document.getElementById('d'+i).classList.remove('filled'); document.getElementById('__pw_err__').textContent=''; }, 700);
+      }
     }
   };
-  document.addEventListener('DOMContentLoaded', function() {
-    var inp = document.getElementById('__pw_input__');
-    if (inp) inp.focus();
-  });
+  window.pinDel = function() {
+    if (_pin.length === 0) return;
+    document.getElementById('d'+(_pin.length-1)).classList.remove('filled');
+    _pin = _pin.slice(0, -1);
+  };
+  window.__checkPw__ = function(){};
 })();
 </script>
 
@@ -308,18 +280,18 @@
 <div class="kpi-row">
   <div class="kpi-card">
     <div class="kpi-label">서대리식 월 납입 총액</div>
-    <div class="kpi-value" id="kpi-seo-total">200만원</div>
-    <div class="kpi-sub" id="kpi-seo-sub">연금저축 78 + IRP 16 + ISA 106</div>
+    <div class="kpi-value">320만원</div>
+    <div class="kpi-sub">연금저축 125 + IRP 25 + ISA 170</div>
   </div>
   <div class="kpi-card">
     <div class="kpi-label">주식형 ETF 비중</div>
     <div class="kpi-value">84.8%</div>
-    <div class="kpi-sub" id="kpi-stock-sub">169.6만원 / 200만원</div>
+    <div class="kpi-sub">271.5만원 / 320만원</div>
   </div>
   <div class="kpi-card">
     <div class="kpi-label">현금성 자산 비중</div>
     <div class="kpi-value">15.2%</div>
-    <div class="kpi-sub" id="kpi-cash-sub">30.4만원 (초단기채·MM)</div>
+    <div class="kpi-sub">48.5만원 (초단기채·MM)</div>
   </div>
   <div class="kpi-card">
     <div class="kpi-label">K-올웨더 주식 비중(MP)</div>
@@ -339,7 +311,7 @@
     <div class="input-group">
       <label>💰 월 투자 금액</label>
       <div class="amount-input-wrap">
-        <input type="number" id="amountInput" value="200" min="1" max="99999" oninput="onAmountInput()">
+        <input type="number" id="amountInput" value="320" min="1" max="99999" oninput="onAmountInput()">
         <span>만원</span>
       </div>
     </div>
@@ -349,8 +321,8 @@
         <button class="preset-btn" onclick="setAmount(50)">50만</button>
         <button class="preset-btn" onclick="setAmount(100)">100만</button>
         <button class="preset-btn" onclick="setAmount(150)">150만</button>
-        <button class="preset-btn active" onclick="setAmount(200)">200만</button>
-        <button class="preset-btn" onclick="setAmount(320)">320만</button>
+        <button class="preset-btn" onclick="setAmount(200)">200만</button>
+        <button class="preset-btn active" onclick="setAmount(320)">320만</button>
         <button class="preset-btn" onclick="setAmount(500)">500만</button>
       </div>
     </div>
@@ -395,43 +367,8 @@
   </div>
 </div>
 
-
-<!-- ═══════════════════════════════════════════
-     K-올웨더 절세계좌 배분 전략
-═══════════════════════════════════════════ -->
-<div class="kall-acct-wrap">
-  <h2>🏦 K-올웨더 절세계좌 배분 전략</h2>
-  <div class="kdesc">
-    K-올웨더 ETF는 모두 <strong>국내 상장 ETF</strong> → 연금저축·IRP·ISA 전액 편입 가능 &nbsp;|&nbsp;
-    IRP 안전자산 30% 룰 자동 준수 &nbsp;|&nbsp; 납입한도: 연금저축+IRP 합산 1,800만원/년, ISA 2,000만원/년
-  </div>
-
-  <div class="kall-input-row">
-    <div class="kall-input-box">
-      <label>🏛️ 연금저축 (월납입)</label>
-      <input type="number" id="k-pension" value="125" min="0" max="9999" oninput="renderKallAccounts()">
-      <span class="unit">만원</span>
-    </div>
-    <div class="kall-input-box">
-      <label>🔒 IRP (월납입)</label>
-      <input type="number" id="k-irp" value="25" min="0" max="9999" oninput="renderKallAccounts()">
-      <span class="unit">만원</span>
-    </div>
-    <div class="kall-input-box auto-box">
-      <label>💎 ISA (자동계산)</label>
-      <div id="k-isa-display" style="font-size:20px;font-weight:800;color:#fff;padding:3px 0">170만원</div>
-    </div>
-    <button class="kall-reset-btn" onclick="resetKallInputs()">↩️ 기본값 복원</button>
-  </div>
-
-  <div class="kall-acct-grid" id="kallAcctGrid"></div>
-  <div class="kall-tax-bar"   id="kallTaxBar"></div>
-</div>
-
-<!-- 서대리식 계좌 레이블 -->
-<div class="sec-label" id="seo-label">📋 서대리식 계좌별 배분 (월 200만원 기준)</div>
 <!-- 서대리식 계좌 카드 -->
-<div class="acct-grid" id="seo-acct-grid">
+<div class="acct-grid">
   <div class="acct-card">
     <div class="acct-name">연금저축 y1 (세액공제 O)</div>
     <div class="acct-amount">50만원/월</div>
@@ -478,7 +415,7 @@
 <!-- 차트 1~2 -->
 <div class="chart-row mb">
   <div class="card">
-    <h3 id="seo-chart-h3">🟦 서대리식 ETF 자산배분 (월 200만원)</h3>
+    <h3>🟦 서대리식 ETF 자산배분 (월 320만원)</h3>
     <canvas id="chart-seo"></canvas>
   </div>
   <div class="card">
@@ -500,7 +437,7 @@
     <canvas id="chart-compare"></canvas>
   </div>
   <div class="card">
-    <h3 id="isa-chart-h3">💼 ISA 계좌 ETF 구성 상세 (월 106만원)</h3>
+    <h3>💼 ISA 계좌 ETF 구성 상세 (월 170만원)</h3>
     <canvas id="chart-isa"></canvas>
   </div>
 </div>
@@ -598,7 +535,7 @@ const ALLOC_ITEMS = [
 ];
 
 let currentType = 'mp';
-let currentAmount = 200;
+let currentAmount = 320;
 
 function fmtWon(만원) {
   if (만원 === 0) return '0원';
@@ -642,8 +579,6 @@ function renderCalc() {
   kallChart.data.datasets[0].data = [...pcts];
   kallChart.update();
   document.getElementById('chart-kall-type-label').textContent = `(${KALL_TYPES[currentType].label} 기준)`;
-  renderKallAccounts();
-  updateSeoSide();
 }
 
 function setAmount(val) {
@@ -652,9 +587,6 @@ function setAmount(val) {
   document.querySelectorAll('.preset-btn').forEach(b => {
     b.classList.toggle('active', parseInt(b.textContent) === val || b.textContent === val+'만');
   });
-  // 계좌 입력 기본값도 비례 업데이트
-  document.getElementById('k-pension').value = Math.round(val * 125/320);
-  document.getElementById('k-irp').value     = Math.round(val * 25/320);
   renderCalc();
 }
 
@@ -662,8 +594,6 @@ function onAmountInput() {
   const v = parseInt(document.getElementById('amountInput').value) || 0;
   currentAmount = v;
   document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('k-pension').value = Math.round(v * 125/320);
-  document.getElementById('k-irp').value     = Math.round(v * 25/320);
   renderCalc();
 }
 
@@ -690,7 +620,7 @@ new Chart(document.getElementById('chart-seo'), {
     responsive:true, cutout:'60%',
     plugins:{
       legend:{position:'bottom',labels:{font:{size:11},padding:8}},
-      tooltip:{callbacks:{label:ctx=>` ${ctx.label}: ${ctx.raw}% (${Math.round(ctx.raw*currentAmount/100)}만원)`}}
+      tooltip:{callbacks:{label:ctx=>` ${ctx.label}: ${ctx.raw}% (${Math.round(ctx.raw*3.2)}만원)`}}
     }
   }
 });
@@ -752,7 +682,7 @@ new Chart(document.getElementById('chart-isa'), {
     responsive:true, cutout:'55%',
     plugins:{
       legend:{position:'bottom',labels:{font:{size:11},padding:8}},
-      tooltip:{callbacks:{label:ctx=>` ${ctx.label}: ${Math.round(ctx.raw*currentAmount*170/32000)}만원`}}
+      tooltip:{callbacks:{label:ctx=>` ${ctx.label}: ${Math.round(ctx.raw*1.7)}만원`}}
     }
   }
 });
@@ -788,228 +718,6 @@ new Chart(document.getElementById('chart-kall-types'), {
 
 // 초기 렌더
 renderCalc();
-
-// ── K-올웨더 절세계좌 배분 ──────────────────────────────────
-function resetKallInputs() {
-  const total = currentAmount;
-  document.getElementById('k-pension').value = Math.round(total * 125/320);
-  document.getElementById('k-irp').value     = Math.round(total * 25/320);
-  renderKallAccounts();
-}
-
-function renderKallAccounts() {
-  const total = currentAmount;
-  const pcts  = KALL_TYPES[currentType].pcts;
-  // pcts: [미국주식, 한국주식, 중국주식, 인도주식, 금, 미국채, 한국채, 현금]
-
-  const pensionInput = parseFloat(document.getElementById('k-pension').value);
-  const irpInput     = parseFloat(document.getElementById('k-irp').value);
-  const pensionBase  = isNaN(pensionInput) ? 0 : Math.max(0, pensionInput);
-  const irpBase      = isNaN(irpInput)     ? 0 : Math.max(0, irpInput);
-
-  const pensionAmt = pensionBase;
-  const irpAmt     = irpBase;
-  const isaAmt     = Math.max(0, total - pensionAmt - irpAmt);
-
-  document.getElementById('k-isa-display').textContent = fmtWon(Math.round(isaAmt));
-
-  // 자산별 금액
-  const usAmt   = total * pcts[0] / 100;
-  const krAmt   = total * pcts[1] / 100;
-  const cnAmt   = total * pcts[2] / 100;
-  const inAmt   = total * pcts[3] / 100;
-  const goldAmt = total * pcts[4] / 100;
-  const usBond  = total * pcts[5] / 100;
-  const krBond  = total * pcts[6] / 100;
-  const cashAmt = total * pcts[7] / 100;
-  const stockTotal = usAmt + krAmt + cnAmt + inAmt;
-  const bondTotal  = usBond + krBond;
-  const stockSum   = pcts[0]+pcts[1]+pcts[2]+pcts[3] || 1;
-  const bondSum    = pcts[5]+pcts[6] || 1;
-
-  // IRP: 위험 70% (주식) + 안전 30% (채권)
-  const irpRisky = irpAmt * 0.7;
-  const irpSafe  = irpAmt * 0.3;
-
-  // 연금저축: 주식 우선, 부족시 채권 보완
-  const pensionStockAmt = Math.min(pensionAmt, stockTotal);
-  const pensionBondAmt  = pensionAmt - pensionStockAmt;
-
-  // ISA: 나머지 전부
-  const isaStockAmt = Math.max(0, stockTotal - pensionStockAmt - irpRisky);
-  const isaBondAmt  = Math.max(0, bondTotal - irpSafe - pensionBondAmt);
-
-  function badge(type) {
-    if (type === 'risky') return '<span class="kac-badge badge-risky">위험</span>';
-    if (type === 'safe')  return '<span class="kac-badge badge-safe">안전</span>';
-    return '';
-  }
-
-  function etfRow(name, etf, amt, btype='') {
-    if (amt < 0.5) return '';
-    return `<div class="kac-etf-row">
-      <span class="kac-etf-name">${etf}${badge(btype)}</span>
-      <span class="kac-etf-amt">${fmtWon(Math.round(amt))}</span>
-    </div>`;
-  }
-
-  function renderCard(icon, name, amt, colorHex, rows, note) {
-    return `<div class="kall-acct-card" style="border-top-color:${colorHex}">
-      <div class="kac-name">${icon} ${name}</div>
-      <div class="kac-amount">${fmtWon(Math.round(amt))}/월</div>
-      ${rows}
-      <div class="kac-note">${note}</div>
-    </div>`;
-  }
-
-  // ── 연금저축 카드
-  let pensionRows = '';
-  if (stockSum > 0 && pensionStockAmt > 0) {
-    if (pcts[0] > 0) pensionRows += etfRow('미국 S&P500', 'KODEX 미국S&P500', pensionStockAmt * pcts[0]/stockSum);
-    if (pcts[1] > 0) pensionRows += etfRow('한국 주식', 'PLUS 200',           pensionStockAmt * pcts[1]/stockSum);
-    if (pcts[2] > 0) pensionRows += etfRow('중국 주식', 'KODEX 차이나CSI300', pensionStockAmt * pcts[2]/stockSum);
-    if (pcts[3] > 0) pensionRows += etfRow('인도 주식', 'TIGER 인도니프티50', pensionStockAmt * pcts[3]/stockSum);
-  }
-  if (pensionBondAmt > 0.5) {
-    pensionRows += etfRow('미국 국채 (보완)', 'ACE 미국30년국채', pensionBondAmt * pcts[5]/bondSum, '');
-    pensionRows += etfRow('한국 국채 (보완)', 'TIGER 국고채30년', pensionBondAmt * pcts[6]/bondSum, '');
-  }
-  const pensionNote = pensionBondAmt > 0.5
-    ? '⚠️ 주식 비중 부족 → 채권으로 보완 (안정형에서 발생)'
-    : '✅ 주식 ETF 100% 배분 · 세액공제 최대화';
-
-  // ── IRP 카드
-  let irpRows = '';
-  if (irpRisky > 0.5 && stockSum > 0) {
-    irpRows += etfRow('미국 S&P500', 'KODEX 미국S&P500', irpRisky * pcts[0]/stockSum, 'risky');
-    if (pcts[1] > 0) irpRows += etfRow('한국 주식', 'PLUS 200', irpRisky * pcts[1]/stockSum, 'risky');
-    if (pcts[2] > 0) irpRows += etfRow('중국 주식', 'KODEX 차이나CSI300', irpRisky * pcts[2]/stockSum, 'risky');
-    if (pcts[3] > 0) irpRows += etfRow('인도 주식', 'TIGER 인도니프티50', irpRisky * pcts[3]/stockSum, 'risky');
-  }
-  if (irpSafe > 0.5 && bondSum > 0) {
-    irpRows += etfRow('미국 국채 30년', 'ACE 미국30년국채', irpSafe * pcts[5]/bondSum, 'safe');
-    irpRows += etfRow('한국 국채 30년', 'TIGER 국고채30년', irpSafe * pcts[6]/bondSum, 'safe');
-  }
-  const irpSafePct = irpAmt > 0 ? Math.round(irpSafe/irpAmt*100) : 30;
-  const irpNote = `✅ 위험자산 ${100-irpSafePct}% / 안전자산 ${irpSafePct}% (30% 룰 준수)`;
-
-  // ── ISA 카드
-  let isaRows = '';
-  if (goldAmt > 0.5) isaRows += etfRow('금 (대체투자)', 'ACE KRX금현물', goldAmt);
-  if (isaBondAmt > 0.5 && bondSum > 0) {
-    isaRows += etfRow('미국 국채 30년', 'ACE 미국30년국채액티브', isaBondAmt * pcts[5]/bondSum);
-    isaRows += etfRow('한국 국채 30년', 'TIGER 국고채30년스트립', isaBondAmt * pcts[6]/bondSum);
-  }
-  if (isaStockAmt > 0.5 && stockSum > 0) {
-    isaRows += etfRow('글로벌 주식 (잔여)', 'KODEX 미국S&P500 등', isaStockAmt);
-  }
-  if (cashAmt > 0.5) isaRows += etfRow('현금성 자산', 'SOL 초단기채권액티브', cashAmt);
-  const isaNote = '✅ 금·채권·잔여주식 배분 · 비과세 200만원/년 (일반형)';
-
-  document.getElementById('kallAcctGrid').innerHTML =
-    renderCard('🏛️', '연금저축', pensionAmt, '#3b82f6', pensionRows, pensionNote) +
-    renderCard('🔒', 'IRP', irpAmt, '#10b981', irpRows, irpNote) +
-    renderCard('💎', 'ISA', isaAmt, '#f59e0b', isaRows, isaNote);
-
-  // 세금 절감 요약 바
-  const taxCreditBase  = Math.min((pensionAmt + irpAmt) * 12 * 10000, 9000000); // 세액공제 한도 900만원
-  const taxCredit      = taxCreditBase * 0.165; // 16.5% (소득 5500만원 이하) 환급
-  const irpSafeActual  = irpAmt > 0 ? Math.round(irpSafe/irpAmt*100) : 30;
-  const totalPct       = total > 0 ? Math.round((pensionAmt+irpAmt+isaAmt)/total*100) : 100;
-
-  document.getElementById('kallTaxBar').innerHTML = `
-    <div class="ktb-item">
-      <div class="ktb-label">연간 세액공제 환급 (추정)</div>
-      <div class="ktb-value" style="color:#93c5fd">약 ${Math.round(taxCredit/10000).toFixed(0)}만원</div>
-    </div>
-    <div class="ktb-item">
-      <div class="ktb-label">IRP 안전자산 비율</div>
-      <div class="ktb-value" style="color:#6ee7b7">${irpSafeActual}% ✓</div>
-    </div>
-    <div class="ktb-item">
-      <div class="ktb-label">절세계좌 활용 비중</div>
-      <div class="ktb-value" style="color:#fde68a">${totalPct}%</div>
-    </div>
-    <div class="ktb-item">
-      <div class="ktb-label">K-올웨더 절세계좌 적합성</div>
-      <div class="ktb-value" style="color:#fda4af">국내 ETF 100% ✅</div>
-    </div>
-  `;
-}
-
-// ── 서대리식 사이드 동적 업데이트 ─────────────────────────
-function updateSeoSide() {
-  const total = currentAmount;
-  const y1  = Math.round(total * 50/320);
-  const y2  = Math.round(total * 75/320);
-  const irp = Math.round(total * 25/320);
-  const isa = total - y1 - y2 - irp;
-  const pension = y1 + y2;
-
-  // KPI
-  document.getElementById('kpi-seo-total').textContent = total + '만원';
-  document.getElementById('kpi-seo-sub').textContent =
-    `연금저축 ${pension} + IRP ${irp} + ISA ${isa}`;
-  document.getElementById('kpi-stock-sub').textContent =
-    `${(total*84.8/100).toFixed(1)}만원 / ${total}만원`;
-  document.getElementById('kpi-cash-sub').textContent =
-    `${(total*15.2/100).toFixed(1)}만원 (초단기채·MM)`;
-
-  // sec-label, chart h3
-  document.getElementById('seo-label').textContent =
-    `📋 서대리식 계좌별 배분 (월 ${total}만원 기준)`;
-  document.getElementById('seo-chart-h3').textContent =
-    `🟦 서대리식 ETF 자산배분 (월 ${total}만원)`;
-  document.getElementById('isa-chart-h3').textContent =
-    `💼 ISA 계좌 ETF 구성 상세 (월 ${isa}만원)`;
-
-  // 서대리 계좌 카드
-  function fmt(v){ return Math.round(v) + '만'; }
-  document.getElementById('seo-acct-grid').innerHTML = `
-    <div class="acct-card">
-      <div class="acct-name">연금저축 y1 (세액공제 O)</div>
-      <div class="acct-amount">${y1}만원/월</div>
-      <div class="acct-desc">성장+배당의 조화. 세액공제 혜택과 함께 알차게 불어날 주머니</div>
-      <div style="margin-top:8px">
-        <span class="etf-tag">ACE S&P500 ${fmt(y1*0.6)}</span>
-        <span class="etf-tag">ACE 나스닥100 ${fmt(y1*0.2)}</span>
-        <span class="etf-tag">TIGER 배당다우존스 ${fmt(y1*0.2)}</span>
-      </div>
-    </div>
-    <div class="acct-card">
-      <div class="acct-name">연금저축 y2 (세액공제 X)</div>
-      <div class="acct-amount">${y2}만원/월</div>
-      <div class="acct-desc">가장 든든한 엔진. 20% 현금 비중이 하락장에서 멘탈을 지켜줌</div>
-      <div style="margin-top:8px">
-        <span class="etf-tag">ACE 나스닥100 ${fmt(y2*0.4)}</span>
-        <span class="etf-tag">ACE S&P500 ${fmt(y2*0.4)}</span>
-        <span class="etf-tag">TIGER 초단기채 ${fmt(y2*0.2)}</span>
-      </div>
-    </div>
-    <div class="acct-card">
-      <div class="acct-name">IRP (세액공제 O)</div>
-      <div class="acct-amount">${irp}만원/월</div>
-      <div class="acct-desc">안전자산 30% 룰 준수. 법적 규수 깔끔하게 관리</div>
-      <div style="margin-top:8px">
-        <span class="etf-tag">ACE 나스닥100 ${fmt(irp*0.68)}</span>
-        <span class="etf-tag">TIGER 초단기채 ${fmt(irp*0.32)}</span>
-      </div>
-    </div>
-    <div class="acct-card">
-      <div class="acct-name">ISA</div>
-      <div class="acct-amount">${isa}만원/월</div>
-      <div class="acct-desc">현금 흐름의 핵심. 배당 비과세를 극대화하는 전략적 요충지</div>
-      <div style="margin-top:8px">
-        <span class="etf-tag">ACE S&P500 29%</span>
-        <span class="etf-tag">TIGER 배당다우존스 29%</span>
-        <span class="etf-tag">ACE 배당퀄리티 17%</span>
-        <span class="etf-tag">ACE 빅테크TOP7 10%</span>
-        <span class="etf-tag">TIGER 초단기채 15%</span>
-      </div>
-    </div>
-  `;
-}
-
 </script>
 </body>
 </html>
