@@ -308,18 +308,18 @@
 <div class="kpi-row">
   <div class="kpi-card">
     <div class="kpi-label">서대리식 월 납입 총액</div>
-    <div class="kpi-value">320만원</div>
-    <div class="kpi-sub">연금저축 125 + IRP 25 + ISA 170</div>
+    <div class="kpi-value" id="kpi-seo-total">200만원</div>
+    <div class="kpi-sub" id="kpi-seo-sub">연금저축 78 + IRP 16 + ISA 106</div>
   </div>
   <div class="kpi-card">
     <div class="kpi-label">주식형 ETF 비중</div>
     <div class="kpi-value">84.8%</div>
-    <div class="kpi-sub">271.5만원 / 320만원</div>
+    <div class="kpi-sub" id="kpi-stock-sub">169.6만원 / 200만원</div>
   </div>
   <div class="kpi-card">
     <div class="kpi-label">현금성 자산 비중</div>
     <div class="kpi-value">15.2%</div>
-    <div class="kpi-sub">48.5만원 (초단기채·MM)</div>
+    <div class="kpi-sub" id="kpi-cash-sub">30.4만원 (초단기채·MM)</div>
   </div>
   <div class="kpi-card">
     <div class="kpi-label">K-올웨더 주식 비중(MP)</div>
@@ -339,7 +339,7 @@
     <div class="input-group">
       <label>💰 월 투자 금액</label>
       <div class="amount-input-wrap">
-        <input type="number" id="amountInput" value="320" min="1" max="99999" oninput="onAmountInput()">
+        <input type="number" id="amountInput" value="200" min="1" max="99999" oninput="onAmountInput()">
         <span>만원</span>
       </div>
     </div>
@@ -349,8 +349,8 @@
         <button class="preset-btn" onclick="setAmount(50)">50만</button>
         <button class="preset-btn" onclick="setAmount(100)">100만</button>
         <button class="preset-btn" onclick="setAmount(150)">150만</button>
-        <button class="preset-btn" onclick="setAmount(200)">200만</button>
-        <button class="preset-btn active" onclick="setAmount(320)">320만</button>
+        <button class="preset-btn active" onclick="setAmount(200)">200만</button>
+        <button class="preset-btn" onclick="setAmount(320)">320만</button>
         <button class="preset-btn" onclick="setAmount(500)">500만</button>
       </div>
     </div>
@@ -429,9 +429,9 @@
 </div>
 
 <!-- 서대리식 계좌 레이블 -->
-<div class="sec-label">📋 서대리식 계좌별 배분 (월 320만원 기준)</div>
+<div class="sec-label" id="seo-label">📋 서대리식 계좌별 배분 (월 200만원 기준)</div>
 <!-- 서대리식 계좌 카드 -->
-<div class="acct-grid">
+<div class="acct-grid" id="seo-acct-grid">
   <div class="acct-card">
     <div class="acct-name">연금저축 y1 (세액공제 O)</div>
     <div class="acct-amount">50만원/월</div>
@@ -478,7 +478,7 @@
 <!-- 차트 1~2 -->
 <div class="chart-row mb">
   <div class="card">
-    <h3>🟦 서대리식 ETF 자산배분 (월 320만원)</h3>
+    <h3 id="seo-chart-h3">🟦 서대리식 ETF 자산배분 (월 200만원)</h3>
     <canvas id="chart-seo"></canvas>
   </div>
   <div class="card">
@@ -500,7 +500,7 @@
     <canvas id="chart-compare"></canvas>
   </div>
   <div class="card">
-    <h3>💼 ISA 계좌 ETF 구성 상세 (월 170만원)</h3>
+    <h3 id="isa-chart-h3">💼 ISA 계좌 ETF 구성 상세 (월 106만원)</h3>
     <canvas id="chart-isa"></canvas>
   </div>
 </div>
@@ -598,7 +598,7 @@ const ALLOC_ITEMS = [
 ];
 
 let currentType = 'mp';
-let currentAmount = 320;
+let currentAmount = 200;
 
 function fmtWon(만원) {
   if (만원 === 0) return '0원';
@@ -643,6 +643,7 @@ function renderCalc() {
   kallChart.update();
   document.getElementById('chart-kall-type-label').textContent = `(${KALL_TYPES[currentType].label} 기준)`;
   renderKallAccounts();
+  updateSeoSide();
 }
 
 function setAmount(val) {
@@ -689,7 +690,7 @@ new Chart(document.getElementById('chart-seo'), {
     responsive:true, cutout:'60%',
     plugins:{
       legend:{position:'bottom',labels:{font:{size:11},padding:8}},
-      tooltip:{callbacks:{label:ctx=>` ${ctx.label}: ${ctx.raw}% (${Math.round(ctx.raw*3.2)}만원)`}}
+      tooltip:{callbacks:{label:ctx=>` ${ctx.label}: ${ctx.raw}% (${Math.round(ctx.raw*currentAmount/100)}만원)`}}
     }
   }
 });
@@ -751,7 +752,7 @@ new Chart(document.getElementById('chart-isa'), {
     responsive:true, cutout:'55%',
     plugins:{
       legend:{position:'bottom',labels:{font:{size:11},padding:8}},
-      tooltip:{callbacks:{label:ctx=>` ${ctx.label}: ${Math.round(ctx.raw*1.7)}만원`}}
+      tooltip:{callbacks:{label:ctx=>` ${ctx.label}: ${Math.round(ctx.raw*currentAmount*170/32000)}만원`}}
     }
   }
 });
@@ -806,10 +807,8 @@ function renderKallAccounts() {
   const pensionBase  = isNaN(pensionInput) ? 0 : Math.max(0, pensionInput);
   const irpBase      = isNaN(irpInput)     ? 0 : Math.max(0, irpInput);
 
-  // 총액 기준 비례 스케일
-  const scale     = total / 320;
-  const pensionAmt = pensionBase * scale;
-  const irpAmt     = irpBase * scale;
+  const pensionAmt = pensionBase;
+  const irpAmt     = irpBase;
   const isaAmt     = Math.max(0, total - pensionAmt - irpAmt);
 
   document.getElementById('k-isa-display').textContent = fmtWon(Math.round(isaAmt));
@@ -913,7 +912,7 @@ function renderKallAccounts() {
     renderCard('💎', 'ISA', isaAmt, '#f59e0b', isaRows, isaNote);
 
   // 세금 절감 요약 바
-  const taxCreditBase  = Math.min((pensionBase + irpBase) * 12, 9000000); // 세액공제 한도 900만원
+  const taxCreditBase  = Math.min((pensionAmt + irpAmt) * 12 * 10000, 9000000); // 세액공제 한도 900만원
   const taxCredit      = taxCreditBase * 0.165; // 16.5% (소득 5500만원 이하) 환급
   const irpSafeActual  = irpAmt > 0 ? Math.round(irpSafe/irpAmt*100) : 30;
   const totalPct       = total > 0 ? Math.round((pensionAmt+irpAmt+isaAmt)/total*100) : 100;
@@ -938,6 +937,78 @@ function renderKallAccounts() {
   `;
 }
 
+// ── 서대리식 사이드 동적 업데이트 ─────────────────────────
+function updateSeoSide() {
+  const total = currentAmount;
+  const y1  = Math.round(total * 50/320);
+  const y2  = Math.round(total * 75/320);
+  const irp = Math.round(total * 25/320);
+  const isa = total - y1 - y2 - irp;
+  const pension = y1 + y2;
+
+  // KPI
+  document.getElementById('kpi-seo-total').textContent = total + '만원';
+  document.getElementById('kpi-seo-sub').textContent =
+    `연금저축 ${pension} + IRP ${irp} + ISA ${isa}`;
+  document.getElementById('kpi-stock-sub').textContent =
+    `${(total*84.8/100).toFixed(1)}만원 / ${total}만원`;
+  document.getElementById('kpi-cash-sub').textContent =
+    `${(total*15.2/100).toFixed(1)}만원 (초단기채·MM)`;
+
+  // sec-label, chart h3
+  document.getElementById('seo-label').textContent =
+    `📋 서대리식 계좌별 배분 (월 ${total}만원 기준)`;
+  document.getElementById('seo-chart-h3').textContent =
+    `🟦 서대리식 ETF 자산배분 (월 ${total}만원)`;
+  document.getElementById('isa-chart-h3').textContent =
+    `💼 ISA 계좌 ETF 구성 상세 (월 ${isa}만원)`;
+
+  // 서대리 계좌 카드
+  function fmt(v){ return Math.round(v) + '만'; }
+  document.getElementById('seo-acct-grid').innerHTML = `
+    <div class="acct-card">
+      <div class="acct-name">연금저축 y1 (세액공제 O)</div>
+      <div class="acct-amount">${y1}만원/월</div>
+      <div class="acct-desc">성장+배당의 조화. 세액공제 혜택과 함께 알차게 불어날 주머니</div>
+      <div style="margin-top:8px">
+        <span class="etf-tag">ACE S&P500 ${fmt(y1*0.6)}</span>
+        <span class="etf-tag">ACE 나스닥100 ${fmt(y1*0.2)}</span>
+        <span class="etf-tag">TIGER 배당다우존스 ${fmt(y1*0.2)}</span>
+      </div>
+    </div>
+    <div class="acct-card">
+      <div class="acct-name">연금저축 y2 (세액공제 X)</div>
+      <div class="acct-amount">${y2}만원/월</div>
+      <div class="acct-desc">가장 든든한 엔진. 20% 현금 비중이 하락장에서 멘탈을 지켜줌</div>
+      <div style="margin-top:8px">
+        <span class="etf-tag">ACE 나스닥100 ${fmt(y2*0.4)}</span>
+        <span class="etf-tag">ACE S&P500 ${fmt(y2*0.4)}</span>
+        <span class="etf-tag">TIGER 초단기채 ${fmt(y2*0.2)}</span>
+      </div>
+    </div>
+    <div class="acct-card">
+      <div class="acct-name">IRP (세액공제 O)</div>
+      <div class="acct-amount">${irp}만원/월</div>
+      <div class="acct-desc">안전자산 30% 룰 준수. 법적 규수 깔끔하게 관리</div>
+      <div style="margin-top:8px">
+        <span class="etf-tag">ACE 나스닥100 ${fmt(irp*0.68)}</span>
+        <span class="etf-tag">TIGER 초단기채 ${fmt(irp*0.32)}</span>
+      </div>
+    </div>
+    <div class="acct-card">
+      <div class="acct-name">ISA</div>
+      <div class="acct-amount">${isa}만원/월</div>
+      <div class="acct-desc">현금 흐름의 핵심. 배당 비과세를 극대화하는 전략적 요충지</div>
+      <div style="margin-top:8px">
+        <span class="etf-tag">ACE S&P500 29%</span>
+        <span class="etf-tag">TIGER 배당다우존스 29%</span>
+        <span class="etf-tag">ACE 배당퀄리티 17%</span>
+        <span class="etf-tag">ACE 빅테크TOP7 10%</span>
+        <span class="etf-tag">TIGER 초단기채 15%</span>
+      </div>
+    </div>
+  `;
+}
 
 </script>
 </body>
