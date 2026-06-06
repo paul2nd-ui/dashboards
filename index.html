@@ -19,9 +19,7 @@
     --text2: #8b949e;
     --radius: 14px;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
   body {
     background: var(--bg);
     font-family: 'Noto Sans KR', sans-serif;
@@ -29,8 +27,6 @@
     min-height: 100vh;
     padding: 0 0 60px;
   }
-
-  /* 배경 그리드 */
   body::before {
     content: '';
     position: fixed;
@@ -42,16 +38,8 @@
     pointer-events: none;
     z-index: 0;
   }
-
-  .wrap { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 0 24px; }
-
-  /* ── 헤더 ── */
-  header {
-    padding: 56px 0 40px;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 48px;
-  }
-
+  .wrap { position: relative; z-index: 1; max-width: 960px; margin: 0 auto; padding: 0 24px; }
+  header { padding: 56px 0 40px; border-bottom: 1px solid var(--border); margin-bottom: 48px; }
   .header-tag {
     display: inline-block;
     font-family: 'DM Mono', monospace;
@@ -64,29 +52,14 @@
     margin-bottom: 18px;
     letter-spacing: .5px;
   }
-
-  header h1 {
-    font-size: clamp(28px, 5vw, 42px);
-    font-weight: 900;
-    line-height: 1.2;
-    letter-spacing: -1px;
-  }
-
+  header h1 { font-size: clamp(28px, 5vw, 42px); font-weight: 900; line-height: 1.2; letter-spacing: -1px; }
   header h1 span {
     background: linear-gradient(90deg, var(--accent), var(--accent3));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
-
-  header p {
-    margin-top: 12px;
-    color: var(--text2);
-    font-size: 15px;
-    line-height: 1.7;
-  }
-
-  /* ── 섹션 타이틀 ── */
+  header p { margin-top: 12px; color: var(--text2); font-size: 15px; line-height: 1.7; }
   .section-title {
     font-family: 'DM Mono', monospace;
     font-size: 11px;
@@ -98,21 +71,13 @@
     align-items: center;
     gap: 10px;
   }
-  .section-title::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--border);
-  }
-
-  /* ── 카드 그리드 ── */
+  .section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
   .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 16px;
     margin-bottom: 48px;
   }
-
   .card {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -127,7 +92,6 @@
     position: relative;
     overflow: hidden;
   }
-
   .card::before {
     content: '';
     position: absolute;
@@ -137,36 +101,11 @@
     opacity: 0;
     transition: opacity .2s;
   }
-
-  .card:hover {
-    border-color: var(--card-color, var(--accent));
-    transform: translateY(-3px);
-    box-shadow: 0 8px 24px rgba(0,0,0,.3);
-  }
-
+  .card:hover { border-color: var(--card-color, var(--accent)); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,.3); }
   .card:hover::before { opacity: 1; }
-
-  .card-icon {
-    width: 40px; height: 40px;
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 20px;
-    background: var(--surface2);
-  }
-
-  .card-title {
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 1.3;
-  }
-
-  .card-desc {
-    font-size: 13px;
-    color: var(--text2);
-    line-height: 1.6;
-    flex: 1;
-  }
-
+  .card-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; background: var(--surface2); }
+  .card-title { font-size: 16px; font-weight: 700; line-height: 1.3; }
+  .card-desc { font-size: 13px; color: var(--text2); line-height: 1.6; flex: 1; }
   .card-badge {
     display: inline-flex;
     align-items: center;
@@ -177,67 +116,17 @@
     border-radius: 6px;
     width: fit-content;
   }
-
-  .badge-live {
-    background: rgba(63,185,80,.12);
-    color: var(--accent2);
-    border: 1px solid rgba(63,185,80,.25);
-  }
-  .badge-soon {
-    background: rgba(139,148,158,.1);
-    color: var(--text2);
-    border: 1px solid var(--border);
-  }
-
-  .card-arrow {
-    position: absolute;
-    top: 20px; right: 20px;
-    color: var(--text2);
-    font-size: 18px;
-    transition: color .2s, transform .2s;
-  }
-  .card:hover .card-arrow {
-    color: var(--card-color, var(--accent));
-    transform: translate(2px, -2px);
-  }
-
-  /* 준비중 카드 */
-  .card.coming {
-    opacity: .55;
-    pointer-events: none;
-  }
-
-  /* ── 푸터 ── */
-  footer {
-    border-top: 1px solid var(--border);
-    padding-top: 28px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-
-  footer p {
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    color: var(--text2);
-  }
-
-  footer a {
-    color: var(--accent);
-    text-decoration: none;
-  }
-
-  @media (max-width: 500px) {
-    header { padding: 36px 0 28px; margin-bottom: 32px; }
-    .grid { grid-template-columns: 1fr; }
-  }
+  .badge-live { background: rgba(63,185,80,.12); color: var(--accent2); border: 1px solid rgba(63,185,80,.25); }
+  .card-arrow { position: absolute; top: 20px; right: 20px; color: var(--text2); font-size: 18px; transition: color .2s, transform .2s; }
+  .card:hover .card-arrow { color: var(--card-color, var(--accent)); transform: translate(2px, -2px); }
+  footer { border-top: 1px solid var(--border); padding-top: 28px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  footer p { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text2); }
+  footer a { color: var(--accent); text-decoration: none; }
+  @media (max-width: 500px) { header { padding: 36px 0 28px; margin-bottom: 32px; } .grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
 <div class="wrap">
-
   <header>
     <div class="header-tag">paul2nd-ui · dashboards</div>
     <h1>금융 <span>대시보드</span> 모음</h1>
@@ -248,30 +137,45 @@
 
   <div class="grid">
 
-    <!-- 포트폴리오 비교 -->
     <a class="card" href="./portfolio/" style="--card-color: #58a6ff;">
       <div class="card-icon">📊</div>
-      <div class="card-title">포트폴리오 비교<br>대시보드</div>
+      <div class="card-title">포트폴리오 비교 대시보드</div>
       <div class="card-desc">국내 주요 ETF 포트폴리오를 비교 분석합니다. 수익률, 자산 배분, 계좌별 현황을 한눈에 확인할 수 있습니다.</div>
       <div class="card-badge badge-live">● LIVE</div>
       <span class="card-arrow">↗</span>
     </a>
 
-    <!-- ETF 분석 (준비중) -->
-    <div class="card coming" style="--card-color: #3fb950;">
-      <div class="card-icon">📈</div>
-      <div class="card-title">ETF 분석<br>대시보드</div>
-      <div class="card-desc">연금저축·IRP·ISA 계좌별 ETF 종목 분석 및 수익률 비교를 제공합니다.</div>
-      <div class="card-badge badge-soon">준비중</div>
-    </div>
+    <a class="card" href="./tax/" style="--card-color: #ffa657;">
+      <div class="card-icon">💰</div>
+      <div class="card-title">일반계좌 vs 절세계좌 세금 비교</div>
+      <div class="card-desc">일반계좌와 절세계좌(연금저축·IRP·ISA)의 세금 차이를 완전 비교합니다. 실수령액 차이를 한눈에 확인하세요.</div>
+      <div class="card-badge badge-live">● LIVE</div>
+      <span class="card-arrow">↗</span>
+    </a>
 
-    <!-- 자산 시뮬레이터 (준비중) -->
-    <div class="card coming" style="--card-color: #d2a8ff;">
-      <div class="card-icon">🧮</div>
-      <div class="card-title">교사 자산<br>시뮬레이터</div>
-      <div class="card-desc">퇴직 시점까지의 자산 성장을 시뮬레이션합니다. 계좌별 납입 전략과 예상 수령액을 확인할 수 있습니다.</div>
-      <div class="card-badge badge-soon">준비중</div>
-    </div>
+    <a class="card" href="./retirement/" style="--card-color: #3fb950;">
+      <div class="card-icon">🏖️</div>
+      <div class="card-title">은퇴생활비 계산기</div>
+      <div class="card-desc">은퇴 후 필요한 생활비를 계산하고 연금·투자 수익으로 충당 가능한지 시뮬레이션합니다.</div>
+      <div class="card-badge badge-live">● LIVE</div>
+      <span class="card-arrow">↗</span>
+    </a>
+
+    <a class="card" href="./account/" style="--card-color: #d2a8ff;">
+      <div class="card-icon">🏦</div>
+      <div class="card-title">절세계좌 비교 대시보드</div>
+      <div class="card-desc">연금저축, IRP, ISA 계좌의 특징과 혜택을 비교합니다. 나에게 맞는 절세 전략을 찾아보세요.</div>
+      <div class="card-badge badge-live">● LIVE</div>
+      <span class="card-arrow">↗</span>
+    </a>
+
+    <a class="card" href="./roadmap/" style="--card-color: #f78166;">
+      <div class="card-icon">🗺️</div>
+      <div class="card-title">배당투자 로드맵 Ver3.0</div>
+      <div class="card-desc">배당투자 단계별 로드맵과 은퇴 인출 시뮬레이션을 연동합니다. 장기 투자 전략을 세워보세요.</div>
+      <div class="card-badge badge-live">● LIVE</div>
+      <span class="card-arrow">↗</span>
+    </a>
 
   </div>
 
@@ -279,7 +183,6 @@
     <p>© 2025 paul2nd-ui · 금융 교육용 자료입니다</p>
     <p><a href="https://github.com/paul2nd-ui/dashboards" target="_blank">GitHub →</a></p>
   </footer>
-
 </div>
 </body>
 </html>
