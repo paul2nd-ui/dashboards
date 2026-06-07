@@ -280,13 +280,13 @@
 <div class="kpi-row">
   <div class="kpi-card">
     <div class="kpi-label">서대리식 월 납입 총액</div>
-    <div class="kpi-value">320만원</div>
-    <div class="kpi-sub">연금저축 125 + IRP 25 + ISA 170</div>
+    <div class="kpi-value" id="kpi-total-amt">200만원</div>
+    <div class="kpi-sub" id="kpi-acct-sub">연금저축 50 + IRP 25 + y2 38 + ISA 87</div>
   </div>
   <div class="kpi-card">
     <div class="kpi-label">주식형 ETF 비중</div>
     <div class="kpi-value">84.8%</div>
-    <div class="kpi-sub">271.5만원 / 320만원</div>
+    <div class="kpi-sub" id="kpi-stock-sub">271.5만원 / 200만원</div>
   </div>
   <div class="kpi-card">
     <div class="kpi-label">현금성 자산 비중</div>
@@ -311,7 +311,7 @@
     <div class="input-group">
       <label>💰 월 투자 금액</label>
       <div class="amount-input-wrap">
-        <input type="number" id="amountInput" value="320" min="1" max="99999" oninput="onAmountInput()">
+        <input type="number" id="amountInput" value="200" min="1" max="99999" oninput="onAmountInput()">
         <span>만원</span>
       </div>
     </div>
@@ -321,8 +321,8 @@
         <button class="preset-btn" onclick="setAmount(50)">50만</button>
         <button class="preset-btn" onclick="setAmount(100)">100만</button>
         <button class="preset-btn" onclick="setAmount(150)">150만</button>
-        <button class="preset-btn" onclick="setAmount(200)">200만</button>
-        <button class="preset-btn active" onclick="setAmount(320)">320만</button>
+        <button class="preset-btn active" onclick="setAmount(200)">200만</button>
+        <button class="preset-btn" onclick="setAmount(320)">320만</button>
         <button class="preset-btn" onclick="setAmount(500)">500만</button>
       </div>
     </div>
@@ -416,7 +416,7 @@
 <!-- 차트 1~2 -->
 <div class="chart-row mb">
   <div class="card">
-    <h3>🟦 서대리식 ETF 자산배분 (월 320만원)</h3>
+    <h3>🟦 서대리식 ETF 자산배분 (월 <span id="seo-chart-title">200</span>만원)</h3>
     <canvas id="chart-seo"></canvas>
   </div>
   <div class="card">
@@ -536,7 +536,7 @@ const ALLOC_ITEMS = [
 ];
 
 let currentType = 'mp';
-let currentAmount = 320;
+let currentAmount = 200;
 
 function fmtWon(만원) {
   if (만원 === 0) return '0원';
@@ -604,6 +604,16 @@ function renderCalc() {
   const bondTotal  = pcts[5]+pcts[6];
   const cashTotal  = pcts[7];
 
+  // 서대리식 KPI 업데이트
+  const seoTitle = document.getElementById('seo-chart-title');
+  if (seoTitle) seoTitle.textContent = total;
+  const kpiTotal = document.getElementById('kpi-total-amt');
+  if (kpiTotal) kpiTotal.textContent = total + '만원';
+  const kpiSub = document.getElementById('kpi-acct-sub');
+  if (kpiSub) kpiSub.textContent = `연금저축 ${split.y1} + IRP ${split.irp} + y2 ${split.y2} + ISA ${split.isa}`;
+  const kpiStockSub = document.getElementById('kpi-stock-sub');
+  if (kpiStockSub) kpiStockSub.textContent = `${Math.round(total*0.848)}만원 / ${total}만원`;
+
   document.getElementById('totalAmt').textContent = fmtWon(total);
   document.getElementById('stockAmt').textContent = fmtWon(total*stockTotal/100) + ` (${stockTotal}%)`;
   document.getElementById('altAmt').textContent   = fmtWon(total*altTotal/100)   + ` (${altTotal}%)`;
@@ -656,7 +666,7 @@ new Chart(document.getElementById('chart-seo'), {
     responsive:true, cutout:'60%',
     plugins:{
       legend:{position:'bottom',labels:{font:{size:11},padding:8}},
-      tooltip:{callbacks:{label:ctx=>` ${ctx.label}: ${ctx.raw}% (${Math.round(ctx.raw*3.2)}만원)`}}
+      tooltip:{callbacks:{label:ctx=>` ${ctx.label}: ${ctx.raw}% (${Math.round(ctx.raw*currentAmount/100)}만원)`}}
     }
   }
 });
