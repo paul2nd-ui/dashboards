@@ -337,6 +337,7 @@
     </div>
   </div>
 
+  <div id="kall-acct-split"></div>
   <div class="alloc-grid" id="allocGrid"></div>
 
   <div class="total-bar">
@@ -371,7 +372,7 @@
 <div class="acct-grid">
   <div class="acct-card">
     <div class="acct-name">연금저축 y1 (세액공제 O)</div>
-    <div class="acct-amount">50만원/월</div>
+    <div class="acct-amount" id="acct-y1-amt">50만원/월</div>
     <div class="acct-desc">성장+배당의 조화. 세액공제 혜택과 함께 알차게 불어날 주머니</div>
     <div style="margin-top:8px">
       <span class="etf-tag">ACE S&P500 30만</span>
@@ -381,7 +382,7 @@
   </div>
   <div class="acct-card">
     <div class="acct-name">연금저축 y2 (세액공제 X)</div>
-    <div class="acct-amount">75만원/월</div>
+    <div class="acct-amount" id="acct-y2-amt">75만원/월</div>
     <div class="acct-desc">가장 든든한 엔진. 12% 현금 비중이 하락장에서 멘탈을 지켜줌</div>
     <div style="margin-top:8px">
       <span class="etf-tag">ACE 나스닥100 30만</span>
@@ -391,7 +392,7 @@
   </div>
   <div class="acct-card">
     <div class="acct-name">IRP (세액공제 O)</div>
-    <div class="acct-amount">25만원/월</div>
+    <div class="acct-amount" id="acct-irp-amt">25만원/월</div>
     <div class="acct-desc">안전자산 30% 룰 준수. 법적 규수 깔끔하게 관리</div>
     <div style="margin-top:8px">
       <span class="etf-tag">ACE 나스닥100 17만</span>
@@ -400,7 +401,7 @@
   </div>
   <div class="acct-card">
     <div class="acct-name">ISA</div>
-    <div class="acct-amount">170만원/월</div>
+    <div class="acct-amount" id="acct-isa-amt">170만원/월</div>
     <div class="acct-desc">현금 흐름의 핵심. 배당 비과세를 극대화하는 전략적 요충지</div>
     <div style="margin-top:8px">
       <span class="etf-tag">ACE S&P500 29%</span>
@@ -544,10 +545,45 @@ function fmtWon(만원) {
   return Math.round(만원) + '만원';
 }
 
+function calcAcctSplit(total) {
+  // 우선순위: 연금저축(y1) 50만 → IRP 25만 → 나머지 y2:ISA = 75:170
+  const y1  = Math.min(total, 50);
+  const irp = Math.min(Math.max(0, total - 50), 25);
+  const rem = Math.max(0, total - 75);
+  const y2  = Math.round(rem * 75 / 245);
+  const isa = rem - y2;
+  return { y1, irp, y2, isa };
+}
+
 function renderCalc() {
   const pcts = KALL_TYPES[currentType].pcts;
   const total = currentAmount;
   const grid = document.getElementById('allocGrid');
+
+  // 우선순위 계좌 배분 계산
+  const split = calcAcctSplit(total);
+
+  // 계좌 카드 업데이트
+  const acctY1  = document.getElementById('acct-y1-amt');
+  const acctY2  = document.getElementById('acct-y2-amt');
+  const acctIRP = document.getElementById('acct-irp-amt');
+  const acctISA = document.getElementById('acct-isa-amt');
+  if (acctY1)  acctY1.textContent  = split.y1  + '만원/월';
+  if (acctY2)  acctY2.textContent  = split.y2  + '만원/월';
+  if (acctIRP) acctIRP.textContent = split.irp + '만원/월';
+  if (acctISA) acctISA.textContent = split.isa + '만원/월';
+
+  // K-올웨더 계산기 계좌 배분 표시
+  const kallSplit = document.getElementById('kall-acct-split');
+  if (kallSplit) {
+    kallSplit.innerHTML = `
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;font-size:13px">
+        <span style="background:#dbeafe;color:#1e40af;padding:4px 10px;border-radius:8px;font-weight:700">연금저축 y1: ${split.y1}만</span>
+        <span style="background:#fce7f3;color:#9d174d;padding:4px 10px;border-radius:8px;font-weight:700">IRP: ${split.irp}만</span>
+        <span style="background:#d1fae5;color:#065f46;padding:4px 10px;border-radius:8px;font-weight:700">연금저축 y2: ${split.y2}만</span>
+        <span style="background:#ede9fe;color:#5b21b6;padding:4px 10px;border-radius:8px;font-weight:700">ISA: ${split.isa}만</span>
+      </div>`;
+  }
 
   grid.innerHTML = ALLOC_ITEMS.map((item, i) => {
     const pct  = pcts[i];
