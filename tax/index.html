@@ -17,6 +17,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .hdr{background:linear-gradient(135deg,#14213d,#3b0764);color:#fff;padding:20px 32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
 .hdr h1{font-size:20px;font-weight:700;}
 .hdr p{font-size:12px;color:rgba(255,255,255,.6);margin-top:3px;}
+.hdr-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.print-btn{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.22);color:#fff;border-radius:8px;padding:7px 14px;font-size:13px;cursor:pointer;font-family:inherit;transition:background .2s;}
+.print-btn:hover{background:rgba(255,255,255,.22);}
+@media print{.print-btn,.tabs{display:none!important;}.tab-panel{display:block!important;page-break-inside:avoid;}}
 .badge{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:4px 13px;font-size:11px;color:rgba(255,255,255,.85);}
 .wrap{max-width:1360px;margin:0 auto;padding:var(--gap);}
 .card{background:var(--card);border-radius:var(--r);box-shadow:0 1px 4px rgba(0,0,0,.07);}
@@ -88,92 +92,81 @@ table.dt tr:last-child td{border-bottom:none;}
   <span style="margin-left:10px;font-size:10px;">All rights reserved · 무단 복제 및 배포 금지</span>
 </div>
 <style id="__lock_style__">
-#__pw_overlay__ {
-  position:fixed; inset:0; z-index:99999;
-  background:#f2f2f7;
-  display:flex; align-items:center; justify-content:center;
-}
-#__pw_box__ {
-  background:#f2f2f7;
-  text-align:center;
-  width:100%; max-width:400px;
-  padding:60px 24px 40px;
-}
-#__pw_box__ h2 { color:#000; font-size:20px; font-weight:700; margin-bottom:8px; font-family:'Malgun Gothic',sans-serif; }
-#__pw_box__ .pw-sub { color:#8e8e93; font-size:14px; margin-bottom:32px; font-family:'Malgun Gothic',sans-serif; }
-.pin-dots { display:flex; justify-content:center; gap:16px; margin-bottom:40px; }
-.pin-dot { width:14px; height:14px; border-radius:50%; border:1.5px solid #c7c7cc; background:transparent; transition:background .15s; }
-.pin-dot.filled { background:#000; border-color:#000; }
-.pin-pad { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; max-width:280px; margin:0 auto; }
-.pin-btn {
-  background:#fff; border:none; border-radius:16px;
-  padding:20px 0; font-size:28px; font-weight:400;
-  cursor:pointer; font-family:'Malgun Gothic',sans-serif;
-  box-shadow:0 2px 8px rgba(0,0,0,.1); transition:background .1s;
-}
-.pin-btn:active { background:#e5e5ea; }
-.pin-btn.del { font-size:20px; }
-.pin-btn.empty { background:transparent; box-shadow:none; cursor:default; pointer-events:none; }
-#__pw_err__ { color:#ff3b30; font-size:13px; margin-top:16px; min-height:18px; font-family:'Malgun Gothic',sans-serif; }
-#__pw_box__ .pw-copy { color:rgba(255,255,255,.25); font-size:10px; margin-top:20px; font-family:'Malgun Gothic',sans-serif; }
+#__pw_overlay__{position:fixed;inset:0;z-index:99999;background:#f0f0f0;display:flex;align-items:center;justify-content:center;font-family:'Malgun Gothic','Apple SD Gothic Neo',sans-serif;}
+#__pw_box__{text-align:center;}
+#__pw_box__ h2{font-size:22px;font-weight:700;margin-bottom:6px;color:#1a1a1a;}
+#__pw_box__ .pw-sub{font-size:13px;color:#888;margin-bottom:28px;}
+.pin-dots{display:flex;justify-content:center;gap:16px;margin-bottom:36px;}
+.pin-dot{width:14px;height:14px;border-radius:50%;border:2px solid #bbb;background:#fff;transition:all .15s;}
+.pin-dot.filled{background:#1a1a1a;border-color:#1a1a1a;}
+.pin-pad{display:grid;grid-template-columns:repeat(3,80px);gap:12px;justify-content:center;}
+.pin-btn{width:80px;height:80px;border-radius:18px;border:none;background:#fff;font-size:28px;font-weight:500;color:#1a1a1a;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.1);transition:transform .1s,background .1s;}
+.pin-btn:active{transform:scale(.93);background:#e0e0e0;}
+.pin-btn.del{font-size:20px;color:#555;}
+.pin-btn.empty{background:transparent;box-shadow:none;cursor:default;pointer-events:none;}
+#__pw_err__{color:#e74c3c;font-size:12px;margin-top:16px;min-height:18px;}
 </style>
-
 <div id="__pw_overlay__">
   <div id="__pw_box__">
-    <h2>일반계좌 vs 절세계좌 세금 완전 비교</h2>
+    <h2>장정민 대시보드</h2>
     <div class="pw-sub">PIN 4자리를 입력하세요</div>
     <div class="pin-dots">
-      <div class="pin-dot" id="d0"></div>
-      <div class="pin-dot" id="d1"></div>
-      <div class="pin-dot" id="d2"></div>
-      <div class="pin-dot" id="d3"></div>
+      <div class="pin-dot" id="__pd0__"></div>
+      <div class="pin-dot" id="__pd1__"></div>
+      <div class="pin-dot" id="__pd2__"></div>
+      <div class="pin-dot" id="__pd3__"></div>
     </div>
     <div class="pin-pad">
-      <button class="pin-btn" onclick="pinInput('1')">1</button>
-      <button class="pin-btn" onclick="pinInput('2')">2</button>
-      <button class="pin-btn" onclick="pinInput('3')">3</button>
-      <button class="pin-btn" onclick="pinInput('4')">4</button>
-      <button class="pin-btn" onclick="pinInput('5')">5</button>
-      <button class="pin-btn" onclick="pinInput('6')">6</button>
-      <button class="pin-btn" onclick="pinInput('7')">7</button>
-      <button class="pin-btn" onclick="pinInput('8')">8</button>
-      <button class="pin-btn" onclick="pinInput('9')">9</button>
-      <div class="pin-btn empty"></div>
-      <button class="pin-btn" onclick="pinInput('0')">0</button>
-      <button class="pin-btn del" onclick="pinDel()">⌫</button>
+      <button class="pin-btn" onclick="__pinPress__('1')">1</button>
+      <button class="pin-btn" onclick="__pinPress__('2')">2</button>
+      <button class="pin-btn" onclick="__pinPress__('3')">3</button>
+      <button class="pin-btn" onclick="__pinPress__('4')">4</button>
+      <button class="pin-btn" onclick="__pinPress__('5')">5</button>
+      <button class="pin-btn" onclick="__pinPress__('6')">6</button>
+      <button class="pin-btn" onclick="__pinPress__('7')">7</button>
+      <button class="pin-btn" onclick="__pinPress__('8')">8</button>
+      <button class="pin-btn" onclick="__pinPress__('9')">9</button>
+      <button class="pin-btn empty"></button>
+      <button class="pin-btn" onclick="__pinPress__('0')">0</button>
+      <button class="pin-btn del" onclick="__pinDel__()">⌫</button>
     </div>
     <div id="__pw_err__"></div>
   </div>
 </div>
-</div>
 <script>
 (function(){
-  var _h = '5631e5efadc1db19f6b2453cc6a2d6b76a81682d8c8594680343794a2558a91e';
-  var _pin = '';
-  window.pinInput = async function(n) {
-    if (_pin.length >= 4) return;
-    _pin += n;
-    document.getElementById('d'+(_pin.length-1)).classList.add('filled');
-    if (_pin.length === 4) {
-      var enc = new TextEncoder();
-      var buf = await crypto.subtle.digest('SHA-256', enc.encode(_pin));
-      var hex = Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
-      if (hex === _h) {
-        document.getElementById('__pw_overlay__').style.display = 'none';
-        var s = document.getElementById('__lock_style__');
-        if (s) s.remove();
-      } else {
-        document.getElementById('__pw_err__').textContent = '핀 번호가 올바르지 않습니다';
-        setTimeout(function(){ _pin=''; for(var i=0;i<4;i++) document.getElementById('d'+i).classList.remove('filled'); document.getElementById('__pw_err__').textContent=''; }, 700);
+  var _pin='1346';
+  var _buf='';
+  function __unlock__(){
+    var ov=document.getElementById('__pw_overlay__'); if(ov) ov.style.display='none';
+    var s=document.getElementById('__lock_style__'); if(s) s.remove();
+  }
+  window.__pinPress__=function(n){
+    if(_buf.length>=4) return;
+    _buf+=n;
+    document.getElementById('__pd'+(_buf.length-1)+'__').classList.add('filled');
+    if(_buf.length===4){
+      if(_buf===_pin){ setTimeout(__unlock__,200); }
+      else{
+        document.getElementById('__pw_err__').textContent='PIN이 올바르지 않습니다';
+        setTimeout(function(){
+          _buf='';
+          for(var i=0;i<4;i++) document.getElementById('__pd'+i+'__').classList.remove('filled');
+          document.getElementById('__pw_err__').textContent='';
+        },800);
       }
     }
   };
-  window.pinDel = function() {
-    if (_pin.length === 0) return;
-    document.getElementById('d'+(_pin.length-1)).classList.remove('filled');
-    _pin = _pin.slice(0, -1);
+  window.__pinDel__=function(){
+    if(_buf.length===0) return;
+    document.getElementById('__pd'+(_buf.length-1)+'__').classList.remove('filled');
+    _buf=_buf.slice(0,-1);
+    document.getElementById('__pw_err__').textContent='';
   };
-  window.__checkPw__ = function(){};
+  document.addEventListener('DOMContentLoaded',function(){
+    var params=new URLSearchParams(window.location.search);
+    if(params.get('from')==='roadmap') __unlock__();
+  });
 })();
 </script>
 
@@ -183,7 +176,13 @@ table.dt tr:last-child td{border-bottom:none;}
     <h1>💰 일반계좌 vs 절세계좌 세금 완전 비교</h1>
     <p>투자 종류별 세율 · 연금저축·IRP·ISA 완전 분석</p>
   </div>
-  <div class="badge">배당금 입력 → 세금 즉시 계산</div>
+  <div class="hdr-right">
+    <div class="badge">배당금 입력 → 세금 즉시 계산</div>
+    <button class="print-btn" onclick="window.print()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      인쇄
+    </button>
+  </div>
 </div>
 
 <div class="wrap">
@@ -192,6 +191,8 @@ table.dt tr:last-child td{border-bottom:none;}
   <button class="tab" onclick="showTab('pension',this)">🏦 연금저축 vs IRP</button>
   <button class="tab" onclick="showTab('isa',this)">🛡️ ISA 계좌 분석</button>
   <button class="tab" onclick="showTab('calc',this)">🧮 세금 계산기</button>
+  <button class="tab" onclick="showTab('techtree',this)">🗺️ 자본주의 테크트리</button>
+  <button class="tab" onclick="showTab('insight',this)">💡 금융소득 & 크레딧 제도</button>
 </div>
 
 <!-- ════════════════════════════════════ -->
@@ -311,6 +312,14 @@ table.dt tr:last-child td{border-bottom:none;}
           <td class="hl-purple"><span class="ok">비과세</span><br><small>IRP 안전자산 30% 의무 채우기용<br>100% 매수 가능</small></td>
           <td class="hl-purple"><span class="ok">3.3~5.5%</span></td>
           <td class="hl-green"><span class="ok">200~400만원 비과세</span><br><small>초과 9.9%</small></td>
+        </tr>
+        <tr>
+          <td>📉 채권 ETF — <span style="color:var(--red);font-weight:700">미국 직상장</span><br><small style="color:var(--text2)">TLT, BND, AGG, SGOV 등 (달러로 직접 매수)</small><br><small style="background:#fee2e2;padding:1px 5px;border-radius:3px;color:#b91c1c">❌ 연금/ISA 계좌 매수 불가</small></td>
+          <td class="hl-red"><span class="warn">15.4%</span><br><small>이자·분배금 과세</small></td>
+          <td class="hl-red"><span class="bad">22%</span><br><small>양도소득세<br>(250만원 공제 후)</small></td>
+          <td style="background:#fef2f2;color:var(--red);font-size:11px;font-weight:600">❌ 매수 불가<br>국내 상장 ETF만 가능</td>
+          <td style="background:#fef2f2;color:var(--text2);font-size:11px">—</td>
+          <td style="background:#fef2f2;color:var(--red);font-size:11px;font-weight:600">❌ 매수 불가<br>국내 상장 ETF만 가능</td>
         </tr>
       </tbody>
     </table>
@@ -662,6 +671,835 @@ table.dt tr:last-child td{border-bottom:none;}
     </div>
   </div>
 </div>
+
+<!-- ════════════════════════════════════════════════════════════════ -->
+<!-- TAB 5 : 자본주의 테크트리  (서대리 13장 기반)                   -->
+<!-- ════════════════════════════════════════════════════════════════ -->
+<div id="tab-techtree" style="display:none">
+
+  <!-- 챕터 헤더 -->
+  <div style="background:linear-gradient(135deg,#14213d,#3b0764);color:#fff;border-radius:12px;padding:22px 24px;margin-bottom:var(--gap);position:relative;overflow:hidden">
+    <div style="position:absolute;right:20px;top:50%;transform:translateY(-50%);font-size:64px;opacity:.12">🌳</div>
+    <div style="font-size:11px;font-weight:700;letter-spacing:1px;color:rgba(255,255,255,.6);margin-bottom:6px">서대리(무서준) · 1억은 답답하지만 투자는 · 13장</div>
+    <div style="font-size:20px;font-weight:800;margin-bottom:6px">세금혜택을 최대한 누릴 수 있는 자본주의 테크트리</div>
+    <div style="font-size:13px;color:rgba(255,255,255,.75)">같은 돈, 같은 종목을 투자한다면 연금이나 ISA 계좌를 이용해야 하는 이유 — 투자하는 계좌만 잘 선택해도 돈을 더 벌 수 있다.</div>
+  </div>
+
+  <!-- 상황 선택 카드 3개 -->
+  <div style="margin-bottom:var(--gap)">
+    <div style="font-size:13px;font-weight:700;margin-bottom:12px;color:#1e293b">📍 나의 투자 상황을 선택하세요</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px">
+
+      <div id="ttcA" onclick="selectTT('A')" style="padding:18px 20px;border-radius:12px;border:2px solid var(--purple);background:#f5f3ff;cursor:pointer;transition:all .2s;box-shadow:0 2px 8px rgba(109,40,217,.18)">
+        <div style="font-size:26px;margin-bottom:8px">🏆</div>
+        <div style="font-size:14px;font-weight:700;color:var(--purple);margin-bottom:5px">노후 세금 최적화 (장기)</div>
+        <div style="font-size:12px;color:#6d28d9;opacity:.85;line-height:1.5">55세까지 돈 묶어둘 수 있음<br>세금 혜택 최대화가 목표</div>
+        <div style="margin-top:10px;font-size:11px;background:rgba(109,40,217,.12);border-radius:6px;padding:6px 8px;color:var(--purple);font-weight:600">연금저축 → IRP → 연금저축추가 → ISA → 일반계좌</div>
+      </div>
+
+      <div id="ttcB" onclick="selectTT('B')" style="padding:18px 20px;border-radius:12px;border:2px solid #e2e8f0;background:#fff;cursor:pointer;transition:all .2s">
+        <div style="font-size:26px;margin-bottom:8px">🏠</div>
+        <div style="font-size:14px;font-weight:700;margin-bottom:5px">결혼 · 내 집 마련 목돈 (중기)</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.5">3~5년 안에 목돈이 필요함<br>유연한 중도 인출 필요</div>
+        <div style="margin-top:10px;font-size:11px;background:#f0fdfa;border-radius:6px;padding:6px 8px;color:var(--teal);font-weight:600">ISA 우선 → 일반계좌 → 연금저축 소액</div>
+      </div>
+
+      <div id="ttcC" onclick="selectTT('C')" style="padding:18px 20px;border-radius:12px;border:2px solid #e2e8f0;background:#fff;cursor:pointer;transition:all .2s">
+        <div style="font-size:26px;margin-bottom:8px">⏰</div>
+        <div style="font-size:14px;font-weight:700;margin-bottom:5px">1~3년 단기 자금 (결혼비·중도금)</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.5">날짜가 정해진 자금<br>아파트 중도금·등록금 등</div>
+        <div style="margin-top:10px;font-size:11px;background:#fef3c7;border-radius:6px;padding:6px 8px;color:#92400e;font-weight:600">⚠️ 투자 금지! 예금·적금·파킹통장만</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── CASE A : 노후 최적화 ─────────────────────────────────── -->
+  <div id="tt-A">
+
+    <div style="background:#ede9fe;border:1px solid #c4b5fd;border-radius:10px;padding:14px 18px;margin-bottom:var(--gap);font-size:13px;color:#5b21b6">
+      💡 <strong>핵심 순서:</strong>
+      연금저축펀드 600만원 → 개인형 IRP 300만원 → 연금저축펀드 추가 900만원 → 중개형 ISA 2,000만원 → 일반계좌: 나머지 여유자금<br>
+      <span style="font-size:11px;display:block;margin-top:5px;opacity:.85">※ 세금혜택 최대화 연간 필요 금액: <strong>3,800만원</strong> (부부 합산 7,600만원) · 매년 여유자금이 생길 때마다 순서대로 채우면 됩니다.</span>
+    </div>
+
+    <!-- 납입 플로우 -->
+    <div class="card" style="padding:18px 20px;margin-bottom:var(--gap)">
+      <div class="stitle">🎯 최적 납입 순서 — Step by Step</div>
+      <div class="flow">
+        <div class="flow-item" style="border-top:3px solid var(--purple)">
+          <div class="fn">STEP 1</div>
+          <div class="ft">연금저축 600만원</div>
+          <div class="fd">세액공제 한도<br>환급 79~99만원</div>
+        </div>
+        <div class="flow-item" style="border-top:3px solid var(--blue)">
+          <div class="fn">STEP 2</div>
+          <div class="ft">IRP 300만원</div>
+          <div class="fd">합산 900만원<br>환급 추가 40~50만원</div>
+        </div>
+        <div class="flow-item" style="border-top:3px solid var(--teal)">
+          <div class="fn">STEP 3</div>
+          <div class="ft">연금저축 +900만원</div>
+          <div class="fd">납입한도 1,800만원<br>과세이연 극대화</div>
+        </div>
+        <div class="flow-item" style="border-top:3px solid var(--green)">
+          <div class="fn">STEP 4</div>
+          <div class="ft">ISA 2,000만원</div>
+          <div class="fd">비과세 200~400만원<br>초과분 9.9%</div>
+        </div>
+        <div class="flow-item" style="border-top:3px solid var(--amber)">
+          <div class="fn">STEP 5</div>
+          <div class="ft">일반계좌</div>
+          <div class="fd">나머지 여유자금<br>해외 직상장 ETF 가능</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 연간 투자 배분 계획기 -->
+    <div class="card inp-panel">
+      <h2>💰 나의 연간 투자 배분 계획기</h2>
+      <div class="inp-grid">
+        <div class="inp-item">
+          <label>연간 투자 가능 금액</label>
+          <input type="number" id="tt-amount" value="1000" step="100" onchange="calcTechTree()">
+          <div class="unit">만원/년</div>
+        </div>
+        <div class="inp-item">
+          <label>총급여 (세액공제율 결정)</label>
+          <input type="number" id="tt-income" value="5000" step="100" onchange="calcTechTree()">
+          <div class="unit">만원/년</div>
+        </div>
+      </div>
+      <button class="btn" onclick="calcTechTree()">🔄 배분 계획 계산</button>
+    </div>
+    <div id="tt-plan" style="margin-bottom:var(--gap)"></div>
+
+    <!-- 장기 복리 효과 차트 -->
+    <div class="chart-grid">
+      <div class="card chart-card">
+        <div class="stitle">📈 절세계좌 vs 일반계좌 20년 복리 비교 <span>연 1,000만원 · 연 7% 수익률 가정</span></div>
+        <canvas id="c-tt-compound"></canvas>
+      </div>
+      <div class="card chart-card">
+        <div class="stitle">💵 절세계좌 사용 시 추가 자산 (10 · 20 · 30년)</div>
+        <canvas id="c-tt-savings"></canvas>
+      </div>
+    </div>
+
+    <!-- 3대 혜택 + 주의사항 + ISA 이전 루트 -->
+    <div class="info-row">
+      <div class="info-box" style="border-left:4px solid var(--purple)">
+        <h3 style="color:var(--purple)">🏆 절세계좌 4대 혜택</h3>
+        <div class="row"><span class="k">① 세액공제</span><span class="v ok">13.2~16.5% 연말정산 환급</span></div>
+        <div class="row"><span class="k">② 과세이연</span><span class="v ok">운용 중 세금 0% (복리 극대화)</span></div>
+        <div class="row"><span class="k">③ 저율과세</span><span class="v ok">수령 시 3.3~5.5%만 부담</span></div>
+        <div class="row"><span class="k">④ 건보료 무풍</span><span class="v ok">배당금 얼마든 건보료 0원!</span></div>
+        <div class="row"><span class="k">원래 세율 대비</span><span class="v ok">15~22% → 최저 3.3%</span></div>
+      </div>
+      <div class="info-box" style="border-left:4px solid var(--amber)">
+        <h3 style="color:var(--amber)">⚠️ 연금계좌 단점 & 주의</h3>
+        <div class="row"><span class="k">의무 유지기간</span><span class="v warn">계좌 개설 후 5년 이상</span></div>
+        <div class="row"><span class="k">연금 개시 나이</span><span class="v warn">만 55세 이후</span></div>
+        <div class="row"><span class="k">중도 해지 세율</span><span class="v bad">16.5% 기타소득세</span></div>
+        <div class="row"><span class="k">IRP 위험자산</span><span class="v warn">최대 70% (나머지 안전자산)</span></div>
+        <div class="row"><span class="k">핵심 마인드</span><span class="v">"없는 돈"이라고 생각하고 투자</span></div>
+      </div>
+      <div class="info-box" style="border-left:4px solid var(--green)">
+        <h3 style="color:var(--green)">🥇 ISA → 연금저축 이전 황금 루트</h3>
+        <div class="row"><span class="k">이전 시 추가 납입</span><span class="v ok">연 3,800만원 한도 (일반의 2배)</span></div>
+        <div class="row"><span class="k">추가 세액공제</span><span class="v ok">이전 금액의 10% 추가 공제</span></div>
+        <div class="row"><span class="k">예시</span><span class="v">2,000만원 이전 → 200만원 추가 공제</span></div>
+        <div class="row"><span class="k">효과</span><span class="v ok">비과세 혜택 받은 돈 → 연금으로 이중 절세</span></div>
+        <div class="row"><span class="k">연금 수령 시</span><span class="v ok">3.3~5.5% 저율과세 적용</span></div>
+      </div>
+    </div>
+
+  </div><!-- /tt-A -->
+
+  <!-- ── CASE B : 목돈 마련 ──────────────────────────────────── -->
+  <div id="tt-B" style="display:none">
+
+    <div style="background:#f0fdfa;border:1px solid #99f6e4;border-radius:10px;padding:14px 18px;margin-bottom:var(--gap);font-size:13px;color:#0f766e">
+      💡 <strong>핵심 순서:</strong>
+      중개형 ISA 2,000만원 → 일반계좌: 남는 돈 → 연금저축펀드: 남는 돈 → 개인형 IRP: 남는 돈<br>
+      <span style="font-size:11px;display:block;margin-top:5px;opacity:.85">※ ISA는 만기 3~5년으로 기간이 적당하고, 중도 인출도 문제없습니다. 취업 초기라면 ISA와 일반계좌를 동시에 시작하는 것도 좋습니다.</span>
+    </div>
+
+    <div class="card" style="padding:18px 20px;margin-bottom:var(--gap)">
+      <div class="stitle">🎯 목돈 마련 최적 납입 순서</div>
+      <div class="flow">
+        <div class="flow-item" style="border-top:3px solid var(--teal)">
+          <div class="fn">1순위</div><div class="ft">ISA 2,000만원</div>
+          <div class="fd">비과세 200~400만원<br>3~5년 후 만기 수령</div>
+        </div>
+        <div class="flow-item" style="border-top:3px solid var(--blue)">
+          <div class="fn">2순위</div><div class="ft">일반계좌</div>
+          <div class="fd">남는 돈<br>해외 ETF 직접 가능</div>
+        </div>
+        <div class="flow-item" style="border-top:3px solid var(--purple)">
+          <div class="fn">3순위</div><div class="ft">연금저축 소액</div>
+          <div class="fd">월 3만원이라도<br>습관 & 관심 형성</div>
+        </div>
+        <div class="flow-item" style="border-top:3px solid var(--amber)">
+          <div class="fn">4순위</div><div class="ft">IRP 소액</div>
+          <div class="fd">남는 돈으로<br>퇴직금 대비</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-row">
+      <div class="info-box" style="border-left:4px solid var(--teal)">
+        <h3 style="color:var(--teal)">✅ ISA를 1순위로 선택하는 이유</h3>
+        <div class="row"><span class="k">만기</span><span class="v ok">3~5년 (목돈 마련 기간과 일치)</span></div>
+        <div class="row"><span class="k">중도 인출</span><span class="v ok">납입 원금 한도 내 가능</span></div>
+        <div class="row"><span class="k">비과세</span><span class="v ok">200~400만원 세금 0원</span></div>
+        <div class="row"><span class="k">손익통산</span><span class="v ok">수익 - 손실 합산 과세</span></div>
+        <div class="row"><span class="k">금융소득 합산</span><span class="v ok">제외 (종합과세 걱정 없음)</span></div>
+        <div class="row"><span class="k">건강보험료</span><span class="v ok">영향 없음</span></div>
+      </div>
+      <div class="info-box" style="border-left:4px solid var(--amber)">
+        <h3 style="color:var(--amber)">⚠️ ISA 반드시 알아야 할 단점</h3>
+        <div class="row"><span class="k">해외 직상장 ETF</span><span class="v bad">❌ 불가 (SCHD·QQQ·SPY·JEPI 등)</span></div>
+        <div class="row"><span class="k">국내 개별주식</span><span class="v ok">✅ 가능 (삼성전자·SK하이닉스 등)</span></div>
+        <div class="row"><span class="k">국내 상장 해외ETF</span><span class="v ok">✅ 가능 (TIGER S&P500 등)</span></div>
+        <div class="row"><span class="k">해외 직접 투자 원한다면</span><span class="v">일반계좌 이용</span></div>
+        <div class="row"><span class="k">연금저축·IRP도</span><span class="v bad">동일하게 해외 직상장 불가</span></div>
+      </div>
+      <div class="info-box" style="border-left:4px solid var(--blue)">
+        <h3 style="color:var(--blue)">💡 투자 초보자 전략</h3>
+        <div class="row"><span class="k">처음에는</span><span class="v">ISA + 일반계좌 둘 다 시작</span></div>
+        <div class="row"><span class="k">개별종목 자신감 생기면</span><span class="v">일반계좌 비중 높이기</span></div>
+        <div class="row"><span class="k">자신 없으면</span><span class="v ok">ISA + ETF 위주로 안정 투자</span></div>
+        <div class="row"><span class="k">연금계좌</span><span class="v ok">월 3만원이라도 시작 (관심 형성)</span></div>
+        <div class="row"><span class="k">핵심</span><span class="v ok">계좌 선택만 잘해도 돈이 더 벌린다!</span></div>
+      </div>
+    </div>
+
+    <!-- ISA 세금 효과 차트 (재사용) -->
+    <div class="chart-grid">
+      <div class="card chart-card">
+        <div class="stitle">💰 ISA vs 일반계좌 세금 비교 (수익 구간별)</div>
+        <canvas id="c-ttb-isa"></canvas>
+      </div>
+      <div class="card chart-card">
+        <div class="stitle">📊 ISA 만기 후 연금 이전 시 추가 세액공제</div>
+        <canvas id="c-ttb-transfer"></canvas>
+      </div>
+    </div>
+
+  </div><!-- /tt-B -->
+
+  <!-- ── CASE C : 단기 자금 ─────────────────────────────────── -->
+  <div id="tt-C" style="display:none">
+
+    <div style="background:#fef2f2;border:2px solid #fca5a5;border-radius:14px;padding:28px;margin-bottom:var(--gap);text-align:center">
+      <div style="font-size:52px;margin-bottom:12px">🚫</div>
+      <div style="font-size:22px;font-weight:800;color:var(--red);margin-bottom:10px">만기가 정해진 돈으로 투자하면 안 됩니다!</div>
+      <div style="font-size:14px;color:#991b1b;max-width:520px;margin:0 auto;line-height:1.7">
+        결혼비·아파트 중도금·자녀 등록금 등 납부 날짜가 정해진 자금은 투자 대상이 아닙니다.<br>
+        <strong>단기 주가 방향은 아무도 맞출 수 없습니다.</strong> 순간의 선택이 인생 전체를 흔들어버릴 수 있습니다.
+      </div>
+    </div>
+
+    <div class="info-row">
+      <div class="info-box" style="border-left:4px solid var(--red)">
+        <h3 style="color:var(--red)">❌ 단기 자금을 투자에 쓰면 안 되는 이유</h3>
+        <div class="row"><span class="k">주가 단기 예측</span><span class="v bad">아무도 맞출 수 없음</span></div>
+        <div class="row"><span class="k">원금 손실 위험</span><span class="v bad">투자는 자산을 녹여버릴 수도 있음</span></div>
+        <div class="row"><span class="k">최악의 시나리오</span><span class="v bad">중도금보다 돈이 부족해지는 상황</span></div>
+        <div class="row"><span class="k">부족하다면</span><span class="v bad">투자로 보전 시도 → 더 큰 손실 위험</span></div>
+        <div class="row"><span class="k">결론</span><span class="v bad">투자는 자산을 불리기도, 녹이기도 한다</span></div>
+      </div>
+      <div class="info-box" style="border-left:4px solid var(--green)">
+        <h3 style="color:var(--green)">✅ 단기 자금 올바른 운용법</h3>
+        <div class="row"><span class="k">정기예금</span><span class="v ok">안전 + 확정 이자 + 만기 설정</span></div>
+        <div class="row"><span class="k">적금</span><span class="v ok">매달 소액 납입, 만기 일치</span></div>
+        <div class="row"><span class="k">파킹통장</span><span class="v ok">언제든 출금 가능 + 일일 이자</span></div>
+        <div class="row"><span class="k">CMA</span><span class="v ok">증권사 수시입출금 + 이자</span></div>
+        <div class="row"><span class="k">핵심</span><span class="v ok">원금 보장 + 납부일에 맞게 출금</span></div>
+      </div>
+      <div class="info-box" style="border-left:4px solid var(--blue)">
+        <h3 style="color:var(--blue)">💡 돈이 부족할 때 해결책</h3>
+        <div class="row"><span class="k">근본 해결책</span><span class="v">투자가 아닌 다른 방법으로 더 벌기</span></div>
+        <div class="row"><span class="k">부업·알바</span><span class="v">단기간 수입 늘리기</span></div>
+        <div class="row"><span class="k">지출 절감</span><span class="v">불필요한 소비 줄이기</span></div>
+        <div class="row"><span class="k">저리 대출 검토</span><span class="v warn">전세대출·주담대 등 (신중히)</span></div>
+        <div class="row"><span class="k">절대 금지</span><span class="v bad">날짜 임박 자금으로 투자 시도</span></div>
+      </div>
+    </div>
+
+    <div class="card" style="padding:18px 20px;margin-bottom:var(--gap)">
+      <div class="stitle" style="margin-bottom:16px">📊 예금 vs 투자 — 단기(3년) 기대값 비교</div>
+      <canvas id="c-ttc-compare" style="max-height:240px"></canvas>
+    </div>
+
+  </div><!-- /tt-C -->
+
+  <!-- 추천 유튜브 (항상 표시) -->
+  <div class="card" style="padding:18px 20px;margin-bottom:var(--gap);border-left:4px solid var(--red)">
+    <div class="stitle">📺 서대리 추천 핵심 유튜브 영상 (책 본문 수록)</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-top:12px">
+      <div style="background:#f8fafc;border-radius:8px;padding:12px 14px;border:1px solid var(--border)">
+        <div style="font-size:10px;font-weight:700;color:var(--red);margin-bottom:4px;letter-spacing:.3px">▶ 연금저축</div>
+        <div style="font-size:12px;font-weight:600;line-height:1.4">연금저축펀드로 노후 걱정 끝내는 방법</div>
+      </div>
+      <div style="background:#f8fafc;border-radius:8px;padding:12px 14px;border:1px solid var(--border)">
+        <div style="font-size:10px;font-weight:700;color:var(--red);margin-bottom:4px;letter-spacing:.3px">▶ 배당 ETF</div>
+        <div style="font-size:12px;font-weight:600;line-height:1.4">죽을 때까지 들고 갈 최고의 배당 ETF</div>
+      </div>
+      <div style="background:#f8fafc;border-radius:8px;padding:12px 14px;border:1px solid var(--border)">
+        <div style="font-size:10px;font-weight:700;color:var(--red);margin-bottom:4px;letter-spacing:.3px">▶ S&amp;P500</div>
+        <div style="font-size:12px;font-weight:600;line-height:1.4">S&amp;P500 ETF는 이렇게 모아가세요</div>
+      </div>
+      <div style="background:#f8fafc;border-radius:8px;padding:12px 14px;border:1px solid var(--border)">
+        <div style="font-size:10px;font-weight:700;color:var(--red);margin-bottom:4px;letter-spacing:.3px">▶ 계좌 개설</div>
+        <div style="font-size:12px;font-weight:600;line-height:1.4">직장인이라면 무조건 만들어야 하는 계좌 4개</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /tab-techtree -->
+
+<script>
+// ── 자본주의 테크트리 JS ──────────────────────────────────────────────
+let _ttScenario = 'A';
+
+function selectTT(s) {
+  _ttScenario = s;
+  const colors = {A:'var(--purple)', B:'var(--teal)', C:'var(--amber)'};
+  const bgs    = {A:'#f5f3ff',       B:'#f0fdfa',     C:'#fffbeb'};
+  const shadows= {A:'rgba(109,40,217,.18)', B:'rgba(13,148,136,.15)', C:'rgba(217,119,6,.15)'};
+  ['A','B','C'].forEach(x => {
+    const card = document.getElementById('ttc'+x);
+    const det  = document.getElementById('tt-'+x);
+    if(x===s){
+      card.style.borderColor  = colors[x];
+      card.style.background   = bgs[x];
+      card.style.boxShadow    = '0 2px 8px '+shadows[x];
+      det.style.display = '';
+    } else {
+      card.style.borderColor  = '#e2e8f0';
+      card.style.background   = '#fff';
+      card.style.boxShadow    = '';
+      det.style.display = 'none';
+    }
+  });
+  if(s==='A'){ calcTechTree(); drawTTChartsA(); }
+  if(s==='B'){ drawTTChartsB(); }
+  if(s==='C'){ drawTTChartsC(); }
+}
+
+function calcTechTree(){
+  const amount = +document.getElementById('tt-amount').value || 1000;
+  const income = +document.getElementById('tt-income').value || 5000;
+  const rate   = income <= 5500 ? 0.165 : 0.132;
+
+  let rem = amount;
+  const steps = [];
+
+  const s1 = Math.min(rem, 600); rem -= s1;
+  steps.push({name:'연금저축 (세액공제 한도)', amt:s1, credit:s1, col:'var(--purple)', note:'환급 받고 과세이연'});
+
+  if(rem > 0){ const s2=Math.min(rem,300); rem-=s2; steps.push({name:'IRP 추가 (합산 900만원)', amt:s2, credit:s2, col:'var(--blue)', note:'세액공제 한도 채우기'}); }
+  if(rem > 0){ const s3=Math.min(rem,900); rem-=s3; steps.push({name:'연금저축 추가 납입',       amt:s3, credit:0,  col:'var(--teal)', note:'세액공제 없음, 과세이연만'}); }
+  if(rem > 0){ const s4=Math.min(rem,2000); rem-=s4; steps.push({name:'ISA (중개형)',            amt:s4, credit:0,  col:'var(--green)', note:`비과세 200만원, 초과 9.9%`}); }
+  if(rem > 0){ steps.push({name:'일반계좌',                                                        amt:rem, credit:-1, col:'var(--amber)', note:'배당 15.4%, 해외차익 22%'}); rem=0; }
+
+  const totalCredit = steps.filter(s=>s.credit>0).reduce((a,s)=>a+s.credit,0);
+  const refund      = Math.min(totalCredit,900) * rate;
+  const deferred    = steps.filter(s=>s.credit===0).reduce((a,s)=>a+s.amt,0);
+
+  let rows = '';
+  steps.forEach((s,i) => {
+    let taxCell;
+    if(s.credit>0)       taxCell = `<span class="ok">환급 +${(s.credit*rate).toFixed(0)}만원</span>`;
+    else if(s.credit===0 && s.name.includes('ISA')) taxCell = `<span class="ok">비과세 200만/초과 9.9%</span>`;
+    else if(s.credit===0) taxCell = `<span class="ok">과세이연 (0%)</span>`;
+    else                 taxCell = `<span class="warn">배당 15.4%</span>`;
+    rows += `<tr>
+      <td><span style="display:inline-block;width:20px;height:20px;border-radius:50%;background:${s.col};color:#fff;font-size:10px;font-weight:700;text-align:center;line-height:20px;margin-right:6px">${i+1}</span>${s.name}</td>
+      <td style="font-weight:700;text-align:right">${s.amt.toLocaleString()}만원</td>
+      <td>${taxCell}</td>
+      <td style="font-size:11px;color:var(--text2)">${s.note}</td>
+    </tr>`;
+  });
+
+  document.getElementById('tt-plan').innerHTML = `
+    <div class="card" style="padding:18px 20px">
+      <div class="stitle">📊 연간 <strong>${amount.toLocaleString()}만원</strong> 최적 배분 계획 (총급여 ${income.toLocaleString()}만원 기준)</div>
+      <div style="overflow-x:auto"><table class="dt"><thead><tr>
+        <th style="text-align:left">납입 순서 · 계좌</th>
+        <th style="text-align:right">납입 금액</th>
+        <th>세금 혜택</th>
+        <th>메모</th>
+      </tr></thead><tbody>${rows}</tbody></table></div>
+      <div class="kpi-row" style="margin-top:14px;margin-bottom:0">
+        <div class="card kpi green" style="padding:12px"><div class="lbl">연말정산 환급</div><div class="val" style="font-size:18px">${refund.toFixed(0)}만원</div><div class="sub">세액공제율 ${(rate*100).toFixed(1)}%</div></div>
+        <div class="card kpi purple" style="padding:12px"><div class="lbl">과세이연/비과세 납입</div><div class="val" style="font-size:18px">${deferred.toLocaleString()}만원</div><div class="sub">운용 중 세금 0원</div></div>
+        <div class="card kpi ${rem===0?'teal':'amber'}" style="padding:12px"><div class="lbl">일반계좌</div><div class="val" style="font-size:18px">${steps.find(s=>s.credit===-1)?steps.find(s=>s.credit===-1).amt:0}만원</div><div class="sub">${steps.find(s=>s.credit===-1)?'해외 직상장 ETF 사용 가능':'절세계좌만으로 충분!'}</div></div>
+        <div class="card kpi blue" style="padding:12px"><div class="lbl">절세계좌 채우려면</div><div class="val" style="font-size:18px">${(3800-amount>0?(3800-amount):0).toLocaleString()}만원</div><div class="sub">추가 납입 시 세금 혜택 증가</div></div>
+      </div>
+    </div>`;
+}
+
+function drawTTChartsA(){
+  const annual=1000, r=0.07, taxDiv=0.154, penOut=0.055;
+  let pen=0, gen=0;
+  const pD=[0], gD=[0], yrs=[];
+  for(let i=1;i<=20;i++){
+    pen = (pen+annual)*(1+r);
+    gen = (gen+annual*(1))*(1+r*(1-taxDiv));
+    pD.push(+(pen*(1-penOut)).toFixed(0));
+    gD.push(+gen.toFixed(0));
+    yrs.push(i+'년');
+  }
+  mkChart('c-tt-compound','line',{labels:['0년',...yrs],datasets:[
+    {label:'절세계좌 (수령 시 5.5% 적용)',data:pD,borderColor:C.purple,backgroundColor:C.purple+'22',fill:true,tension:.35,borderWidth:2.5,pointRadius:0},
+    {label:'일반계좌 (세후 복리)',data:gD,borderColor:C.red,backgroundColor:C.red+'18',fill:true,tension:.35,borderWidth:2.5,pointRadius:0},
+  ]},{plugins:{legend:{position:'top',labels:{font:{size:10}}},tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${fmt(c.parsed.y)}`}}},
+    scales:{x:{grid:{display:false}},y:{beginAtZero:true,ticks:{callback:v=>fmt(v)}}}});
+
+  let pp=0,gg=0; const savedArr=[];
+  for(let i=1;i<=30;i++){
+    pp=(pp+annual)*(1+r);
+    gg=(gg+annual)*(1+r*(1-taxDiv));
+    if([10,20,30].includes(i)) savedArr.push(+(pp*(1-penOut)-gg).toFixed(0));
+  }
+  mkChart('c-tt-savings','bar',{labels:['10년 후','20년 후','30년 후'],datasets:[{
+    label:'절세계좌 추가 자산',data:savedArr,
+    backgroundColor:[C.green+'bb',C.teal+'bb',C.purple+'bb'],
+    borderColor:[C.green,C.teal,C.purple],borderWidth:1.5,borderRadius:8
+  }]},{plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`절세계좌가 ${fmt(c.parsed.y)} 더 많음`}}},
+    scales:{x:{grid:{display:false}},y:{beginAtZero:true,ticks:{callback:v=>fmt(v)}}}});
+}
+
+function drawTTChartsB(){
+  const profits=[100,200,300,500,1000,2000];
+  mkChart('c-ttb-isa','bar',{labels:profits.map(p=>p+'만'),datasets:[
+    {label:'일반계좌 (15.4%)',data:profits.map(p=>+(p*0.154).toFixed(0)),backgroundColor:C.red+'99',borderColor:C.red,borderWidth:1.5,borderRadius:4},
+    {label:'ISA 일반형 (비과세200+9.9%)',data:profits.map(p=>+(Math.max(0,p-200)*0.099).toFixed(0)),backgroundColor:C.green+'99',borderColor:C.green,borderWidth:1.5,borderRadius:4},
+    {label:'ISA 서민형 (비과세400+9.9%)',data:profits.map(p=>+(Math.max(0,p-400)*0.099).toFixed(0)),backgroundColor:C.teal+'99',borderColor:C.teal,borderWidth:1.5,borderRadius:4},
+  ]},{plugins:{legend:{position:'top',labels:{font:{size:10}}},tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${c.parsed.y}만원`}}},
+    scales:{x:{grid:{display:false}},y:{beginAtZero:true,ticks:{callback:v=>v+'만'}}}});
+
+  const transfers=[500,1000,1500,2000,3000];
+  mkChart('c-ttb-transfer','bar',{labels:transfers.map(t=>t+'만 이전'),datasets:[
+    {label:'추가 세액공제 (10%)',data:transfers.map(t=>+(t*0.1).toFixed(0)),backgroundColor:C.purple+'99',borderColor:C.purple,borderWidth:1.5,borderRadius:6},
+  ]},{plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`추가 공제: ${c.parsed.y}만원`}}},
+    scales:{x:{grid:{display:false}},y:{beginAtZero:true,ticks:{callback:v=>v+'만'}}}});
+}
+
+function drawTTChartsC(){
+  const scenarios=[
+    {label:'최악 (-30%)',  deposit:103, invest:70,  color:C.red},
+    {label:'보통 (-10%)',  deposit:103, invest:90,  color:C.amber},
+    {label:'보통 (+10%)',  deposit:103, invest:110, color:C.teal},
+    {label:'최선 (+30%)',  deposit:103, invest:130, color:C.green},
+  ];
+  mkChart('c-ttc-compare','bar',{
+    labels:scenarios.map(s=>s.label),
+    datasets:[
+      {label:'정기예금 (연 1% 3년)',data:scenarios.map(()=>103),backgroundColor:C.blue+'88',borderColor:C.blue,borderWidth:1.5,borderRadius:6},
+      {label:'주식 투자 결과',data:scenarios.map(s=>s.invest),backgroundColor:scenarios.map(s=>s.color+'88'),borderColor:scenarios.map(s=>s.color),borderWidth:1.5,borderRadius:6},
+    ]
+  },{plugins:{legend:{position:'top',labels:{font:{size:10}}},tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${c.parsed.y}만원`}}},
+    scales:{x:{grid:{display:false}},y:{beginAtZero:false,min:50,ticks:{callback:v=>v+'만'}}}});
+}
+</script>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- TAB 6 : 금융소득 & 크레딧 제도                               -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div id="tab-insight" style="display:none">
+
+  <!-- 헤더 -->
+  <div style="background:linear-gradient(135deg,#7f1d1d,#dc2626);color:#fff;border-radius:12px;padding:22px 24px;margin-bottom:var(--gap)">
+    <div style="font-size:11px;font-weight:700;letter-spacing:1px;color:rgba(255,255,255,.55);margin-bottom:6px">핵심 심화 지식</div>
+    <div style="font-size:20px;font-weight:800;margin-bottom:6px">⚠️ 금융소득 2,000만원 — 정확히 무엇이 합산되나?</div>
+    <div style="font-size:13px;color:rgba(255,255,255,.82)">같은 수익도 상품·계좌에 따라 금융소득 합산 여부가 완전히 다릅니다. 잘못 알면 세금 폭탄!</div>
+  </div>
+
+  <!-- ─── 금융소득 합산 상세표 ─── -->
+  <div class="card tbl-wrap" style="border-left:4px solid var(--red);margin-bottom:var(--gap)">
+    <div class="stitle">📋 투자 상품 × 소득 유형별 금융소득 합산 여부 <span>일반계좌 기준 · 연 이자+배당 합계 2,000만원 초과 시 종합과세</span></div>
+    <table class="dt">
+      <thead>
+        <tr>
+          <th style="text-align:left;min-width:220px">투자 상품 · 소득 유형</th>
+          <th style="min-width:130px">금융소득 합산?</th>
+          <th style="min-width:90px">세율</th>
+          <th style="min-width:110px">세금 종류</th>
+          <th>비고</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- 국내 주식 -->
+        <tr style="background:#f1f5f9"><td colspan="5" style="font-size:11px;font-weight:700;color:#475569;padding:7px 12px;letter-spacing:.4px">🇰🇷 국내 주식 (삼성전자, SK하이닉스, 카카오 등)</td></tr>
+        <tr>
+          <td>배당금 (삼성전자 배당 등)</td>
+          <td><span style="background:#fee2e2;color:var(--red);padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700">✅ 합산</span></td>
+          <td class="warn">15.4%</td><td>배당소득세</td>
+          <td>이자+배당 합계가 2,000만원 초과 시 종합과세</td>
+        </tr>
+        <tr>
+          <td>매매차익 (삼성전자 사고팔기)</td>
+          <td><span style="background:#dcfce7;color:#15803d;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700">❌ 비과세</span></td>
+          <td class="ok">0%</td><td>비과세</td>
+          <td>국내 상장 주식 매매차익 → 비과세, 합산 무관</td>
+        </tr>
+
+        <!-- 국내 주식형 ETF -->
+        <tr style="background:#f1f5f9"><td colspan="5" style="font-size:11px;font-weight:700;color:#475569;padding:7px 12px;letter-spacing:.4px">📊 국내 주식형 ETF (KODEX 200, TIGER 코스피200 등)</td></tr>
+        <tr>
+          <td>분배금 (KODEX 200 분배금)</td>
+          <td><span style="background:#fee2e2;color:var(--red);padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700">✅ 합산</span></td>
+          <td class="warn">15.4%</td><td>배당소득세</td>
+          <td>ETF 분배금은 배당소득으로 분류</td>
+        </tr>
+        <tr>
+          <td>매매차익 (KODEX 200 매도 차익)</td>
+          <td><span style="background:#dcfce7;color:#15803d;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700">❌ 비과세</span></td>
+          <td class="ok">0%</td><td>비과세</td>
+          <td>국내 주식형 ETF 매매차익 → 비과세</td>
+        </tr>
+
+        <!-- 국내상장 해외주식형 ETF ★ 핵심 주의! -->
+        <tr style="background:#fef3c7"><td colspan="5" style="font-size:11px;font-weight:700;color:#92400e;padding:7px 12px;letter-spacing:.4px">⚠️ 국내상장 해외주식형 ETF (TIGER 미국S&P500, KODEX 나스닥100, TIGER 미국배당다우존스 등) — 핵심 주의!</td></tr>
+        <tr>
+          <td>분배금 (TIGER S&P500 분배금)</td>
+          <td><span style="background:#fee2e2;color:var(--red);padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700">✅ 합산</span></td>
+          <td class="warn">15.4%</td><td>배당소득세</td>
+          <td>분배금 → 배당소득으로 합산</td>
+        </tr>
+        <tr style="background:#fff7ed">
+          <td><strong>매매차익 (TIGER S&P500 매도 차익)</strong></td>
+          <td><span style="background:#fee2e2;color:var(--red);padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700">⚠️ 합산!</span></td>
+          <td class="bad">15.4%</td><td>배당소득세(!)</td>
+          <td style="color:var(--red);font-weight:700">매매차익인데도 배당소득으로 과세! 2,000만원 합산 포함 — 절세계좌 활용 필수!</td>
+        </tr>
+
+        <!-- 미국 직접 투자 -->
+        <tr style="background:#f1f5f9"><td colspan="5" style="font-size:11px;font-weight:700;color:#475569;padding:7px 12px;letter-spacing:.4px">🇺🇸 미국 직접 투자 (SCHD, QQQ, SPY, 애플, 마이크로소프트, JEPI 등)</td></tr>
+        <tr>
+          <td>배당금 (애플·SCHD·JEPI 배당 등)</td>
+          <td><span style="background:#fee2e2;color:var(--red);padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700">✅ 합산</span></td>
+          <td class="warn">15% (미국) → 합산</td><td>배당소득세</td>
+          <td>미국 원천징수 15% 후 국내 금융소득에 합산. 외국납부세액공제 적용</td>
+        </tr>
+        <tr>
+          <td>매매차익 (SPY, SCHD, 애플 매도 차익)</td>
+          <td><span style="background:#dbeafe;color:#1d4ed8;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700">🔵 별도 과세</span></td>
+          <td class="bad">22%</td><td>양도소득세 (분류과세)</td>
+          <td>금융소득 아님! 별도 양도소득세 (연 250만원 공제 후 22%). 종합과세 합산 제외</td>
+        </tr>
+
+        <!-- 국내상장 채권형 ETF -->
+        <tr style="background:#f1f5f9"><td colspan="5" style="font-size:11px;font-weight:700;color:#475569;padding:7px 12px;letter-spacing:.4px">🏦 채권형 ETF — 국내상장 (ACE 미국30년국채, KODEX TRF3070 등)</td></tr>
+        <tr>
+          <td>분배금 및 매매차익</td>
+          <td><span style="background:#fee2e2;color:var(--red);padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700">✅ 합산</span></td>
+          <td class="warn">15.4%</td><td>이자소득세</td>
+          <td>채권형 ETF 분배금·매매차익 모두 이자소득으로 분류, 합산</td>
+        </tr>
+
+        <!-- 미국 직상장 채권 ETF -->
+        <tr style="background:#f1f5f9"><td colspan="5" style="font-size:11px;font-weight:700;color:#475569;padding:7px 12px;letter-spacing:.4px">📉 채권 ETF — 미국 직상장 (TLT, BND, AGG, SGOV 등)</td></tr>
+        <tr>
+          <td>분배금 (TLT 이자·분배금)</td>
+          <td><span style="background:#fee2e2;color:var(--red);padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700">✅ 합산</span></td>
+          <td class="warn">15.4%</td><td>이자소득세</td>
+          <td>미국 채권 이자 → 이자소득으로 합산</td>
+        </tr>
+        <tr>
+          <td>매매차익 (TLT 매도 차익)</td>
+          <td><span style="background:#dbeafe;color:#1d4ed8;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700">🔵 별도 과세</span></td>
+          <td class="bad">22%</td><td>양도소득세 (분류과세)</td>
+          <td>미국 직상장 ETF 매매차익 → 양도소득세. 금융소득 합산 제외</td>
+        </tr>
+
+        <!-- 예금·이자 -->
+        <tr style="background:#f1f5f9"><td colspan="5" style="font-size:11px;font-weight:700;color:#475569;padding:7px 12px;letter-spacing:.4px">🏧 예금·적금·채권 이자</td></tr>
+        <tr>
+          <td>예금·적금 이자 / 채권 이자</td>
+          <td><span style="background:#fee2e2;color:var(--red);padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700">✅ 합산</span></td>
+          <td class="warn">15.4%</td><td>이자소득세</td>
+          <td>이자소득 + 배당소득 합계로 2,000만원 판단</td>
+        </tr>
+
+        <!-- 부동산 임대소득 -->
+        <tr style="background:#f1f5f9"><td colspan="5" style="font-size:11px;font-weight:700;color:#475569;padding:7px 12px;letter-spacing:.4px">🏠 부동산 임대소득 (월세 등)</td></tr>
+        <tr>
+          <td>월세 수입 (임대소득)</td>
+          <td><span style="background:#f3f4f6;color:#6b7280;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700">🔶 별도 분류</span></td>
+          <td class="warn">분리 or 종합</td><td>사업소득 (임대소득)</td>
+          <td>금융소득 아님 (이자·배당 아님). 연 2,000만원 이하 분리과세 선택 가능. 단, 금융소득 종합과세 대상이 되면 임대소득과 근로소득도 함께 합산 누진과세!</td>
+        </tr>
+
+        <!-- 절세계좌 -->
+        <tr style="background:#f0fdf4"><td colspan="5" style="font-size:11px;font-weight:700;color:#166534;padding:7px 12px;letter-spacing:.4px">🛡️ 절세계좌 내 수익 — ISA · 연금저축 · IRP (완전 제외!)</td></tr>
+        <tr style="background:#f0fdf4">
+          <td>ISA 계좌 내 모든 수익</td>
+          <td><span style="background:#dcfce7;color:#15803d;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700">❌ 완전 제외</span></td>
+          <td class="ok">9.9% 분리과세</td><td>분리과세</td>
+          <td>금융소득 합산 완전 제외. 건보료 영향 없음!</td>
+        </tr>
+        <tr style="background:#f0fdf4">
+          <td>연금저축·IRP 운용 중 수익</td>
+          <td><span style="background:#dcfce7;color:#15803d;padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700">❌ 완전 제외</span></td>
+          <td class="ok">0% (과세이연)</td><td>과세이연</td>
+          <td>수령 시 연금소득세 3.3~5.5%. 연 1,500만원 이하 분리과세. 금융소득 합산 제외!</td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="background:#ede9fe;border-radius:8px;padding:12px 16px;margin-top:12px;font-size:12px;color:#5b21b6;line-height:1.7">
+      💡 <strong>핵심 요약 — 금융소득 2,000만원 = 이자소득 + 배당소득 합계</strong><br>
+      ✅ <strong>합산 포함:</strong> 국내주식 배당 · 국내ETF 분배금 · 국내상장 해외ETF 분배금·<strong>매매차익(!)</strong> · 미국주식 배당 · 예금이자 · 채권이자<br>
+      ❌ <strong>합산 제외:</strong> 국내주식 매매차익(비과세) · 국내 주식형ETF 매매차익(비과세) · 미국직상장 ETF/주식 매매차익(양도소득세, 별도) · ISA/연금계좌 수익(분리과세)
+    </div>
+  </div>
+
+  <!-- 금융소득 시뮬레이터 -->
+  <div class="card inp-panel" style="border-color:var(--red);margin-bottom:var(--gap)">
+    <h2>🧮 나의 금융소득 합산 시뮬레이터</h2>
+    <div class="inp-grid">
+      <div class="inp-item"><label>국내 주식 배당금</label><input type="number" id="fi-kdiv" value="200" step="50" onchange="calcFinIncome()"><div class="unit">만원 (삼성전자 등)</div></div>
+      <div class="inp-item"><label>국내 ETF 분배금</label><input type="number" id="fi-ketf" value="100" step="50" onchange="calcFinIncome()"><div class="unit">만원 (KODEX 200 등)</div></div>
+      <div class="inp-item"><label>국내상장 해외ETF 분배금</label><input type="number" id="fi-fediv" value="200" step="50" onchange="calcFinIncome()"><div class="unit">만원 (TIGER S&P500 등)</div></div>
+      <div class="inp-item"><label>국내상장 해외ETF 매매차익</label><input type="number" id="fi-fegain" value="500" step="50" onchange="calcFinIncome()"><div class="unit">만원 ⚠️ 배당소득 합산!</div></div>
+      <div class="inp-item"><label>미국 주식·ETF 배당금</label><input type="number" id="fi-usdiv" value="300" step="50" onchange="calcFinIncome()"><div class="unit">만원 (SCHD·애플 배당 등)</div></div>
+      <div class="inp-item"><label>예금·적금·채권 이자</label><input type="number" id="fi-int" value="100" step="50" onchange="calcFinIncome()"><div class="unit">만원</div></div>
+    </div>
+    <button class="btn" style="background:var(--red)" onclick="calcFinIncome()">🔄 금융소득 합산 계산</button>
+  </div>
+  <div id="fi-result" style="margin-bottom:var(--gap)"></div>
+
+  <!-- ─── 외국납부세액공제 크레딧 제도 ─── -->
+  <div style="background:linear-gradient(135deg,#1e3a5f,#1e40af);color:#fff;border-radius:12px;padding:22px 24px;margin-bottom:var(--gap)">
+    <div style="font-size:11px;font-weight:700;letter-spacing:1px;color:rgba(255,255,255,.55);margin-bottom:6px">2026년 주요 세제 변화</div>
+    <div style="font-size:20px;font-weight:800;margin-bottom:6px">🆕 외국납부세액공제 크레딧 제도 (2026년 도입)</div>
+    <div style="font-size:13px;color:rgba(255,255,255,.82)">ISA·연금계좌 내 해외 ETF 이중과세 논란 해결을 위한 크레딧(포인트) 적립 방식 세금 보정 제도</div>
+  </div>
+
+  <!-- 타임라인 -->
+  <div class="card" style="padding:18px 20px;margin-bottom:var(--gap)">
+    <div class="stitle">📅 제도 변천사 — 왜 생겼나?</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:0;margin-top:14px">
+      <div style="padding:16px 18px;border-top:4px solid var(--green);background:#f0fdf4">
+        <div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:6px">2024년 이전</div>
+        <div style="font-size:14px;font-weight:700;margin-bottom:8px">선환급 제도</div>
+        <div style="font-size:12px;color:#166534;line-height:1.6">미국 세금 15%를 <strong>국가가 즉시 계좌에 메꿔줌</strong><br>→ 세전 100% 재투자 (완벽한 과세이연 실현)</div>
+      </div>
+      <div style="padding:16px 18px;border-top:4px solid var(--red);background:#fef2f2">
+        <div style="font-size:12px;font-weight:700;color:var(--red);margin-bottom:6px">2025년</div>
+        <div style="font-size:14px;font-weight:700;margin-bottom:8px">선환급 폐지 → 이중과세!</div>
+        <div style="font-size:12px;color:#991b1b;line-height:1.6">미국 세금 15% 차감 후 계좌 입금<br>인출 시 국내 연금세 3.3~5.5% 또 부과<br>→ <strong>이중과세! 투자자 반발</strong></div>
+      </div>
+      <div style="padding:16px 18px;border-top:4px solid var(--blue);background:#eff6ff">
+        <div style="font-size:12px;font-weight:700;color:var(--blue);margin-bottom:6px">2026년 현재</div>
+        <div style="font-size:14px;font-weight:700;margin-bottom:8px">크레딧(포인트) 제도 도입</div>
+        <div style="font-size:12px;color:#1e40af;line-height:1.6">해외 납부 세금만큼 포인트 적립<br>인출 시 포인트로 국내 세금 자동 상쇄<br>→ <strong>이중과세 해소 (복리효과 일부 감소)</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 계좌별 작동 방식 -->
+  <div class="info-row">
+    <div class="info-box" style="border-left:4px solid var(--green)">
+      <h3 style="color:var(--green)">🛡️ ISA 계좌 (이미 시행 중)</h3>
+      <div class="row"><span class="k">① 분배금 수령</span><span class="v">미국 세금 14~15% 먼저 차감</span></div>
+      <div class="row"><span class="k">② 크레딧 적립</span><span class="v ok">차감액 = 계좌에 포인트 자동 적립</span></div>
+      <div class="row"><span class="k">③ ISA 만기 정산 시</span><span class="v ok">크레딧으로 9.9% 세금 자동 상쇄</span></div>
+      <div class="row"><span class="k">크레딧 > 세금이면</span><span class="v ok">추가 세금 0원 (초과분 소멸)</span></div>
+      <div class="row"><span class="k">별도 신청</span><span class="v ok">불필요 — 자동 적용</span></div>
+    </div>
+    <div class="info-box" style="border-left:4px solid var(--purple)">
+      <h3 style="color:var(--purple)">🏦 연금저축·IRP (2026.7.1 시행)</h3>
+      <div class="row"><span class="k">① 분배금 수령</span><span class="v">미국 세금 15% 먼저 차감</span></div>
+      <div class="row"><span class="k">② 크레딧 적립</span><span class="v ok">차감액 = 공제적립금으로 자동 기록</span></div>
+      <div class="row"><span class="k">③ 연금 인출 시</span><span class="v ok">크레딧으로 연금소득세 3.3~5.5% 상쇄</span></div>
+      <div class="row"><span class="k">소급 적용</span><span class="v ok">2025.1.1 이후 발생분부터 소급</span></div>
+      <div class="row"><span class="k">별도 신청</span><span class="v ok">불필요 — 자동 적용</span></div>
+    </div>
+    <div class="info-box" style="border-left:4px solid var(--amber)">
+      <h3 style="color:var(--amber)">⚠️ 과거 대비 달라진 점</h3>
+      <div class="row"><span class="k">재투자 금액</span><span class="v warn">세전 100% → 세후 약 85%</span></div>
+      <div class="row"><span class="k">이중과세 해소</span><span class="v ok">O (크레딧으로 상쇄)</span></div>
+      <div class="row"><span class="k">완벽한 과세이연?</span><span class="v warn">△ (2024년 이전만큼은 아님)</span></div>
+      <div class="row"><span class="k">장기 복리 효과</span><span class="v warn">세전 기준 대비 다소 줄어듦</span></div>
+      <div class="row"><span class="k">일반계좌 대비</span><span class="v ok">여전히 절세계좌가 압도적 유리!</span></div>
+    </div>
+  </div>
+
+  <!-- 작동 예시 표 -->
+  <div class="card tbl-wrap" style="border-left:4px solid var(--blue)">
+    <div class="stitle">💡 크레딧 제도 작동 예시 <span>TIGER 미국S&P500 연금계좌 보유, 분배금 100만원 수령</span></div>
+    <table class="dt">
+      <thead>
+        <tr>
+          <th style="text-align:left">단계</th>
+          <th class="hl-green">2024년 이전<br>(선환급)</th>
+          <th class="hl-red">2025년<br>(선환급 폐지)</th>
+          <th class="hl-blue">2026년<br>(크레딧 제도)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>① 미국 세금 (15%)</td>
+          <td class="hl-green">15만원 차감 → <span class="ok">즉시 15만원 환급!</span></td>
+          <td class="hl-red"><span class="bad">15만원 차감 (환급 없음)</span></td>
+          <td class="hl-blue">15만원 차감 → <span class="ok">15만원 크레딧 적립</span></td>
+        </tr>
+        <tr>
+          <td>② 계좌 재투자 금액</td>
+          <td class="hl-green ok">100만원 (100% 재투자)</td>
+          <td class="hl-red warn">85만원만 재투자</td>
+          <td class="hl-blue warn">85만원 재투자<br><small>(크레딧은 나중에 사용)</small></td>
+        </tr>
+        <tr>
+          <td>③ 연금 인출 시 국내 세금</td>
+          <td class="hl-green">5.5만원 (5.5%)</td>
+          <td class="hl-red bad">4.7만원 추가 부과<br>(미국 15% + 국내 5.5% = <strong>이중과세!</strong>)</td>
+          <td class="hl-blue ok">크레딧 15만원 > 세금 5.5만원<br>→ <strong>추가 세금 0원!</strong></td>
+        </tr>
+        <tr>
+          <td>④ 실효세율</td>
+          <td class="hl-green ok">5.5%</td>
+          <td class="hl-red bad">약 19.7% (이중과세)</td>
+          <td class="hl-blue ok">15% (미국 세금만 부담)</td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="background:#dbeafe;border-radius:8px;padding:12px 16px;margin-top:12px;font-size:12px;color:#1e40af;line-height:1.7">
+      💡 <strong>한 줄 결론:</strong> "이중과세로 두 번 두들겨 맞는 최악 상황은 면했다. 하지만 2024년 이전의 <em>세전 100% 재투자</em>라는 완벽한 과세이연은 살짝 빛이 바랬다. 그래도 일반계좌 대비 절세계좌가 압도적으로 유리한 사실은 변하지 않는다."
+    </div>
+  </div>
+
+  <!-- 차트: 제도별 장기 비교 -->
+  <div class="chart-grid">
+    <div class="card chart-card">
+      <div class="stitle">📈 제도별 20년 연금계좌 누적 자산 비교 <span>연 1,000만원 납입 · 분배금 수익률 5% 가정</span></div>
+      <canvas id="c-credit-compound"></canvas>
+    </div>
+    <div class="card chart-card">
+      <div class="stitle">💸 분배금 100만원 수령 시 계좌별 실효세율</div>
+      <canvas id="c-credit-rate"></canvas>
+    </div>
+  </div>
+
+</div><!-- /tab-insight -->
+
+<script>
+// ── 금융소득 시뮬레이터 ────────────────────────────────────────
+function calcFinIncome(){
+  const kdiv   = +document.getElementById('fi-kdiv').value   || 0;
+  const ketf   = +document.getElementById('fi-ketf').value   || 0;
+  const fediv  = +document.getElementById('fi-fediv').value  || 0;
+  const fegain = +document.getElementById('fi-fegain').value || 0;
+  const usdiv  = +document.getElementById('fi-usdiv').value  || 0;
+  const intInc = +document.getElementById('fi-int').value    || 0;
+
+  const total   = kdiv + ketf + fediv + fegain + usdiv + intInc;
+  const over    = Math.max(0, total - 2000);
+  const isOver  = total > 2000;
+  const colMain = isOver ? C.red : C.green;
+  const badge   = isOver
+    ? '<span style="background:#fee2e2;color:var(--red);padding:3px 10px;border-radius:10px;font-size:12px;font-weight:700">⚠️ 종합과세 대상!</span>'
+    : '<span style="background:#dcfce7;color:#15803d;padding:3px 10px;border-radius:10px;font-size:12px;font-weight:700">✅ 분리과세 (2,000만원 이하)</span>';
+
+  const rows = [
+    {name:'국내 주식 배당금 (삼성전자 등)', v:kdiv, badge:'✅ 합산', cl:'warn'},
+    {name:'국내 ETF 분배금 (KODEX 200 등)', v:ketf, badge:'✅ 합산', cl:'warn'},
+    {name:'국내상장 해외ETF 분배금', v:fediv, badge:'✅ 합산', cl:'warn'},
+    {name:'⚠️ 국내상장 해외ETF 매매차익', v:fegain, badge:'⚠️ 합산 (배당소득!)', cl:'bad', hl:true},
+    {name:'미국 주식·ETF 배당금', v:usdiv, badge:'✅ 합산', cl:'warn'},
+    {name:'예금·적금·채권 이자', v:intInc, badge:'✅ 합산', cl:'warn'},
+  ].map(r=>`<tr${r.hl?' style="background:#fff7ed"':''}><td>${r.name}</td><td style="text-align:right;font-weight:700">${r.v.toLocaleString()}만원</td><td><span class="${r.cl}">${r.badge}</span></td></tr>`).join('');
+
+  document.getElementById('fi-result').innerHTML = `
+    <div class="card" style="padding:18px 20px;border-left:4px solid ${colMain}">
+      <div class="stitle">💰 금융소득 합산 분석 결과 &nbsp;${badge}</div>
+      <div class="kpi-row" style="margin-bottom:16px">
+        <div class="card kpi ${isOver?'red':'green'}" style="padding:12px">
+          <div class="lbl">총 금융소득 합산액</div>
+          <div class="val" style="font-size:18px">${total.toLocaleString()}만원</div>
+          <div class="sub">${isOver?`초과 ${over.toLocaleString()}만원 → 종합과세`:`${(2000-total).toLocaleString()}만원 여유`}</div>
+        </div>
+        <div class="card kpi ${isOver?'amber':'teal'}" style="padding:12px">
+          <div class="lbl">종합과세 합산액</div>
+          <div class="val" style="font-size:18px">${over.toLocaleString()}만원</div>
+          <div class="sub">${isOver?'다른 소득과 합산 → 누진세율':'없음'}</div>
+        </div>
+        <div class="card kpi purple" style="padding:12px">
+          <div class="lbl">⚠️ 해외ETF 차익 포함분</div>
+          <div class="val" style="font-size:18px">${fegain.toLocaleString()}만원</div>
+          <div class="sub">매매차익인데 배당소득 합산!</div>
+        </div>
+      </div>
+      <div style="overflow-x:auto"><table class="dt">
+        <thead><tr><th style="text-align:left">소득 항목</th><th style="text-align:right">금액</th><th>합산 여부</th></tr></thead>
+        <tbody>${rows}
+          <tr style="background:#f0fdf4;font-weight:800">
+            <td>합계</td><td style="text-align:right">${total.toLocaleString()}만원</td>
+            <td>${isOver?'<span class="bad">⚠️ 종합과세 대상</span>':'<span class="ok">✅ 분리과세'}</span></td>
+          </tr>
+        </tbody>
+      </table></div>
+      <div style="background:${isOver?'#fef3c7':'#f0fdf4'};border-radius:8px;padding:10px 14px;margin-top:12px;font-size:12px;color:${isOver?'#92400e':'#166534'}">
+        ${isOver
+          ? `⚠️ <strong>종합과세 적용:</strong> 금융소득 ${total.toLocaleString()}만원이 2,000만원 초과. 초과분 ${over.toLocaleString()}만원은 근로소득·임대소득 등과 합산 → 6~45% 누진세율. ISA·연금계좌 활용으로 합산 금액을 줄이세요!`
+          : `✅ <strong>분리과세 적용:</strong> 금융소득 ${total.toLocaleString()}만원으로 2,000만원 이하. 각 항목별 원천징수(15.4%)로 세금 납부 완료. 종합과세 걱정 없습니다.`}
+      </div>
+    </div>`;
+}
+
+// ── 크레딧 제도 차트 ────────────────────────────────────────
+function drawCreditCharts(){
+  // 20년 누적 비교 (연 분배금 5% 가정, 납입 1000만원)
+  const annual=1000, divRate=0.05, usTax=0.15, krTax=0.055;
+  let old20=0, bad25=0, new26=0;
+  const oldD=[0], badD=[0], newD=[0], yrs=['0년'];
+  for(let i=1;i<=20;i++){
+    // 2024 이전: 분배금 전액 재투자 (선환급), 수령시 5.5%
+    old20 = (old20+annual) * (1+divRate); // 과세이연 완벽
+    // 2025: 분배금에 미국세금 차감, 재투자, 수령시 또 세금
+    bad25 = (bad25+annual) * (1+divRate*(1-usTax)); // 배당 복리 감소
+    // 2026: 분배금에 미국세금 차감, 재투자, 수령시 크레딧 상쇄
+    new26 = (new26+annual) * (1+divRate*(1-usTax)); // 재투자는 25년과 동일
+    oldD.push(+(old20*(1-krTax)).toFixed(0));
+    badD.push(+(bad25*(1-usTax-krTax)).toFixed(0)); // 이중과세
+    newD.push(+(new26*(1-usTax)).toFixed(0));       // 크레딧으로 국내세 상쇄
+    yrs.push(i+'년');
+  }
+  mkChart('c-credit-compound','line',{labels:yrs,datasets:[
+    {label:'2024 이전 (선환급 · 세전100%재투자)',data:oldD,borderColor:C.green,backgroundColor:C.green+'22',fill:true,tension:.35,borderWidth:2.5,pointRadius:0},
+    {label:'2026 현재 (크레딧 제도)',data:newD,borderColor:C.blue,backgroundColor:C.blue+'22',fill:true,tension:.35,borderWidth:2.5,pointRadius:0},
+    {label:'2025 (이중과세)',data:badD,borderColor:C.red,backgroundColor:C.red+'18',fill:true,tension:.35,borderWidth:2,pointRadius:0,borderDash:[5,4]},
+  ]},{plugins:{legend:{position:'top',labels:{font:{size:10}}},tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${fmt(c.parsed.y)}`}}},
+    scales:{x:{grid:{display:false}},y:{beginAtZero:true,ticks:{callback:v=>fmt(v)}}}});
+
+  // 실효세율 비교
+  mkChart('c-credit-rate','bar',{
+    labels:['일반계좌\n(15.4%배당)', '2024이전\n연금(선환급)', '2026현재\n연금(크레딧)', '2025\n연금(이중과세)', 'ISA\n(9.9%분리)'],
+    datasets:[{label:'실효세율(%)',
+      data:[15.4, 5.5, 15, 20.5, 9.9],
+      backgroundColor:[C.red+'99',C.green+'99',C.blue+'99',C.red+'55',C.teal+'99'],
+      borderColor:[C.red,C.green,C.blue,C.red,C.teal],
+      borderWidth:1.5,borderRadius:8}]
+  },{plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`실효세율: ${c.parsed.y}%`}}},
+    scales:{x:{grid:{display:false}},y:{beginAtZero:true,max:25,ticks:{callback:v=>v+'%'}}}});
+}
+
+// 탭 전환 시 차트 그리기
+const _origShowTab = window.showTab || function(){};
+window.showTab = function(id, btn){
+  ['tax','pension','isa','calc','techtree','insight'].forEach(t=>document.getElementById('tab-'+t).style.display=t===id?'':'none');
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  if(id==='insight'){ calcFinIncome(); drawCreditCharts(); }
+  if(id==='techtree'){ selectTT(_ttScenario||'A'); }
+};
+</script>
+
 </div><!-- /wrap -->
 
 <div class="footer"><span style="font-weight:700;color:var(--text2)">ⓒ 장정민</span><span>교육용 자료 · 실제 세율은 개인 상황에 따라 다를 수 있습니다</span></div>
@@ -679,7 +1517,7 @@ function fmt(v){
   return v.toFixed(0)+'만';
 }
 function showTab(id,btn){
-  ['tax','pension','isa','calc'].forEach(t=>document.getElementById('tab-'+t).style.display=t===id?'':'none');
+  ['tax','pension','isa','calc','techtree','insight'].forEach(t=>document.getElementById('tab-'+t).style.display=t===id?'':'none');
   document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
 }
@@ -828,6 +1666,7 @@ window.addEventListener('DOMContentLoaded',()=>{
   calcPension();
   calcISA();
   calcTotal();
+  selectTT('A');
 });
 </script>
 </body>
